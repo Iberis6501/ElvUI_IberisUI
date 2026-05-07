@@ -26,25 +26,9 @@ local function DeepCopy(t, lookup_table)
 end
 
 -- ============================================================
--- Reflux setAceProfile 방식 — AceDB-3.0 db_registry 순회
--- ============================================================
-local function SetAllAceProfiles(profileName)
-	local LibStub = _G["LibStub"]
-	if not LibStub then return end
-	local AceDB = LibStub:GetLibrary("AceDB-3.0", true)
-	if not (AceDB and AceDB.db_registry) then return end
-	for db in pairs(AceDB.db_registry) do
-		if not db.parent then
-			pcall(function() db:SetProfile(profileName) end)
-		end
-	end
-end
-
--- ============================================================
 -- 이베리스 프로필 적용
--- 1. 서약선 → 이베리스 DeepCopy (ElvDB, ElvPrivateDB)
--- 2. 모든 AceDB 인스턴스를 "이베리스"로 SetProfile
--- 3. 재로드는 InstallComplete()에서 처리
+-- BenikUI 방식: profileKeys만 업데이트 → db:SetProfile() 호출 안 함
+-- → 설치 중 UI reload 없음, 최종 InstallComplete()에서 한 번만 reload
 -- ============================================================
 local function ApplyIberisProfile()
 
@@ -55,19 +39,25 @@ local function ApplyIberisProfile()
 		return
 	end
 
-	-- ElvDB: 서약선 → 이베리스 복사
+	-- 1. 이베리스 프로필 = 서약선 프로필 DeepCopy
 	ElvDB.profiles["이베리스"] = DeepCopy(ElvDB.profiles["서약선"])
 
-	-- ElvPrivateDB: 서약선 → 이베리스 복사
+	-- 2. ElvPrivateDB 복사
 	if ElvPrivateDB and ElvPrivateDB.profiles and ElvPrivateDB.profiles["서약선"] then
 		ElvPrivateDB.profiles["이베리스"] = DeepCopy(ElvPrivateDB.profiles["서약선"])
 	end
 
-	-- 모든 AceDB-3.0 인스턴스를 "이베리스" 프로필로 전환
-	SetAllAceProfiles("이베리스")
+	-- 3. 이 케릭터가 다음 로드 시 "이베리스" 프로필을 사용하도록 profileKeys 설정
+	--    (db:SetProfile() 호출 없음 → 설치 중 reload 없음)
+	if ElvDB.profileKeys then
+		ElvDB.profileKeys[E.mynameRealm] = "이베리스"
+	end
+	if ElvPrivateDB and ElvPrivateDB.profileKeys then
+		ElvPrivateDB.profileKeys[E.mynameRealm] = "이베리스"
+	end
 
-	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r '이베리스' 프로필 생성 완료!")
-	DEFAULT_CHAT_FRAME:AddMessage("'완료' 버튼을 눌러 재로드하면 적용됩니다.")
+	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r '이베리스' 프로필 준비 완료!")
+	DEFAULT_CHAT_FRAME:AddMessage("나머지 단계를 완료한 뒤 '완료' 버튼으로 재로드하세요.")
 	PluginInstallStepComplete.message = IUI.Title .. L["Profile Set"]
 	PluginInstallStepComplete:Show()
 end
@@ -81,11 +71,13 @@ local function SetupAddons()
 	wipe(addonNames)
 
 	local function tryLoad(addonName, loadFn)
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r " .. addonName .. " 적용 시도...")
 		local ok, err = pcall(loadFn)
 		if ok then
 			tinsert(addonNames, addonName)
+			DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r " .. addonName .. " |cff00ff00성공|r")
 		else
-			DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r " .. addonName .. " 오류: " .. tostring(err))
+			DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r " .. addonName .. " |cffff0000실패|r: " .. tostring(err))
 		end
 	end
 
@@ -167,8 +159,8 @@ IUI.installTable = {
 		end,
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("채팅 창 설정")
-			PluginInstallFrame.Desc1:SetText("ElvUI 기본 채팅 설정을 적용합니다.\n전리품 창이 오른쪽 채팅 패널로 이동됩니다.")
-			PluginInstallFrame.Desc2:SetText("(E:SetupChat — 즉시 적용)")
+			PluginInstallFrame.Desc1:SetText("이베리스 프로필에 채팅 패널 설정이 포함되어 있습니다.")
+			PluginInstallFrame.Desc2:SetText("'완료' 버튼으로 재로드 시 좌측·우측 채팅 패널이 자동 구성됩니다.\n별도 조작 없이 확인 버튼을 누르세요.")
 			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function()

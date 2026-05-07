@@ -1,21 +1,12 @@
 local IUI, E, L = unpack((select(2, ...)))
 
--- ElvUI 기본 SetupChat을 그대로 호출합니다.
--- E:SetupChat()은 ElvUI/Game/Shared/General/Install.lua에 정의되어 있으며
--- 채팅 창 초기화, 전리품 창 오른쪽 패널 배치, 메시지 그룹 설정을 모두 처리합니다.
+-- 채팅 창 설정
+-- '이베리스' 프로필에는 panelSnapLeftID=1, panelSnapRightID=4 가 이미 포함되어 있으므로
+-- 최종 재로드 후 ElvUI가 자동으로 좌우 패널을 구성합니다.
+-- 이 단계에서는 별도 FCF 조작 없이 안내만 표시합니다.
 function IUI:SetupChatWindows()
-	if not E.SetupChat then
-		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r E:SetupChat()을 찾을 수 없습니다.")
-		return
-	end
-
-	local ok, err = pcall(function() E:SetupChat() end)
-	if ok then
-		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 창 설정 완료 — 전리품 창을 오른쪽 패널로 이동했습니다.")
-	else
-		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 오류: " .. tostring(err))
-	end
-
-	PluginInstallStepComplete.message = "|cffff9900IberisUI|r 채팅 설정 완료"
+	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 설정: 이베리스 프로필에 좌우 채팅 패널 설정 포함됨.")
+	DEFAULT_CHAT_FRAME:AddMessage("'완료' 버튼으로 재로드하면 좌측/우측 채팅 패널이 자동 적용됩니다.")
+	PluginInstallStepComplete.message = "|cffff9900IberisUI|r 채팅 설정 확인됨"
 	PluginInstallStepComplete:Show()
 end
