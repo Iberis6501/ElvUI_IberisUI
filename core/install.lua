@@ -4,89 +4,70 @@ local tinsert, wipe = table.insert, table.wipe or wipe
 local format = string.format
 
 -- ============================================================
--- DeepCopy (Reflux 방식)
+-- Reflux 방식 DeepCopy — 순환 참조 처리 포함
 -- ============================================================
-local function DeepCopy(orig)
-	if type(orig) ~= "table" then return orig end
+local function DeepCopy(t, lookup_table)
 	local copy = {}
-	for k, v in pairs(orig) do
-		copy[DeepCopy(k)] = DeepCopy(v)
+	if type(t) ~= "table" then return t end
+	for i, v in pairs(t) do
+		if type(v) ~= "table" then
+			copy[i] = v
+		else
+			lookup_table = lookup_table or {}
+			lookup_table[t] = copy
+			if lookup_table[v] then
+				copy[i] = lookup_table[v]
+			else
+				copy[i] = DeepCopy(v, lookup_table)
+			end
+		end
 	end
 	return copy
 end
 
 -- ============================================================
--- 이베리스 프로필 적용 — ElvDB 직접 조작 (AceDB CopyProfile 미사용)
--- AceDB.CopyProfile은 서약선 본인 케릭에서 실행 시 자기 참조로 프로필이
--- 초기화되는 버그가 있어 ElvDB 테이블을 직접 복사합니다.
+-- Reflux setAceProfile 방식 — AceDB-3.0 db_registry 순회
+-- ============================================================
+local function SetAllAceProfiles(profileName)
+	local LibStub = _G["LibStub"]
+	if not LibStub then return end
+	local AceDB = LibStub:GetLibrary("AceDB-3.0", true)
+	if not (AceDB and AceDB.db_registry) then return end
+	for db in pairs(AceDB.db_registry) do
+		if not db.parent then
+			pcall(function() db:SetProfile(profileName) end)
+		end
+	end
+end
+
+-- ============================================================
+-- 이베리스 프로필 적용
+-- 1. 서약선 → 이베리스 DeepCopy (ElvDB, ElvPrivateDB)
+-- 2. 모든 AceDB 인스턴스를 "이베리스"로 SetProfile
+-- 3. 재로드는 InstallComplete()에서 처리
 -- ============================================================
 local function ApplyIberisProfile()
 
 	-- 서약선 프로필 존재 확인
 	if not (ElvDB and ElvDB.profiles and ElvDB.profiles["서약선"]) then
-		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r '서약선' 프로필 없음 — 같은 계정에 서약선 케릭이 있어야 합니다.")
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 오류: '서약선' 프로필 없음")
+		DEFAULT_CHAT_FRAME:AddMessage("같은 계정에 '서약선' 케릭터가 있어야 합니다.")
 		return
 	end
 
-	-- 현재 프로필 이름 확인
-	local currentProfile = ElvDB.profileKeys and ElvDB.profileKeys[E.mynameRealm]
-	if not currentProfile then
-		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 현재 프로필을 찾을 수 없습니다.")
-		return
-	end
+	-- ElvDB: 서약선 → 이베리스 복사
+	ElvDB.profiles["이베리스"] = DeepCopy(ElvDB.profiles["서약선"])
 
-	-- 서약선 본인은 이미 올바른 프로필이므로 스킵
-	if currentProfile == "서약선" then
-		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 이미 서약선 프로필입니다.")
-		PluginInstallStepComplete.message = IUI.Title .. L["Profile Set"]
-		PluginInstallStepComplete:Show()
-		return
-	end
-
-	-- ElvDB.profiles[currentProfile] ← DeepCopy(ElvDB.profiles["서약선"])
-	if not ElvDB.profiles[currentProfile] then
-		ElvDB.profiles[currentProfile] = {}
-	end
-	local dst = ElvDB.profiles[currentProfile]
-	-- 기존 키 모두 제거 후 서약선 데이터 기록 (wipe는 안전한 테이블 초기화)
-	wipe(dst)
-	local src = DeepCopy(ElvDB.profiles["서약선"])
-	for k, v in pairs(src) do dst[k] = v end
-
-	-- ElvPrivateDB private 설정 복사 (normTex, glossTex, skins 등)
+	-- ElvPrivateDB: 서약선 → 이베리스 복사
 	if ElvPrivateDB and ElvPrivateDB.profiles and ElvPrivateDB.profiles["서약선"] then
-		local srcPriv = ElvPrivateDB.profiles["서약선"]
-		local currentPrivProfile = ElvPrivateDB.profileKeys and ElvPrivateDB.profileKeys[E.mynameRealm]
-
-		if currentPrivProfile and currentPrivProfile ~= "서약선" then
-			if not ElvPrivateDB.profiles[currentPrivProfile] then
-				ElvPrivateDB.profiles[currentPrivProfile] = {}
-			end
-			local dstPriv = ElvPrivateDB.profiles[currentPrivProfile]
-
-			if srcPriv.general then
-				if not dstPriv.general then dstPriv.general = {} end
-				for k, v in pairs(srcPriv.general) do dstPriv.general[k] = v end
-			end
-			if srcPriv.skins then
-				if not dstPriv.skins then dstPriv.skins = {} end
-				for k, v in pairs(srcPriv.skins) do
-					if type(v) == "table" then
-						if not dstPriv.skins[k] then dstPriv.skins[k] = {} end
-						for k2, v2 in pairs(v) do dstPriv.skins[k][k2] = v2 end
-					else
-						dstPriv.skins[k] = v
-					end
-				end
-			end
-			if srcPriv.benikui then
-				if not dstPriv.benikui then dstPriv.benikui = {} end
-				dstPriv.benikui.expressway = srcPriv.benikui.expressway
-			end
-		end
+		ElvPrivateDB.profiles["이베리스"] = DeepCopy(ElvPrivateDB.profiles["서약선"])
 	end
 
-	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r '서약선' 프로필 복사 완료! '완료' 버튼으로 재로드하세요.")
+	-- 모든 AceDB-3.0 인스턴스를 "이베리스" 프로필로 전환
+	SetAllAceProfiles("이베리스")
+
+	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r '이베리스' 프로필 생성 완료!")
+	DEFAULT_CHAT_FRAME:AddMessage("'완료' 버튼을 눌러 재로드하면 적용됩니다.")
 	PluginInstallStepComplete.message = IUI.Title .. L["Profile Set"]
 	PluginInstallStepComplete:Show()
 end
