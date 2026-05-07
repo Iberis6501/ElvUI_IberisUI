@@ -1,137 +1,21 @@
 local IUI, E, L = unpack((select(2, ...)))
 
--- 알려진 모든 메시지 그룹 (초기화용)
-local ALL_GROUPS = {
-	"SYSTEM", "SAY", "EMOTE", "YELL", "WHISPER", "PARTY", "PARTY_LEADER",
-	"RAID", "RAID_LEADER", "RAID_WARNING", "GUILD", "OFFICER", "CHANNEL",
-	"ACHIEVEMENT", "GUILD_ACHIEVEMENT", "INSTANCE_CHAT", "INSTANCE_CHAT_LEADER",
-	"BN_WHISPER", "BN_WHISPER_INFORM", "BN_CONVERSATION", "BN_INLINE_TOAST_ALERT",
-	"BN_WHISPER_PLAYER_OFFLINE", "CURRENCY", "PING", "GUILD_ITEM_LOOTED",
-	"PET_BATTLE_INFO", "OPENING", "TRADESKILLS", "PET_INFO",
-	"COMBAT_XP_GAIN", "COMBAT_HONOR_GAIN", "COMBAT_MISC_INFO",
-	"COMBAT_FACTION_CHANGE", "SKILL", "LOOT", "MONEY", "ERRORS",
-	"AFK", "DND", "IGNORED", "BG_HORDE", "BG_ALLIANCE", "BG_NEUTRAL",
-	"MONSTER_SAY", "MONSTER_YELL", "MONSTER_EMOTE", "MONSTER_WHISPER",
-	"MONSTER_BOSS_EMOTE", "MONSTER_BOSS_WHISPER",
-	"FILTERED", "RESTRICTED", "VOICE_TEXT",
-}
-
--- 창별 메시지 그룹 정의 (chat-cache.txt 기준)
-local WINDOW_GROUPS = {
-	[1] = { -- 일반
-		"SYSTEM", "SAY", "EMOTE", "YELL", "WHISPER", "PARTY", "PARTY_LEADER",
-		"RAID", "RAID_LEADER", "RAID_WARNING", "GUILD", "OFFICER",
-		"MONSTER_SAY", "MONSTER_YELL", "MONSTER_EMOTE", "MONSTER_WHISPER",
-		"MONSTER_BOSS_EMOTE", "MONSTER_BOSS_WHISPER",
-		"ERRORS", "AFK", "DND", "IGNORED",
-		"BG_HORDE", "BG_ALLIANCE", "BG_NEUTRAL", "CHANNEL",
-		"ACHIEVEMENT", "GUILD_ACHIEVEMENT",
-		"BN_WHISPER", "BN_WHISPER_INFORM", "BN_CONVERSATION",
-		"BN_INLINE_TOAST_ALERT", "CURRENCY", "BN_WHISPER_PLAYER_OFFLINE",
-		"PET_BATTLE_INFO", "INSTANCE_CHAT", "INSTANCE_CHAT_LEADER",
-		"GUILD_ITEM_LOOTED", "PING",
-	},
-	[2] = { -- 기록
-		"OPENING", "TRADESKILLS", "PET_INFO",
-		"COMBAT_XP_GAIN", "COMBAT_HONOR_GAIN", "COMBAT_MISC_INFO",
-	},
-	[3] = { -- 음성 대화 설정
-		"VOICE_TEXT",
-	},
-	[4] = { -- 전리품 / 거래 요청
-		"COMBAT_FACTION_CHANGE", "SKILL", "LOOT", "MONEY",
-		"COMBAT_XP_GAIN", "COMBAT_HONOR_GAIN",
-	},
-	[5] = { -- 길드&파티
-		"SYSTEM", "SAY", "EMOTE", "YELL", "WHISPER",
-		"PARTY", "PARTY_LEADER", "RAID", "RAID_LEADER", "RAID_WARNING",
-		"GUILD", "OFFICER", "CHANNEL",
-		"BN_WHISPER", "INSTANCE_CHAT", "INSTANCE_CHAT_LEADER",
-	},
-	[6] = { -- 거래 (숨김)
-		"SAY", "WHISPER", "PARTY", "RAID", "RAID_WARNING", "GUILD",
-	},
-	-- 7~10: 비어있음
-}
-
--- 창별 이름 (없으면 기본 이름 유지)
-local WINDOW_NAMES = {
-	[1] = "일반",
-	[2] = "기록",
-	[3] = "음성 대화 설정",
-	[4] = "전리품 / 거래 요청",
-	[5] = "길드&파티",
-	[6] = "거래",
-}
-
--- 창 1에 표시할 채널 (파티찾기만 유지)
-local WINDOW1_CHANNELS = { "파티찾기" }
-
--- 창 5(길드&파티)는 개인 채널만 있었으므로 채널 없음
-
-local function clearAllGroups(frame)
-	if not ChatFrame_RemoveMessageGroup then return end
-	for _, group in ipairs(ALL_GROUPS) do
-		ChatFrame_RemoveMessageGroup(frame, group)
-	end
-end
-
-local function addGroups(frame, groups)
-	if not ChatFrame_AddMessageGroup then return end
-	for _, group in ipairs(groups) do
-		ChatFrame_AddMessageGroup(frame, group)
-	end
-end
-
+-- ElvUI 기본 SetupChat을 그대로 호출합니다.
+-- E:SetupChat()은 ElvUI/Game/Shared/General/Install.lua에 정의되어 있으며
+-- 채팅 창 초기화, 전리품 창 오른쪽 패널 배치, 메시지 그룹 설정을 모두 처리합니다.
 function IUI:SetupChatWindows()
-	local NUM_WINDOWS = NUM_CHAT_WINDOWS or 10
-
-	for i = 1, NUM_WINDOWS do
-		local frame = _G["ChatFrame" .. i]
-		if not frame then break end
-
-		-- 폰트 크기 통일
-		local fontSize = (i <= 3 or i >= 7) and 12 or 12
-		if i == 3 then fontSize = 0 end
-		if FCF_SetChatWindowFontSize and fontSize > 0 then
-			FCF_SetChatWindowFontSize(nil, frame, fontSize)
-		end
-
-		-- 메시지 그룹 초기화 후 재설정
-		clearAllGroups(frame)
-		if WINDOW_GROUPS[i] then
-			addGroups(frame, WINDOW_GROUPS[i])
-		end
-
-		-- 창 이름 설정
-		if WINDOW_NAMES[i] then
-			if FCF_SetWindowName then FCF_SetWindowName(frame, WINDOW_NAMES[i]) end
-		end
-
-		-- 잠금
-		if FCF_SetLocked then FCF_SetLocked(frame, 1) end
-
-		-- 위치 저장
-		if frame:GetLeft() then
-			if FCF_SavePositionAndDimensions then FCF_SavePositionAndDimensions(frame) end
-			if FCF_StopDragging then FCF_StopDragging(frame) end
-		end
+	if not E.SetupChat then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r E:SetupChat()을 찾을 수 없습니다.")
+		return
 	end
 
-	-- 전리품 창(ChatFrame4)을 오른쪽 채팅 패널에 임베드
-	-- E.db.chat.panelSnapRightID = 4 설정 → 재로드 후 오른쪽 패널에 고정
-	if E.db and E.db.chat then
-		E.db.chat["panelSnapRightID"] = 4
-		E.db.chat["rightChatPanel"]   = true  -- 오른쪽 패널 활성화
-	end
-	-- ElvUI Chat 모듈이 있으면 즉시 갱신 시도
-	local chatMod = E:GetModule("Chat")
-	if chatMod then
-		if chatMod.Panels_ColorUpdate then chatMod:Panels_ColorUpdate() end
-		if chatMod.BuildChatFrame    then chatMod:BuildChatFrame()    end
+	local ok, err = pcall(function() E:SetupChat() end)
+	if ok then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 창 설정 완료 — 전리품 창을 오른쪽 패널로 이동했습니다.")
+	else
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 오류: " .. tostring(err))
 	end
 
-	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 창 설정 완료 — '완료' 버튼으로 재로드 시 적용됩니다.")
 	PluginInstallStepComplete.message = "|cffff9900IberisUI|r 채팅 설정 완료"
 	PluginInstallStepComplete:Show()
 end

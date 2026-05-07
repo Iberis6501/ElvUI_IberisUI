@@ -96,14 +96,16 @@ local function SetupAddons()
 
 	local resultMsg
 	if #addonNames > 0 then
-		resultMsg = format("|cfffff400적용 완료:|r %s", table.concat(addonNames, ", "))
+		resultMsg = format("|cfffff400저장 완료:|r %s\n|cffff8000'완료' 버튼으로 재로드 시 반영됩니다.|r", table.concat(addonNames, ", "))
 	else
-		resultMsg = "|cffff8000적용 실패 — 오류 확인 후 재시도|r"
+		resultMsg = "|cffff8000오류 발생 — 채팅창 오류 메시지 확인|r"
 	end
 	PluginInstallFrame.Desc2:SetText(resultMsg)
-	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r " .. resultMsg)
+	if #addonNames > 0 then
+		DEFAULT_CHAT_FRAME:AddMessage(format("|cffff9900IberisUI|r 저장됨: %s (재로드 후 반영)", table.concat(addonNames, ", ")))
+	end
 
-	PluginInstallStepComplete.message = IUI.Title .. " 애드온 설정 완료"
+	PluginInstallStepComplete.message = IUI.Title .. " 애드온 설정 저장됨"
 	PluginInstallStepComplete:Show()
 end
 
@@ -165,8 +167,8 @@ IUI.installTable = {
 		end,
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("채팅 창 설정")
-			PluginInstallFrame.Desc1:SetText("채팅 창 이름·메시지 종류를 설정하고\n전리품 창을 오른쪽 채팅패널에 임베드합니다.")
-			PluginInstallFrame.Desc2:SetText("|cffff8000이 설정은 '완료' 버튼의 UI 재로드 후 완전히 적용됩니다.|r")
+			PluginInstallFrame.Desc1:SetText("ElvUI 기본 채팅 설정을 적용합니다.\n전리품 창이 오른쪽 채팅 패널로 이동됩니다.")
+			PluginInstallFrame.Desc2:SetText("(E:SetupChat — 즉시 적용)")
 			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function()
