@@ -1,0 +1,13 @@
+## Interface: 11508
+## Author: Iberis
+## Version: 1.00
+## Title: |cff1784d1ElvUI|r |cffff9900IberisUI|r |cfd9b9b9bClassic|r
+## Notes: 이베리스의 ElvUI Classic 개인 프로필 세팅 애드온
+## RequiredDeps: ElvUI, ElvUI_BenikUI
+## DefaultState: Enabled
+## X-ElvuiVersion: 15.05
+
+locales\load_locales.xml
+defaults\load_defaults.xml
+init.lua
+core\load_core.xml
