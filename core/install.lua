@@ -48,8 +48,8 @@ local function ApplyIberisProfile()
 		ElvDB.profiles[currentProfile] = {}
 	end
 	local dst = ElvDB.profiles[currentProfile]
-	-- 기존 키 모두 제거 후 서약선 데이터 기록
-	for k in pairs(dst) do dst[k] = nil end
+	-- 기존 키 모두 제거 후 서약선 데이터 기록 (wipe는 안전한 테이블 초기화)
+	wipe(dst)
 	local src = DeepCopy(ElvDB.profiles["서약선"])
 	for k, v in pairs(src) do dst[k] = v end
 
@@ -184,8 +184,8 @@ IUI.installTable = {
 		end,
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("채팅 창 설정")
-			PluginInstallFrame.Desc1:SetText("채팅 창 이름과 메시지 종류를 서약선 기준으로 설정합니다.")
-			PluginInstallFrame.Desc2:SetText("좌우 채팅 패널에 내장됩니다.")
+			PluginInstallFrame.Desc1:SetText("채팅 창 이름·메시지 종류를 설정하고\n전리품 창을 오른쪽 채팅패널에 임베드합니다.")
+			PluginInstallFrame.Desc2:SetText("|cffff8000이 설정은 '완료' 버튼의 UI 재로드 후 완전히 적용됩니다.|r")
 			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function()

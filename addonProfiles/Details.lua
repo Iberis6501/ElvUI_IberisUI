@@ -1,7 +1,6 @@
 local IUI, E, L = unpack((select(2, ...)))
 
 function IUI:LoadDetailsProfile()
-	if not C_AddOns.IsAddOnLoaded("Details") then return end
 	if not _detalhes_global then _detalhes_global = {} end
 
 	local db = _detalhes_global

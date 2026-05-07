@@ -118,18 +118,17 @@ function IUI:SetupChatWindows()
 		end
 	end
 
-	-- 창 1 채널 설정 (파티찾기, LookingForGroup — TBC Anniversary에서 채널은 수동 추가 필요)
-	-- ChatFrame_AddChannel이 없는 버전이므로 채널 목록만 E.db에 기록
-	if E.db["datatexts"] and E.db["datatexts"]["panels"] then
-		-- 채널 설정은 ReloadUI 후 chat-cache.txt를 통해 적용됩니다
+	-- 전리품 창(ChatFrame4)을 오른쪽 채팅 패널에 임베드
+	-- E.db.chat.panelSnapRightID = 4 설정 → 재로드 후 오른쪽 패널에 고정
+	if E.db and E.db.chat then
+		E.db.chat["panelSnapRightID"] = 4
+		E.db.chat["rightChatPanel"]   = true  -- 오른쪽 패널 활성화
 	end
-
-	-- 창 4 (전리품): 우측 채팅 패널에 독립 배치
-	local frame4 = ChatFrame4
-	if frame4 then
-		if FCF_UnDockFrame then FCF_UnDockFrame(frame4) end
-		if FCF_DockFrame then FCF_DockFrame(frame4) end
-		if FCF_SetLocked then FCF_SetLocked(frame4, 1) end
+	-- ElvUI Chat 모듈이 있으면 즉시 갱신 시도
+	local chatMod = E:GetModule("Chat")
+	if chatMod then
+		if chatMod.Panels_ColorUpdate then chatMod:Panels_ColorUpdate() end
+		if chatMod.BuildChatFrame    then chatMod:BuildChatFrame()    end
 	end
 
 	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 창 설정 완료 — '완료' 버튼으로 재로드 시 적용됩니다.")

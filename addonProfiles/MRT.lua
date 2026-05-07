@@ -1,7 +1,6 @@
 local IUI, E, L = unpack((select(2, ...)))
 
 function IUI:LoadMRTProfile()
-	if not C_AddOns.IsAddOnLoaded("MRT") then return end
 	if not VMRT then VMRT = {} end
 
 	-- ============================================================
