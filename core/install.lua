@@ -3,39 +3,38 @@ local ReloadUI = ReloadUI
 local tinsert, wipe = table.insert, table.wipe or wipe
 local format, floor = string.format, math.floor
 
--- ============================================================
--- 해상도별 UIScale 및 mover 좌표 스케일 계산
---   기준: FHD(1080p) UIScale 0.711 → 가상 해상도 2700×1519
---   QHD(1440p): UIScale 0.5334 → 가상 해상도 4800×2700
---   비율 ≈ 1.778 (= 4800/2700 = 2700/1519)
--- ============================================================
-local SCALE_RATIO = 1.0
-local UI_SCALE
-
-if E.screenheight == 1440 then
-	UI_SCALE   = 0.5334
-	SCALE_RATIO = 4800 / 2700   -- QHD virtual / FHD virtual ≈ 1.778
-elseif E.screenheight == 1080 then
-	UI_SCALE = 0.711
-else
-	-- 그 외 해상도: 비율 유지
-	UI_SCALE    = 0.711 * 1080 / E.screenheight
-	SCALE_RATIO = (E.screenwidth / UI_SCALE) / (1920 / 0.711)
-end
-
--- "ANCHOR,parent,ANCHOR,x,y" 형태의 mover 문자열을 해상도에 맞게 스케일
-local function SM(s)
-	if SCALE_RATIO == 1.0 then return s end
-	-- 끝의 두 숫자(x, y 오프셋)만 스케일
-	return (s:gsub("(,%-?%d+%.?%d*),(%-?%d+%.?%d*)$", function(x, y)
-		return format(",%d,%d",
-			floor(tonumber(x) * SCALE_RATIO + 0.5),
-			floor(tonumber(y) * SCALE_RATIO + 0.5))
-	end))
-end
-
 -- 서약선 프로필의 전체 설정을 적용합니다.
 local function ApplyIberisProfile()
+
+	-- ============================================================
+	-- 해상도별 UIScale 및 mover 좌표 스케일 계산 (런타임에 수행)
+	--   기준: FHD(1080p) UIScale 0.711 → 가상 너비 2700
+	--   QHD(1440p): UIScale 0.5334 → 가상 너비 4800, 비율 ≈ 1.778
+	-- ============================================================
+	local sh = E.screenheight or 1080
+	local sw = E.screenwidth  or 1920
+	local UI_SCALE, SCALE_RATIO
+
+	if sh == 1440 then
+		UI_SCALE    = 0.5334
+		SCALE_RATIO = 4800 / 2700   -- ≈ 1.778
+	elseif sh == 1080 then
+		UI_SCALE    = 0.711
+		SCALE_RATIO = 1.0
+	else
+		UI_SCALE    = 0.711 * 1080 / sh
+		SCALE_RATIO = (sw / UI_SCALE) / (1920 / 0.711)
+	end
+
+	-- "ANCHOR,parent,ANCHOR,x,y" 형태의 mover 문자열을 해상도에 맞게 스케일
+	local function SM(s)
+		if SCALE_RATIO == 1.0 then return s end
+		return (s:gsub("(,%-?%d+%.?%d*),(%-?%d+%.?%d*)$", function(x, y)
+			return format(",%d,%d",
+				floor(tonumber(x) * SCALE_RATIO + 0.5),
+				floor(tonumber(y) * SCALE_RATIO + 0.5))
+		end))
+	end
 
 	-- ============================================================
 	-- General
