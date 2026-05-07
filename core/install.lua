@@ -1,5 +1,6 @@
 local IUI, E, L = unpack((select(2, ...)))
 local ReloadUI = ReloadUI
+local tinsert, wipe = table.insert, table.wipe or wipe
 
 -- 서약선 프로필의 전체 설정을 적용합니다.
 local function ApplyIberisProfile()
@@ -765,6 +766,44 @@ local function ApplyIberisProfile()
 	PluginInstallStepComplete:Show()
 end
 
+local addonNames = {}
+
+local function SetupAddons()
+	wipe(addonNames)
+
+	if C_AddOns.IsAddOnLoaded("Pawn") then
+		IUI:LoadPawnProfile()
+		tinsert(addonNames, "Pawn")
+	end
+	if C_AddOns.IsAddOnLoaded("ItemRack") then
+		IUI:LoadItemRackProfile()
+		tinsert(addonNames, "ItemRack")
+	end
+	if C_AddOns.IsAddOnLoaded("HidingBar") then
+		IUI:LoadHidingBarProfile()
+		tinsert(addonNames, "HidingBar")
+	end
+	if C_AddOns.IsAddOnLoaded("LFGBulletinBoard") then
+		IUI:LoadLFGBulletinBoardProfile()
+		tinsert(addonNames, "LFGBulletinBoard")
+	end
+	if C_AddOns.IsAddOnLoaded("FindParty") then
+		IUI:LoadFindPartyProfile()
+		tinsert(addonNames, "FindParty")
+	end
+
+	if #addonNames > 0 then
+		PluginInstallFrame.Desc4:SetText(
+			format("|cfffff400적용된 애드온:|r %s", table.concat(addonNames, ", "))
+		)
+	else
+		PluginInstallFrame.Desc4:SetText("|cffff8000지원 애드온이 로드되어 있지 않습니다.|r")
+	end
+
+	PluginInstallStepComplete.message = IUI.Title .. " 애드온 설정 완료"
+	PluginInstallStepComplete:Show()
+end
+
 local function InstallComplete()
 	E.private.install_complete = E.version
 	E.private.iberisui.install_complete = IUI.Version
@@ -785,7 +824,7 @@ IUI.installTable = {
 			PluginInstallTitleFrame.text:SetFont(E["media"].normFont, 16, "OUTLINE")
 			PluginInstallFrame.SubTitle:SetFormattedText(L["Welcome to IberisUI version %s, for ElvUI %s."], IUI.Version, E.version)
 			PluginInstallFrame.Desc1:SetText("|cffff9900이베리스(Iberis)|r 개인 프로필 애드온에 오신 것을 환영합니다.")
-			PluginInstallFrame.Desc2:SetText("계속 버튼을 누르면 '서약선' 케릭터 기준의 ElvUI 프로필이 적용됩니다.\n\n|cffff8000팁: 기존 설정을 보존하려면 먼저 새 프로필을 만드세요.|r")
+			PluginInstallFrame.Desc2:SetText("계속 버튼을 누르면 '서약선' 케릭터 기준의 설정이 적용됩니다.\n\n|cffff8000팁: 기존 설정을 보존하려면 먼저 새 프로필을 만드세요.|r")
 			PluginInstallFrame.Desc3:SetText("계속 버튼을 눌러 다음 단계로 진행하세요.")
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function() InstallComplete() end)
@@ -793,16 +832,34 @@ IUI.installTable = {
 		end,
 		[2] = function()
 			PluginInstallFrame.SubTitle:SetText(L["Layout"])
-			PluginInstallFrame.Desc1:SetText("이 단계에서 '서약선' 프로필의 전체 설정이 현재 ElvUI에 적용됩니다.")
-			PluginInstallFrame.Desc2:SetText("아래 버튼을 클릭하면 모든 설정(유닛프레임, 액션바, 채팅, 네임플레이트, 무버 등)이 한 번에 적용됩니다.")
+			PluginInstallFrame.Desc1:SetText("ElvUI 전체 설정(유닛프레임, 액션바, 네임플레이트, 무버 등)을 적용합니다.")
+			PluginInstallFrame.Desc2:SetText("아래 버튼을 클릭하면 서약선 기준 설정이 한 번에 적용됩니다.")
 			PluginInstallFrame.Desc3:SetText(L["Importance: |cff07D400High|r"])
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function() ApplyIberisProfile() end)
 			PluginInstallFrame.Option1:SetText(L["Apply Iberis Profile"])
 		end,
 		[3] = function()
+			PluginInstallFrame.SubTitle:SetText("외부 애드온 프로필")
+			PluginInstallFrame.Desc1:SetText("로드된 애드온에 서약선 기준 설정을 적용합니다.")
+			PluginInstallFrame.Desc2:SetText("지원: Pawn, ItemRack, HidingBar, LFGBulletinBoard, FindParty")
+			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
+			PluginInstallFrame.Option1:Show()
+			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupAddons() end)
+			PluginInstallFrame.Option1:SetText("애드온 설정 적용")
+		end,
+		[4] = function()
+			PluginInstallFrame.SubTitle:SetText("채팅 창 설정")
+			PluginInstallFrame.Desc1:SetText("채팅 창 구성(이름, 메시지 종류)을 서약선 기준으로 설정합니다.")
+			PluginInstallFrame.Desc2:SetText("|cffff8000'애옹', '추추' 채널은 개인 채널이므로 제외됩니다.|r\n파티찾기, LookingForGroup 채널은 유지됩니다.")
+			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
+			PluginInstallFrame.Option1:Show()
+			PluginInstallFrame.Option1:SetScript("OnClick", function() IUI:SetupChatWindows() end)
+			PluginInstallFrame.Option1:SetText("채팅 창 설정")
+		end,
+		[5] = function()
 			PluginInstallFrame.SubTitle:SetText(L["Installation Complete"])
-			PluginInstallFrame.Desc1:SetText("IberisUI 프로필 설치가 완료되었습니다!")
+			PluginInstallFrame.Desc1:SetText("IberisUI 설치가 완료되었습니다!")
 			PluginInstallFrame.Desc2:SetText("'완료' 버튼을 클릭하면 UI가 재로드됩니다.")
 			PluginInstallFrame.Desc3:SetText("")
 			PluginInstallFrame.Option1:Show()
@@ -815,7 +872,9 @@ IUI.installTable = {
 	["StepTitles"] = {
 		[1] = "시작",
 		[2] = L["Layout"],
-		[3] = L["Installation Complete"],
+		[3] = "외부 애드온",
+		[4] = "채팅 창",
+		[5] = L["Installation Complete"],
 	},
 	StepTitlesColor = { 1, 1, 1 },
 	StepTitlesColorSelected = { 1, 0.6, 0 },

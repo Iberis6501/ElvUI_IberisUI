@@ -11,3 +11,4 @@ locales\load_locales.xml
 defaults\load_defaults.xml
 init.lua
 core\load_core.xml
+addonProfiles\load_addonProfiles.xml
