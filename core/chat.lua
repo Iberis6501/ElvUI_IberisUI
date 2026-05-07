@@ -92,7 +92,7 @@ function IUI:SetupChatWindows()
 		-- 폰트 크기 통일
 		local fontSize = (i <= 3 or i >= 7) and 12 or 12
 		if i == 3 then fontSize = 0 end
-		if fontSize > 0 then
+		if FCF_SetChatWindowFontSize and fontSize > 0 then
 			FCF_SetChatWindowFontSize(nil, frame, fontSize)
 		end
 
@@ -104,33 +104,31 @@ function IUI:SetupChatWindows()
 
 		-- 창 이름 설정
 		if WINDOW_NAMES[i] then
-			FCF_SetWindowName(frame, WINDOW_NAMES[i])
+			if FCF_SetWindowName then FCF_SetWindowName(frame, WINDOW_NAMES[i]) end
 		end
 
 		-- 잠금
-		FCF_SetLocked(frame, 1)
+		if FCF_SetLocked then FCF_SetLocked(frame, 1) end
 
 		-- 위치 저장
 		if frame:GetLeft() then
-			FCF_SavePositionAndDimensions(frame)
-			FCF_StopDragging(frame)
+			if FCF_SavePositionAndDimensions then FCF_SavePositionAndDimensions(frame) end
+			if FCF_StopDragging then FCF_StopDragging(frame) end
 		end
 	end
 
-	-- 창 1 채널 설정 (파티찾기, LookingForGroup만 — 개인 채널 제외)
-	local frame1 = ChatFrame1
-	if frame1 then
-		for _, ch in ipairs(WINDOW1_CHANNELS) do
-			ChatFrame_AddChannel(frame1, ch)
-		end
+	-- 창 1 채널 설정 (파티찾기, LookingForGroup — TBC Anniversary에서 채널은 수동 추가 필요)
+	-- ChatFrame_AddChannel이 없는 버전이므로 채널 목록만 E.db에 기록
+	if E.db["datatexts"] and E.db["datatexts"]["panels"] then
+		-- 채널 설정은 ReloadUI 후 chat-cache.txt를 통해 적용됩니다
 	end
 
 	-- 창 4 (전리품): 우측 채팅 패널에 독립 배치
 	local frame4 = ChatFrame4
 	if frame4 then
-		FCF_UnDockFrame(frame4)
-		FCF_DockFrame(frame4)
-		FCF_SetLocked(frame4, 1)
+		if FCF_UnDockFrame then FCF_UnDockFrame(frame4) end
+		if FCF_DockFrame then FCF_DockFrame(frame4) end
+		if FCF_SetLocked then FCF_SetLocked(frame4, 1) end
 	end
 
 	E:StaticPopup_Show("IBERISUI_CHAT_DONE")

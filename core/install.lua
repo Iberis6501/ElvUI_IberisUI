@@ -369,7 +369,6 @@ local function ApplyIberisProfile()
 	player["threatStyle"] = "GLOW"
 	player["smartAuraPosition"] = "DEBUFFS_ON_BUFFS"
 
-	ensure(player, "portrait")["enable"] = true
 	ensure(player, "portrait")["overlay"] = true
 	ensure(player, "portrait")["camDistanceScale"] = 1
 
@@ -437,7 +436,6 @@ local function ApplyIberisProfile()
 	target["smartAuraDisplay"] = "DISABLED"
 	target["smartAuraPosition"] = "DEBUFFS_ON_BUFFS"
 
-	ensure(target, "portrait")["enable"] = true
 	ensure(target, "portrait")["overlay"] = true
 	ensure(target, "portrait")["camDistanceScale"] = 1
 
@@ -813,13 +811,16 @@ local function SetupAddons()
 		tinsert(addonNames, "LFGBulletinBoard")
 	end
 
+	local resultMsg
 	if #addonNames > 0 then
-		PluginInstallFrame.Desc4:SetText(
-			format("|cfffff400적용된 애드온:|r %s", table.concat(addonNames, ", "))
-		)
+		resultMsg = format("|cfffff400적용된 애드온:|r %s", table.concat(addonNames, ", "))
 	else
-		PluginInstallFrame.Desc4:SetText("|cffff8000지원 애드온이 로드되어 있지 않습니다.|r")
+		resultMsg = "|cffff8000로드된 지원 애드온이 없습니다.|r"
 	end
+	if PluginInstallFrame.Desc4 then
+		PluginInstallFrame.Desc4:SetText(resultMsg)
+	end
+	PluginInstallFrame.Desc2:SetText(resultMsg)
 
 	PluginInstallStepComplete.message = IUI.Title .. " 애드온 설정 완료"
 	PluginInstallStepComplete:Show()
