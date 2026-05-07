@@ -132,15 +132,7 @@ function IUI:SetupChatWindows()
 		if FCF_SetLocked then FCF_SetLocked(frame4, 1) end
 	end
 
-	E:StaticPopup_Show("IBERISUI_CHAT_DONE")
+	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 창 설정 완료 — '완료' 버튼으로 재로드 시 적용됩니다.")
+	PluginInstallStepComplete.message = "|cffff9900IberisUI|r 채팅 설정 완료"
+	PluginInstallStepComplete:Show()
 end
-
-E.PopupDialogs["IBERISUI_CHAT_DONE"] = {
-	text = "|cffff9900IberisUI|r\n채팅 창 설정이 완료되었습니다.\n완전히 적용하려면 UI를 재로드하세요.",
-	button1 = "UI 재로드",
-	button2 = "나중에",
-	timeout = 0,
-	whileDead = 1,
-	preferredIndex = 3,
-	OnAccept = function() ReloadUI() end,
-}
