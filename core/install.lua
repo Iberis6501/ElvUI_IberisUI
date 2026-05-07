@@ -8,6 +8,16 @@ local format = string.format
 -- ============================================================
 local function ApplyIberisProfile()
 
+	-- ★ 서약선 원본 프로필 오염 방지
+	-- 현재 케릭터가 "서약선" 프로필을 사용 중이면 E.db 직접 쓰기를 건너뜀
+	local currentProfile = ElvDB and ElvDB.profileKeys and ElvDB.profileKeys[E.mynameRealm]
+	local skipDbWrite = (currentProfile == "서약선")
+	if skipDbWrite then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 서약선 케릭터 — E.db 쓰기 건너뜀 (원본 보호)")
+	end
+
+	if not skipDbWrite then
+
 	E.db["actionbar"]["bar1"]["backdropSpacing"] = 6
 	E.db["actionbar"]["bar1"]["buttonSize"] = 36
 	E.db["actionbar"]["bar1"]["buttonSpacing"] = 3
@@ -774,6 +784,8 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["targettarget"]["threatStyle"] = "GLOW"
 	E.db["unitframe"]["units"]["targettarget"]["width"] = 125
 
+	end -- skipDbWrite
+
 	-- Private
 	if E.private["benikui"] then
 		E.private["benikui"]["expressway"] = true
@@ -820,12 +832,34 @@ local function ApplyIberisProfile()
 		if Layout and Layout.CreateMiddlePanel then Layout:CreateMiddlePanel(true) end
 	end
 
-	-- profileKeys 업데이트
+	-- profileKeys 업데이트 (서약선 케릭터는 원본 유지)
+	if currentProfile ~= "서약선" then
 	if ElvDB and ElvDB.profileKeys then
 		ElvDB.profileKeys[E.mynameRealm] = "이베리스"
 	end
 	if ElvPrivateDB and ElvPrivateDB.profileKeys then
 		ElvPrivateDB.profileKeys[E.mynameRealm] = "이베리스"
+	end
+	end -- currentProfile ~= "서약선"
+
+	-- HUD 편집 모드: 서약선 레이아웃 활성화 시도
+	-- 20주년 서버 Edit Mode API를 통해 서약선 HUD 프로필 적용
+	if C_EditMode then
+		local ok, layouts = pcall(function() return C_EditMode.GetLayouts and C_EditMode.GetLayouts() end)
+		if ok and layouts and layouts.layouts then
+			for _, layout in ipairs(layouts.layouts) do
+				local name = layout.layoutName or layout.name or ""
+				if name:find("서약선") or name:find("이베리스") then
+					pcall(function()
+						if C_EditMode.SetActiveLayout then
+							C_EditMode.SetActiveLayout(layout.layoutIndex or _)
+						end
+					end)
+					DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r HUD 레이아웃 전환: " .. name)
+					break
+				end
+			end
+		end
 	end
 
 	E:StaggeredUpdateAll(nil, true)
@@ -846,9 +880,9 @@ local function SetupAddons()
 		if ok then tinsert(addonNames, name)
 		else DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r "..name.." 실패: "..tostring(err)) end
 	end
-	tryLoad("Details",   function() IUI:LoadDetailsProfile() end)
+	tryLoad("BigWigs",   function() IUI:LoadBigWigsProfile() end)
+	tryLoad("Details",   function() IUI:LoadDetailsAddonProfile() end)
 	tryLoad("MRT",       function() IUI:LoadMRTProfile() end)
-	tryLoad("Guidelime", function() IUI:LoadGuidelimeProfile() end)
 	tryLoad("HidingBar", function() IUI:LoadHidingBarProfile() end)
 	local msg = #addonNames > 0
 		and format("|cfffff400저장:|r %s (재로드 후 반영)", table.concat(addonNames, ", "))
