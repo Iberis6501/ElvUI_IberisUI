@@ -36,6 +36,17 @@ local function ApplyIberisProfile()
 		end))
 	end
 
+	-- 중첩 경로가 없으면 생성하면서 최종 테이블 반환
+	local function ensure(t, ...)
+		local cur = t
+		for _, k in ipairs({...}) do
+			if type(cur[k]) ~= "table" then cur[k] = {} end
+			cur = cur[k]
+		end
+		return cur
+	end
+	local uf = ensure(E.db, "unitframe", "units")
+
 	-- ============================================================
 	-- General
 	-- ============================================================
@@ -503,132 +514,141 @@ local function ApplyIberisProfile()
 	}
 
 	-- ============================================================
-	-- Unitframes - Focus / TargetTarget / Pet
+	-- Unitframes - Focus / TargetTarget / Pet  (ensure로 nil 안전 처리)
 	-- ============================================================
-	E.db["unitframe"]["units"]["focus"]["width"] = 125
-	E.db["unitframe"]["units"]["focus"]["height"] = 30
-	E.db["unitframe"]["units"]["focus"]["disableMouseoverGlow"] = true
-	E.db["unitframe"]["units"]["focus"]["disableTargetGlow"] = true
-	E.db["unitframe"]["units"]["focus"]["health"]["smoothbars"] = true
-	E.db["unitframe"]["units"]["focus"]["power"]["position"] = "CENTER"
-	E.db["unitframe"]["units"]["focus"]["power"]["height"] = 7
-	E.db["unitframe"]["units"]["focus"]["infoPanel"]["height"] = 12
-	E.db["unitframe"]["units"]["focus"]["infoPanel"]["transparent"] = true
-	E.db["unitframe"]["units"]["focus"]["castbar"]["width"] = 125
-	E.db["unitframe"]["units"]["focus"]["castbar"]["height"] = 14
-	E.db["unitframe"]["units"]["focus"]["castbar"]["overlayOnFrame"] = "Health"
-	E.db["unitframe"]["units"]["focus"]["castbar"]["iconSize"] = 26
-	E.db["unitframe"]["units"]["focus"]["portrait"]["camDistanceScale"] = 1
-	E.db["unitframe"]["units"]["focus"]["fader"]["minAlpha"] = 0.75
+	local focus = ensure(uf, "focus")
+	focus["width"] = 125
+	focus["height"] = 30
+	focus["disableMouseoverGlow"] = true
+	focus["disableTargetGlow"] = true
+	ensure(focus, "health")["smoothbars"] = true
+	ensure(focus, "power")["position"] = "CENTER"
+	ensure(focus, "power")["height"] = 7
+	ensure(focus, "infoPanel")["height"] = 12
+	ensure(focus, "infoPanel")["transparent"] = true
+	ensure(focus, "castbar")["width"] = 125
+	ensure(focus, "castbar")["height"] = 14
+	ensure(focus, "castbar")["overlayOnFrame"] = "Health"
+	ensure(focus, "castbar")["iconSize"] = 26
+	ensure(focus, "portrait")["camDistanceScale"] = 1
+	ensure(focus, "fader")["minAlpha"] = 0.75
 
-	E.db["unitframe"]["units"]["targettarget"]["width"] = 125
-	E.db["unitframe"]["units"]["targettarget"]["height"] = 30
-	E.db["unitframe"]["units"]["targettarget"]["disableMouseoverGlow"] = true
-	E.db["unitframe"]["units"]["targettarget"]["threatStyle"] = "GLOW"
-	E.db["unitframe"]["units"]["targettarget"]["health"]["smoothbars"] = true
-	E.db["unitframe"]["units"]["targettarget"]["power"]["height"] = 7
-	E.db["unitframe"]["units"]["targettarget"]["infoPanel"]["height"] = 12
-	E.db["unitframe"]["units"]["targettarget"]["portrait"]["overlay"] = true
-	E.db["unitframe"]["units"]["targettarget"]["portrait"]["camDistanceScale"] = 1
-	E.db["unitframe"]["units"]["targettarget"]["fader"]["minAlpha"] = 0.75
-	E.db["unitframe"]["units"]["targettarget"]["name"]["text_format"] = "[name:medium]"
-	E.db["unitframe"]["units"]["targettarget"]["debuffs"]["enable"] = false
+	local tt = ensure(uf, "targettarget")
+	tt["width"] = 125
+	tt["height"] = 30
+	tt["disableMouseoverGlow"] = true
+	tt["threatStyle"] = "GLOW"
+	ensure(tt, "health")["smoothbars"] = true
+	ensure(tt, "power")["height"] = 7
+	ensure(tt, "infoPanel")["height"] = 12
+	ensure(tt, "portrait")["overlay"] = true
+	ensure(tt, "portrait")["camDistanceScale"] = 1
+	ensure(tt, "fader")["minAlpha"] = 0.75
+	ensure(tt, "name")["text_format"] = "[name:medium]"
+	ensure(tt, "debuffs")["enable"] = false
 
-	E.db["unitframe"]["units"]["focustarget"]["enable"] = true
-	E.db["unitframe"]["units"]["focustarget"]["width"] = 125
-	E.db["unitframe"]["units"]["focustarget"]["height"] = 30
-	E.db["unitframe"]["units"]["focustarget"]["disableMouseoverGlow"] = true
-	E.db["unitframe"]["units"]["focustarget"]["disableTargetGlow"] = true
-	E.db["unitframe"]["units"]["focustarget"]["health"]["smoothbars"] = true
-	E.db["unitframe"]["units"]["focustarget"]["power"]["position"] = "CENTER"
-	E.db["unitframe"]["units"]["focustarget"]["power"]["height"] = 7
-	E.db["unitframe"]["units"]["focustarget"]["castbar"]["width"] = 125
-	E.db["unitframe"]["units"]["focustarget"]["castbar"]["overlayOnFrame"] = "Health"
-	E.db["unitframe"]["units"]["focustarget"]["fader"]["minAlpha"] = 0.75
+	local ft = ensure(uf, "focustarget")
+	ft["enable"] = true
+	ft["width"] = 125
+	ft["height"] = 30
+	ft["disableMouseoverGlow"] = true
+	ft["disableTargetGlow"] = true
+	ensure(ft, "health")["smoothbars"] = true
+	ensure(ft, "power")["position"] = "CENTER"
+	ensure(ft, "power")["height"] = 7
+	ensure(ft, "castbar")["width"] = 125
+	ensure(ft, "castbar")["overlayOnFrame"] = "Health"
+	ensure(ft, "fader")["minAlpha"] = 0.75
 
-	E.db["unitframe"]["units"]["pet"]["width"] = 125
-	E.db["unitframe"]["units"]["pet"]["height"] = 30
-	E.db["unitframe"]["units"]["pet"]["disableMouseoverGlow"] = true
-	E.db["unitframe"]["units"]["pet"]["health"]["smoothbars"] = true
-	E.db["unitframe"]["units"]["pet"]["portrait"]["overlay"] = true
-	E.db["unitframe"]["units"]["pet"]["power"]["position"] = "CENTER"
-	E.db["unitframe"]["units"]["pet"]["power"]["height"] = 7
-	E.db["unitframe"]["units"]["pet"]["castbar"]["enable"] = false
-	E.db["unitframe"]["units"]["pet"]["castbar"]["width"] = 125
-	E.db["unitframe"]["units"]["pet"]["castbar"]["height"] = 10
-	E.db["unitframe"]["units"]["pet"]["infoPanel"]["height"] = 14
-	E.db["unitframe"]["units"]["pet"]["infoPanel"]["transparent"] = true
-	E.db["unitframe"]["units"]["pet"]["fader"]["minAlpha"] = 0.75
-	E.db["unitframe"]["units"]["pet"]["name"]["text_format"] = "[classcolor][name:medium]  [happiness:discord]"
-	E.db["unitframe"]["units"]["pet"]["debuffs"]["growthY"] = "DOWN"
-	E.db["unitframe"]["units"]["pet"]["debuffs"]["attachTo"] = "BUFFS"
-	E.db["unitframe"]["units"]["pet"]["debuffs"]["enable"] = true
-	E.db["unitframe"]["units"]["pet"]["buffs"]["growthY"] = "DOWN"
-	E.db["unitframe"]["units"]["pet"]["buffs"]["enable"] = true
+	local pet = ensure(uf, "pet")
+	pet["width"] = 125
+	pet["height"] = 30
+	pet["disableMouseoverGlow"] = true
+	ensure(pet, "health")["smoothbars"] = true
+	ensure(pet, "portrait")["overlay"] = true
+	ensure(pet, "power")["position"] = "CENTER"
+	ensure(pet, "power")["height"] = 7
+	ensure(pet, "castbar")["enable"] = false
+	ensure(pet, "castbar")["width"] = 125
+	ensure(pet, "castbar")["height"] = 10
+	ensure(pet, "infoPanel")["height"] = 14
+	ensure(pet, "infoPanel")["transparent"] = true
+	ensure(pet, "fader")["minAlpha"] = 0.75
+	ensure(pet, "name")["text_format"] = "[classcolor][name:medium]  [happiness:discord]"
+	ensure(pet, "debuffs")["growthY"] = "DOWN"
+	ensure(pet, "debuffs")["attachTo"] = "BUFFS"
+	ensure(pet, "debuffs")["enable"] = true
+	ensure(pet, "buffs")["growthY"] = "DOWN"
+	ensure(pet, "buffs")["enable"] = true
 
 	-- ============================================================
 	-- Unitframes - Boss
 	-- ============================================================
-	E.db["unitframe"]["units"]["boss"]["width"] = 148
-	E.db["unitframe"]["units"]["boss"]["height"] = 30
-	E.db["unitframe"]["units"]["boss"]["middleClickFocus"] = true
-	E.db["unitframe"]["units"]["boss"]["threatStyle"] = "BORDERS"
-	E.db["unitframe"]["units"]["boss"]["infoPanel"]["height"] = 17
-	E.db["unitframe"]["units"]["boss"]["castbar"]["width"] = 148
-	E.db["unitframe"]["units"]["boss"]["debuffs"]["yOffset"] = -16
-	E.db["unitframe"]["units"]["boss"]["debuffs"]["maxDuration"] = 300
-	E.db["unitframe"]["units"]["boss"]["debuffs"]["sizeOverride"] = 15
-	E.db["unitframe"]["units"]["boss"]["debuffs"]["anchorPoint"] = "RIGHT"
-	E.db["unitframe"]["units"]["boss"]["buffs"]["yOffset"] = 16
-	E.db["unitframe"]["units"]["boss"]["buffs"]["maxDuration"] = 300
-	E.db["unitframe"]["units"]["boss"]["buffs"]["sizeOverride"] = 15
-	E.db["unitframe"]["units"]["boss"]["buffs"]["anchorPoint"] = "RIGHT"
+	local boss = ensure(uf, "boss")
+	boss["width"] = 148
+	boss["height"] = 30
+	boss["middleClickFocus"] = true
+	boss["threatStyle"] = "BORDERS"
+	ensure(boss, "infoPanel")["height"] = 17
+	ensure(boss, "castbar")["width"] = 148
+	ensure(boss, "debuffs")["yOffset"] = -16
+	ensure(boss, "debuffs")["maxDuration"] = 300
+	ensure(boss, "debuffs")["sizeOverride"] = 15
+	ensure(boss, "debuffs")["anchorPoint"] = "RIGHT"
+	ensure(boss, "buffs")["yOffset"] = 16
+	ensure(boss, "buffs")["maxDuration"] = 300
+	ensure(boss, "buffs")["sizeOverride"] = 15
+	ensure(boss, "buffs")["anchorPoint"] = "RIGHT"
 
 	-- ============================================================
 	-- Unitframes - Party
 	-- ============================================================
-	E.db["unitframe"]["units"]["party"]["enable"] = false
-	E.db["unitframe"]["units"]["party"]["width"] = 70
-	E.db["unitframe"]["units"]["party"]["height"] = 45
-	E.db["unitframe"]["units"]["party"]["numGroups"] = 5
-	E.db["unitframe"]["units"]["party"]["growthDirection"] = "DOWN_RIGHT"
-	E.db["unitframe"]["units"]["party"]["groupBy"] = "GROUP"
-	E.db["unitframe"]["units"]["party"]["groupsPerRowCol"] = 1
-	E.db["unitframe"]["units"]["party"]["horizontalSpacing"] = 3
-	E.db["unitframe"]["units"]["party"]["name"]["text_format"] = "[classcolor][name:short]"
-	E.db["unitframe"]["units"]["party"]["healPrediction"]["enable"] = true
-	E.db["unitframe"]["units"]["party"]["power"]["text_format"] = ""
-	E.db["unitframe"]["units"]["party"]["power"]["position"] = "BOTTOMRIGHT"
-	E.db["unitframe"]["units"]["party"]["power"]["yOffset"] = 2
-	E.db["unitframe"]["units"]["party"]["health"]["position"] = "BOTTOM"
-	E.db["unitframe"]["units"]["party"]["health"]["text_format"] = "[healthcolor][health:deficit:shortvalue]"
-	E.db["unitframe"]["units"]["party"]["health"]["yOffset"] = 2
+	local party = ensure(uf, "party")
+	party["enable"] = false
+	party["width"] = 70
+	party["height"] = 45
+	party["numGroups"] = 5
+	party["growthDirection"] = "DOWN_RIGHT"
+	party["groupBy"] = "GROUP"
+	party["groupsPerRowCol"] = 1
+	party["horizontalSpacing"] = 3
+	ensure(party, "name")["text_format"] = "[classcolor][name:short]"
+	ensure(party, "healPrediction")["enable"] = true
+	ensure(party, "power")["text_format"] = ""
+	ensure(party, "power")["position"] = "BOTTOMRIGHT"
+	ensure(party, "power")["yOffset"] = 2
+	ensure(party, "health")["position"] = "BOTTOM"
+	ensure(party, "health")["text_format"] = "[healthcolor][health:deficit:shortvalue]"
+	ensure(party, "health")["yOffset"] = 2
 
 	-- ============================================================
 	-- Unitframes - Raid
 	-- ============================================================
-	E.db["unitframe"]["units"]["raid1"]["enable"] = false
-	E.db["unitframe"]["units"]["raid1"]["width"] = 70
-	E.db["unitframe"]["units"]["raid1"]["height"] = 45
-	E.db["unitframe"]["units"]["raid1"]["growthDirection"] = "DOWN_RIGHT"
-	E.db["unitframe"]["units"]["raid1"]["healPrediction"]["enable"] = true
-	E.db["unitframe"]["units"]["raid1"]["fader"]["minAlpha"] = 0.55
-	E.db["unitframe"]["units"]["raid1"]["fader"]["smooth"] = 0.55
-	E.db["unitframe"]["units"]["raid1"]["rdebuffs"]["enable"] = false
+	local r1 = ensure(uf, "raid1")
+	r1["enable"] = false
+	r1["width"] = 70
+	r1["height"] = 45
+	r1["growthDirection"] = "DOWN_RIGHT"
+	ensure(r1, "healPrediction")["enable"] = true
+	ensure(r1, "fader")["minAlpha"] = 0.55
+	ensure(r1, "fader")["smooth"] = 0.55
+	ensure(r1, "rdebuffs")["enable"] = false
 
-	E.db["unitframe"]["units"]["raid2"]["enable"] = false
-	E.db["unitframe"]["units"]["raid2"]["width"] = 70
-	E.db["unitframe"]["units"]["raid2"]["height"] = 45
-	E.db["unitframe"]["units"]["raid2"]["growthDirection"] = "DOWN_RIGHT"
-	E.db["unitframe"]["units"]["raid2"]["healPrediction"]["enable"] = true
-	E.db["unitframe"]["units"]["raid2"]["power"]["enable"] = true
+	local r2 = ensure(uf, "raid2")
+	r2["enable"] = false
+	r2["width"] = 70
+	r2["height"] = 45
+	r2["growthDirection"] = "DOWN_RIGHT"
+	ensure(r2, "healPrediction")["enable"] = true
+	ensure(r2, "power")["enable"] = true
 
-	E.db["unitframe"]["units"]["raid3"]["enable"] = false
-	E.db["unitframe"]["units"]["raid3"]["width"] = 70
-	E.db["unitframe"]["units"]["raid3"]["height"] = 45
-	E.db["unitframe"]["units"]["raid3"]["growthDirection"] = "DOWN_RIGHT"
-	E.db["unitframe"]["units"]["raid3"]["healPrediction"]["enable"] = true
-	E.db["unitframe"]["units"]["raid3"]["power"]["enable"] = true
+	local r3 = ensure(uf, "raid3")
+	r3["enable"] = false
+	r3["width"] = 70
+	r3["height"] = 45
+	r3["growthDirection"] = "DOWN_RIGHT"
+	ensure(r3, "healPrediction")["enable"] = true
+	ensure(r3, "power")["enable"] = true
 
 	-- ============================================================
 	-- BenikUI 설정 (E.db.benikui)
