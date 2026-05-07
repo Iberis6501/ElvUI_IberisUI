@@ -64,19 +64,20 @@ local WINDOW_NAMES = {
 	[6] = "거래",
 }
 
--- 창 1에 표시할 채널 (애옹, 추추 제외 — 나머지 채널만)
--- chat-cache.txt 기준: 파티찾기, LookingForGroup
-local WINDOW1_CHANNELS = { "파티찾기", "LookingForGroup" }
+-- 창 1에 표시할 채널 (파티찾기만 유지)
+local WINDOW1_CHANNELS = { "파티찾기" }
 
 -- 창 5(길드&파티)는 개인 채널만 있었으므로 채널 없음
 
 local function clearAllGroups(frame)
+	if not ChatFrame_RemoveMessageGroup then return end
 	for _, group in ipairs(ALL_GROUPS) do
 		ChatFrame_RemoveMessageGroup(frame, group)
 	end
 end
 
 local function addGroups(frame, groups)
+	if not ChatFrame_AddMessageGroup then return end
 	for _, group in ipairs(groups) do
 		ChatFrame_AddMessageGroup(frame, group)
 	end

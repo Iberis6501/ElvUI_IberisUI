@@ -781,6 +781,26 @@ local function ApplyIberisProfile()
 
 	E:StaggeredUpdateAll(nil, true)
 
+	-- 채팅 패널 크기 즉시 갱신
+	local chatMod = E:GetModule("Chat")
+	if chatMod then
+		if chatMod.BuildChatFrame then chatMod:BuildChatFrame() end
+		if chatMod.Panels_ColorUpdate then chatMod:Panels_ColorUpdate() end
+	end
+
+	-- 액션바 즉시 갱신
+	local abMod = E:GetModule("ActionBars")
+	if abMod and abMod.UpdateAll then abMod:UpdateAll() end
+
+	-- BenikUI 레이아웃 (중간 패널 생성)
+	local BUI_ext = ElvUI_BenikUI and ElvUI_BenikUI[1]
+	if BUI_ext then
+		local Layout = BUI_ext:GetModule("Layout")
+		if Layout and Layout.CreateMiddlePanel then
+			Layout:CreateMiddlePanel(true)
+		end
+	end
+
 	PluginInstallStepComplete.message = IUI.Title .. L["Profile Set"]
 	PluginInstallStepComplete:Show()
 end
@@ -790,37 +810,30 @@ local addonNames = {}
 local function SetupAddons()
 	wipe(addonNames)
 
-	if C_AddOns.IsAddOnLoaded("Details") then
-		IUI:LoadDetailsProfile()
-		tinsert(addonNames, "Details")
+	local function tryLoad(addonName, loadFn)
+		if C_AddOns.IsAddOnLoaded(addonName) then
+			local ok, err = pcall(loadFn)
+			if ok then
+				tinsert(addonNames, addonName)
+			else
+				DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r " .. addonName .. " 오류: " .. tostring(err))
+			end
+		end
 	end
-	if C_AddOns.IsAddOnLoaded("MRT") then
-		IUI:LoadMRTProfile()
-		tinsert(addonNames, "MRT")
-	end
-	if C_AddOns.IsAddOnLoaded("Guidelime") then
-		IUI:LoadGuidelimeProfile()
-		tinsert(addonNames, "Guidelime")
-	end
-	if C_AddOns.IsAddOnLoaded("HidingBar") then
-		IUI:LoadHidingBarProfile()
-		tinsert(addonNames, "HidingBar")
-	end
-	if C_AddOns.IsAddOnLoaded("LFGBulletinBoard") then
-		IUI:LoadLFGBulletinBoardProfile()
-		tinsert(addonNames, "LFGBulletinBoard")
-	end
+
+	tryLoad("Details",   function() IUI:LoadDetailsProfile() end)
+	tryLoad("MRT",       function() IUI:LoadMRTProfile() end)
+	tryLoad("Guidelime", function() IUI:LoadGuidelimeProfile() end)
+	tryLoad("HidingBar", function() IUI:LoadHidingBarProfile() end)
 
 	local resultMsg
 	if #addonNames > 0 then
-		resultMsg = format("|cfffff400적용된 애드온:|r %s", table.concat(addonNames, ", "))
+		resultMsg = format("|cfffff400적용 완료:|r %s", table.concat(addonNames, ", "))
 	else
-		resultMsg = "|cffff8000로드된 지원 애드온이 없습니다.|r"
-	end
-	if PluginInstallFrame.Desc4 then
-		PluginInstallFrame.Desc4:SetText(resultMsg)
+		resultMsg = "|cffff8000로드된 지원 애드온 없음 (Details, MRT, Guidelime, HidingBar 확인)|r"
 	end
 	PluginInstallFrame.Desc2:SetText(resultMsg)
+	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r " .. resultMsg)
 
 	PluginInstallStepComplete.message = IUI.Title .. " 애드온 설정 완료"
 	PluginInstallStepComplete:Show()
@@ -869,19 +882,29 @@ IUI.installTable = {
 		[3] = function()
 			PluginInstallFrame.SubTitle:SetText("외부 애드온 프로필")
 			PluginInstallFrame.Desc1:SetText("로드된 애드온에 서약선 기준 설정을 적용합니다.")
-			PluginInstallFrame.Desc2:SetText("지원: Pawn, ItemRack, HidingBar, LFGBulletinBoard, FindParty")
+			PluginInstallFrame.Desc2:SetText("지원 목록: Details, MRT, Guidelime, HidingBar")
 			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
 			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupAddons() end)
+			PluginInstallFrame.Option1:SetScript("OnClick", function()
+				local ok, err = pcall(SetupAddons)
+				if not ok then
+					DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 애드온 오류: " .. tostring(err))
+				end
+			end)
 			PluginInstallFrame.Option1:SetText("애드온 설정 적용")
 		end,
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("채팅 창 설정")
-			PluginInstallFrame.Desc1:SetText("채팅 창 구성(이름, 메시지 종류)을 서약선 기준으로 설정합니다.")
-			PluginInstallFrame.Desc2:SetText("|cffff8000'애옹', '추추' 채널은 개인 채널이므로 제외됩니다.|r\n파티찾기, LookingForGroup 채널은 유지됩니다.")
+			PluginInstallFrame.Desc1:SetText("채팅 창 이름과 메시지 종류를 서약선 기준으로 설정합니다.")
+			PluginInstallFrame.Desc2:SetText("좌우 채팅 패널에 내장됩니다.")
 			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
 			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", function() IUI:SetupChatWindows() end)
+			PluginInstallFrame.Option1:SetScript("OnClick", function()
+				local ok, err = pcall(function() IUI:SetupChatWindows() end)
+				if not ok then
+					DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 오류: " .. tostring(err))
+				end
+			end)
 			PluginInstallFrame.Option1:SetText("채팅 창 설정")
 		end,
 		[5] = function()
