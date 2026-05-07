@@ -41,11 +41,11 @@ ElvUI + BenikUI 기반의 이베리스 개인 프로필 세팅 애드온입니�
 ### 외부 애드온
 | 애드온 | 적용 내용 |
 |--------|-----------|
-| **Pawn** | AutoSelectScales 등 기본 설정 |
-| **ItemRack** | 꽥·노드레야냥·드레야냥·생존 장비 세트 + 전문화 연동 이벤트 |
+| **Details** | 스킨(ElvUI Frame Style), 상태바, run_code 등 표시 설정 |
+| **MRT** | Note 창 설정, MarksBar 위치, CDs 서약선 프로필(전문화별 쿨타임), InviteTool |
+| **Guidelime** | 창 높이, 단계 표시 옵션 |
 | **HidingBar** | 현재 케릭터명으로 프로필 이름 설정 |
 | **LFGBulletinBoard** | TBC 레이드/던전 필터 설정 (SSC, BT, Kara 등) |
-| **FindParty** | 귓속말 문구 설정 |
 
 ### 채팅 창
 | 창 | 이름 | 주요 메시지 |
@@ -77,3 +77,10 @@ ElvUI + BenikUI 기반의 이베리스 개인 프로필 세팅 애드온입니�
   - `core/chat.lua` 신설: 채팅 창 5개 구성, 메시지 그룹 초기화 후 재설정
   - 개인 채널(애옹·추추) 제외, 파티찾기·LookingForGroup 유지
   - 설치 마법사 3단계 → 5단계로 확장 (외부 애드온·채팅 창 단계 추가)
+
+- **v1.02** 외부 애드온 프로필 교체
+  - Pawn, ItemRack, FindParty 제거
+  - Details, MRT, Guidelime 추가
+  - MRT: Note 창, MarksBar, CDs 서약선 프로필(전문화별 쿨타임), InviteTool
+  - Details: ElvUI Frame Style 스킨, 상태바, run_code 설정
+  - Guidelime: 창 높이·단계 표시 옵션

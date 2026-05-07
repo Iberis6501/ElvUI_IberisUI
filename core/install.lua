@@ -771,13 +771,17 @@ local addonNames = {}
 local function SetupAddons()
 	wipe(addonNames)
 
-	if C_AddOns.IsAddOnLoaded("Pawn") then
-		IUI:LoadPawnProfile()
-		tinsert(addonNames, "Pawn")
+	if C_AddOns.IsAddOnLoaded("Details") then
+		IUI:LoadDetailsProfile()
+		tinsert(addonNames, "Details")
 	end
-	if C_AddOns.IsAddOnLoaded("ItemRack") then
-		IUI:LoadItemRackProfile()
-		tinsert(addonNames, "ItemRack")
+	if C_AddOns.IsAddOnLoaded("MRT") then
+		IUI:LoadMRTProfile()
+		tinsert(addonNames, "MRT")
+	end
+	if C_AddOns.IsAddOnLoaded("Guidelime") then
+		IUI:LoadGuidelimeProfile()
+		tinsert(addonNames, "Guidelime")
 	end
 	if C_AddOns.IsAddOnLoaded("HidingBar") then
 		IUI:LoadHidingBarProfile()
@@ -786,10 +790,6 @@ local function SetupAddons()
 	if C_AddOns.IsAddOnLoaded("LFGBulletinBoard") then
 		IUI:LoadLFGBulletinBoardProfile()
 		tinsert(addonNames, "LFGBulletinBoard")
-	end
-	if C_AddOns.IsAddOnLoaded("FindParty") then
-		IUI:LoadFindPartyProfile()
-		tinsert(addonNames, "FindParty")
 	end
 
 	if #addonNames > 0 then
