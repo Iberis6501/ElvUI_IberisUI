@@ -84,3 +84,11 @@ ElvUI + BenikUI 기반의 이베리스 개인 프로필 세팅 애드온입니�
   - MRT: Note 창, MarksBar, CDs 서약선 프로필(전문화별 쿨타임), InviteTool
   - Details: ElvUI Frame Style 스킨, 상태바, run_code 설정
   - Guidelime: 창 높이·단계 표시 옵션
+
+- **v1.03** 버그 수정 및 해상도 대응
+  - **옵션 패널**: `E.Options.args.plugins.args` → `E.Options.args.iberisui` (최상위)로 수정, ElvUI 좌측 사이드바에 IberisUI 탭 표시
+  - **프로필 미적용 수정**: `E.private.iberisui` nil 크래시 수정, install_complete 기본값 false로 변경
+  - **FHD/QHD 해상도 대응**: UIScale 해상도별 자동 계산 + 모든 mover 좌표를 SM() 함수로 비율 스케일링
+    - FHD(1080p): UIScale 0.711 (기준)
+    - QHD(1440p): UIScale 0.5334, mover ×1.778
+    - 기타 해상도: 비율 자동 계산

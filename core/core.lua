@@ -7,7 +7,11 @@ end
 function IUI:Initialize()
 	self:RegisterChatCommand("iberisui", "SetupIberisUI")
 
-	-- 처음 설치 시 설치 마법사 자동 실행
+	-- nil 안전 처리: E.private.iberisui가 없을 경우 대비
+	if not E.private.iberisui then
+		E.private.iberisui = { install_complete = false }
+	end
+
 	if not E.private.iberisui.install_complete then
 		IUI:SetupIberisUI()
 	end

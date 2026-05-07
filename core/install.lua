@@ -1,6 +1,38 @@
 local IUI, E, L = unpack((select(2, ...)))
 local ReloadUI = ReloadUI
 local tinsert, wipe = table.insert, table.wipe or wipe
+local format, floor = string.format, math.floor
+
+-- ============================================================
+-- 해상도별 UIScale 및 mover 좌표 스케일 계산
+--   기준: FHD(1080p) UIScale 0.711 → 가상 해상도 2700×1519
+--   QHD(1440p): UIScale 0.5334 → 가상 해상도 4800×2700
+--   비율 ≈ 1.778 (= 4800/2700 = 2700/1519)
+-- ============================================================
+local SCALE_RATIO = 1.0
+local UI_SCALE
+
+if E.screenheight == 1440 then
+	UI_SCALE   = 0.5334
+	SCALE_RATIO = 4800 / 2700   -- QHD virtual / FHD virtual ≈ 1.778
+elseif E.screenheight == 1080 then
+	UI_SCALE = 0.711
+else
+	-- 그 외 해상도: 비율 유지
+	UI_SCALE    = 0.711 * 1080 / E.screenheight
+	SCALE_RATIO = (E.screenwidth / UI_SCALE) / (1920 / 0.711)
+end
+
+-- "ANCHOR,parent,ANCHOR,x,y" 형태의 mover 문자열을 해상도에 맞게 스케일
+local function SM(s)
+	if SCALE_RATIO == 1.0 then return s end
+	-- 끝의 두 숫자(x, y 오프셋)만 스케일
+	return (s:gsub("(,%-?%d+%.?%d*),(%-?%d+%.?%d*)$", function(x, y)
+		return format(",%d,%d",
+			floor(tonumber(x) * SCALE_RATIO + 0.5),
+			floor(tonumber(y) * SCALE_RATIO + 0.5))
+	end))
+end
 
 -- 서약선 프로필의 전체 설정을 적용합니다.
 local function ApplyIberisProfile()
@@ -667,98 +699,95 @@ local function ApplyIberisProfile()
 	end
 
 	-- ============================================================
-	-- UI Scale
+	-- UI Scale (해상도별)
 	-- ============================================================
-	if E.screenheight == 1080 then
-		E.db["general"]["UIScale"] = 0.711
-	end
+	E.db["general"]["UIScale"] = UI_SCALE
 
 	-- ============================================================
-	-- Movers (서약선 프로필 기준)
+	-- Movers (서약선 FHD 기준, 해상도에 맞게 SM()으로 스케일)
 	-- ============================================================
 	if E.db["movers"] == nil then E.db["movers"] = {} end
-	E.db["movers"]["AlertFrameMover"] = "TOP,UIParent,TOP,0,-208"
-	E.db["movers"]["BelowMinimapContainerMover"] = "TOP,UIParent,TOP,0,-75"
-	E.db["movers"]["BNETMover"] = "TOPLEFT,UIParent,TOPLEFT,368,-284"
-	E.db["movers"]["BuiDashboardMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-8"
-	E.db["movers"]["BuffsMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-158,-3"
-	E.db["movers"]["ClassBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,360"
-	E.db["movers"]["DebuffsMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-158,-128"
-	E.db["movers"]["DTPanelBuiMiddleDTPanelMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,2"
-	E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,145"
-	E.db["movers"]["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,0,105"
-	E.db["movers"]["ElvAB_3"] = "BOTTOM,ElvUIParent,BOTTOM,0,66"
-	E.db["movers"]["ElvAB_4"] = "TOPRIGHT,UIParent,TOPRIGHT,-4,-327"
-	E.db["movers"]["ElvAB_5"] = "BOTTOM,ElvUIParent,BOTTOM,0,27"
-	E.db["movers"]["ElvAB_6"] = "TOPRIGHT,UIParent,TOPRIGHT,-45,-327"
-	E.db["movers"]["ElvAB_7"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,298"
-	E.db["movers"]["ElvAB_8"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,332"
-	E.db["movers"]["ElvAB_9"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,366"
-	E.db["movers"]["ElvAB_10"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
-	E.db["movers"]["ElvUIBagMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-2,22"
-	E.db["movers"]["ElvUIBankMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,2,23"
-	E.db["movers"]["ElvUF_FocusMover"] = "BOTTOM,ElvUIParent,BOTTOM,-292,301"
-	E.db["movers"]["ElvUF_FocusCastbarMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-518,223"
-	E.db["movers"]["ElvUF_FocusTargetMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-491,301"
-	E.db["movers"]["ElvUF_PartyMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,227"
-	E.db["movers"]["ElvUF_PetMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,301"
-	E.db["movers"]["ElvUF_PetCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,232"
-	E.db["movers"]["ElvUF_PlayerMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,333"
-	E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-231,147"
-	E.db["movers"]["ElvUF_Raid1Mover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,226"
-	E.db["movers"]["ElvUF_Raid2Mover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,227"
-	E.db["movers"]["ElvUF_Raid3Mover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,227"
-	E.db["movers"]["ElvUF_RaidpetMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,3,-470"
-	E.db["movers"]["ElvUF_TargetMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-491,333"
-	E.db["movers"]["ElvUF_TargetCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,231,147"
-	E.db["movers"]["ElvUF_TargetTargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,292,301"
-	E.db["movers"]["ElvUF_TankMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,3,-301"
-	E.db["movers"]["ElvUF_AssistMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-240,-349"
-	E.db["movers"]["ElvUF_BodyGuardMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,4,444"
-	E.db["movers"]["ExperienceBarMover"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,351,22"
-	E.db["movers"]["GMMover"] = "TOPLEFT,UIParent,TOPLEFT,158,-138"
-	E.db["movers"]["LeftChatMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,2,22"
-	E.db["movers"]["LocationMover"] = "TOP,ElvUIParent,TOP,0,-7"
-	E.db["movers"]["LootFrameMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,368,-188"
-	E.db["movers"]["MicrobarMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,158,-5"
-	E.db["movers"]["MinimapMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-4,-6"
-	E.db["movers"]["ObjectiveFrameMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-295,-231"
-	E.db["movers"]["PetAB"] = "BOTTOM,UIParent,BOTTOM,110,193"
-	E.db["movers"]["PetExperienceBarMover"] = "TOP,UIParent,TOP,0,-544"
-	E.db["movers"]["PlayerNameplate"] = "BOTTOM,ElvUIParent,BOTTOM,0,359"
-	E.db["movers"]["PlayerPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,350"
-	E.db["movers"]["ProfessionsMover"] = "TOPLEFT,UIParent,TOPLEFT,4,-120"
-	E.db["movers"]["QuestWatchFrameMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-290,-228"
-	E.db["movers"]["QuestTimerFrameMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-421,-253"
-	E.db["movers"]["ReputationBarMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-351,22"
-	E.db["movers"]["RightChatMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-2,22"
-	E.db["movers"]["ShiftAB"] = "BOTTOM,ElvUIParent,BOTTOM,-120,193"
-	E.db["movers"]["SocialMenuMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-187"
-	E.db["movers"]["SquareMinimapButtonBarMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-4,-298"
-	E.db["movers"]["TargetPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,231,215"
-	E.db["movers"]["TimeAlertFrameMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,368,-232"
-	E.db["movers"]["ThreatBarMover"] = "TOP,UIParent,TOP,0,-222"
-	E.db["movers"]["TotemBarMover"] = "TOPLEFT,UIParent,TOPLEFT,368,-430"
-	E.db["movers"]["TotemTrackerMover"] = "TOPLEFT,UIParent,TOPLEFT,368,-465"
-	E.db["movers"]["TopCenterContainerMover"] = "TOP,UIParent,TOP,0,-34"
-	E.db["movers"]["tokenHolderMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-123"
-	E.db["movers"]["reputationHolderMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-320"
-	E.db["movers"]["VehicleSeatMover"] = "TOPLEFT,UIParent,TOPLEFT,368,-336"
-	E.db["movers"]["VehicleLeaveButton"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,457,378"
-	E.db["movers"]["VOICECHAT"] = "TOPLEFT,ElvUIParent,TOPLEFT,368,-210"
-	E.db["movers"]["WatchFrameMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-122,-292"
-	E.db["movers"]["BenikUI_액션바_Mover"] = "BOTTOM,ElvUIParent,BOTTOM,0,22"
-	E.db["movers"]["ArenaHeaderMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-243,-381"
-	E.db["movers"]["BossHeaderMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-243,-381"
-	E.db["movers"]["AdditionalPowerMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,288"
-	E.db["movers"]["LossControlMover"] = "BOTTOM,ElvUIParent,BOTTOM,-1,507"
-	E.db["movers"]["MirrorTimer1Mover"] = "TOP,ElvUIParent,TOP,-1,-96"
-	E.db["movers"]["MirrorTimer2Mover"] = "TOP,MirrorTimer1,BOTTOM,0,0"
-	E.db["movers"]["MirrorTimer3Mover"] = "TOP,MirrorTimer2,BOTTOM,0,0"
-	E.db["movers"]["HonorBarMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-2,-251"
-	E.db["movers"]["AdditionalPowerMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,288"
-	E.db["movers"]["ElvNP_PlayerMover"] = "TOP,UIParent,CENTER,0,-150"
-	E.db["movers"]["DurabilityFrameMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-530,-176"
+	E.db["movers"]["AlertFrameMover"]              = SM("TOP,UIParent,TOP,0,-208")
+	E.db["movers"]["BelowMinimapContainerMover"]   = SM("TOP,UIParent,TOP,0,-75")
+	E.db["movers"]["BNETMover"]                    = SM("TOPLEFT,UIParent,TOPLEFT,368,-284")
+	E.db["movers"]["BuiDashboardMover"]            = SM("TOPLEFT,ElvUIParent,TOPLEFT,4,-8")
+	E.db["movers"]["BuffsMover"]                   = SM("TOPRIGHT,ElvUIParent,TOPRIGHT,-158,-3")
+	E.db["movers"]["ClassBarMover"]                = SM("BOTTOM,ElvUIParent,BOTTOM,0,360")
+	E.db["movers"]["DebuffsMover"]                 = SM("TOPRIGHT,ElvUIParent,TOPRIGHT,-158,-128")
+	E.db["movers"]["DTPanelBuiMiddleDTPanelMover"] = SM("BOTTOM,ElvUIParent,BOTTOM,0,2")
+	E.db["movers"]["ElvAB_1"]                      = SM("BOTTOM,ElvUIParent,BOTTOM,0,145")
+	E.db["movers"]["ElvAB_2"]                      = SM("BOTTOM,ElvUIParent,BOTTOM,0,105")
+	E.db["movers"]["ElvAB_3"]                      = SM("BOTTOM,ElvUIParent,BOTTOM,0,66")
+	E.db["movers"]["ElvAB_4"]                      = SM("TOPRIGHT,UIParent,TOPRIGHT,-4,-327")
+	E.db["movers"]["ElvAB_5"]                      = SM("BOTTOM,ElvUIParent,BOTTOM,0,27")
+	E.db["movers"]["ElvAB_6"]                      = SM("TOPRIGHT,UIParent,TOPRIGHT,-45,-327")
+	E.db["movers"]["ElvAB_7"]                      = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,298")
+	E.db["movers"]["ElvAB_8"]                      = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,332")
+	E.db["movers"]["ElvAB_9"]                      = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,366")
+	E.db["movers"]["ElvAB_10"]                     = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400")
+	E.db["movers"]["ElvUIBagMover"]                = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-2,22")
+	E.db["movers"]["ElvUIBankMover"]               = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,2,23")
+	E.db["movers"]["ElvUF_FocusMover"]             = SM("BOTTOM,ElvUIParent,BOTTOM,-292,301")
+	E.db["movers"]["ElvUF_FocusCastbarMover"]      = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-518,223")
+	E.db["movers"]["ElvUF_FocusTargetMover"]       = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-491,301")
+	E.db["movers"]["ElvUF_PartyMover"]             = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,227")
+	E.db["movers"]["ElvUF_PetMover"]               = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,301")
+	E.db["movers"]["ElvUF_PetCastbarMover"]        = SM("BOTTOM,ElvUIParent,BOTTOM,0,232")
+	E.db["movers"]["ElvUF_PlayerMover"]            = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,333")
+	E.db["movers"]["ElvUF_PlayerCastbarMover"]     = SM("BOTTOM,ElvUIParent,BOTTOM,-231,147")
+	E.db["movers"]["ElvUF_Raid1Mover"]             = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,226")
+	E.db["movers"]["ElvUF_Raid2Mover"]             = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,227")
+	E.db["movers"]["ElvUF_Raid3Mover"]             = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,227")
+	E.db["movers"]["ElvUF_RaidpetMover"]           = SM("TOPLEFT,ElvUIParent,TOPLEFT,3,-470")
+	E.db["movers"]["ElvUF_TargetMover"]            = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-491,333")
+	E.db["movers"]["ElvUF_TargetCastbarMover"]     = SM("BOTTOM,ElvUIParent,BOTTOM,231,147")
+	E.db["movers"]["ElvUF_TargetTargetMover"]      = SM("BOTTOM,ElvUIParent,BOTTOM,292,301")
+	E.db["movers"]["ElvUF_TankMover"]              = SM("TOPLEFT,ElvUIParent,TOPLEFT,3,-301")
+	E.db["movers"]["ElvUF_AssistMover"]            = SM("TOPRIGHT,UIParent,TOPRIGHT,-240,-349")
+	E.db["movers"]["ElvUF_BodyGuardMover"]         = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,4,444")
+	E.db["movers"]["ExperienceBarMover"]           = SM("BOTTOMLEFT,UIParent,BOTTOMLEFT,351,22")
+	E.db["movers"]["GMMover"]                      = SM("TOPLEFT,UIParent,TOPLEFT,158,-138")
+	E.db["movers"]["LeftChatMover"]                = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,2,22")
+	E.db["movers"]["LocationMover"]                = SM("TOP,ElvUIParent,TOP,0,-7")
+	E.db["movers"]["LootFrameMover"]               = SM("TOPLEFT,ElvUIParent,TOPLEFT,368,-188")
+	E.db["movers"]["MicrobarMover"]                = SM("TOPLEFT,ElvUIParent,TOPLEFT,158,-5")
+	E.db["movers"]["MinimapMover"]                 = SM("TOPRIGHT,ElvUIParent,TOPRIGHT,-4,-6")
+	E.db["movers"]["ObjectiveFrameMover"]          = SM("TOPRIGHT,UIParent,TOPRIGHT,-295,-231")
+	E.db["movers"]["PetAB"]                        = SM("BOTTOM,UIParent,BOTTOM,110,193")
+	E.db["movers"]["PetExperienceBarMover"]        = SM("TOP,UIParent,TOP,0,-544")
+	E.db["movers"]["PlayerNameplate"]              = SM("BOTTOM,ElvUIParent,BOTTOM,0,359")
+	E.db["movers"]["PlayerPowerBarMover"]          = SM("BOTTOM,ElvUIParent,BOTTOM,0,350")
+	E.db["movers"]["ProfessionsMover"]             = SM("TOPLEFT,UIParent,TOPLEFT,4,-120")
+	E.db["movers"]["QuestWatchFrameMover"]         = SM("TOPRIGHT,UIParent,TOPRIGHT,-290,-228")
+	E.db["movers"]["QuestTimerFrameMover"]         = SM("TOPRIGHT,UIParent,TOPRIGHT,-421,-253")
+	E.db["movers"]["ReputationBarMover"]           = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-351,22")
+	E.db["movers"]["RightChatMover"]               = SM("BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-2,22")
+	E.db["movers"]["ShiftAB"]                      = SM("BOTTOM,ElvUIParent,BOTTOM,-120,193")
+	E.db["movers"]["SocialMenuMover"]              = SM("TOPLEFT,ElvUIParent,TOPLEFT,4,-187")
+	E.db["movers"]["SquareMinimapButtonBarMover"]  = SM("TOPRIGHT,ElvUIParent,TOPRIGHT,-4,-298")
+	E.db["movers"]["TargetPowerBarMover"]          = SM("BOTTOM,ElvUIParent,BOTTOM,231,215")
+	E.db["movers"]["TimeAlertFrameMover"]          = SM("TOPLEFT,ElvUIParent,TOPLEFT,368,-232")
+	E.db["movers"]["ThreatBarMover"]               = SM("TOP,UIParent,TOP,0,-222")
+	E.db["movers"]["TotemBarMover"]                = SM("TOPLEFT,UIParent,TOPLEFT,368,-430")
+	E.db["movers"]["TotemTrackerMover"]            = SM("TOPLEFT,UIParent,TOPLEFT,368,-465")
+	E.db["movers"]["TopCenterContainerMover"]      = SM("TOP,UIParent,TOP,0,-34")
+	E.db["movers"]["tokenHolderMover"]             = SM("TOPLEFT,ElvUIParent,TOPLEFT,4,-123")
+	E.db["movers"]["reputationHolderMover"]        = SM("TOPLEFT,ElvUIParent,TOPLEFT,4,-320")
+	E.db["movers"]["VehicleSeatMover"]             = SM("TOPLEFT,UIParent,TOPLEFT,368,-336")
+	E.db["movers"]["VehicleLeaveButton"]           = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,457,378")
+	E.db["movers"]["VOICECHAT"]                    = SM("TOPLEFT,ElvUIParent,TOPLEFT,368,-210")
+	E.db["movers"]["WatchFrameMover"]              = SM("TOPRIGHT,ElvUIParent,TOPRIGHT,-122,-292")
+	E.db["movers"]["BenikUI_액션바_Mover"]           = SM("BOTTOM,ElvUIParent,BOTTOM,0,22")
+	E.db["movers"]["ArenaHeaderMover"]             = SM("TOPRIGHT,UIParent,TOPRIGHT,-243,-381")
+	E.db["movers"]["BossHeaderMover"]              = SM("TOPRIGHT,UIParent,TOPRIGHT,-243,-381")
+	E.db["movers"]["AdditionalPowerMover"]         = SM("BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,288")
+	E.db["movers"]["LossControlMover"]             = SM("BOTTOM,ElvUIParent,BOTTOM,-1,507")
+	E.db["movers"]["MirrorTimer1Mover"]            = SM("TOP,ElvUIParent,TOP,-1,-96")
+	E.db["movers"]["MirrorTimer2Mover"]            = "TOP,MirrorTimer1,BOTTOM,0,0"
+	E.db["movers"]["MirrorTimer3Mover"]            = "TOP,MirrorTimer2,BOTTOM,0,0"
+	E.db["movers"]["HonorBarMover"]                = SM("TOPRIGHT,ElvUIParent,TOPRIGHT,-2,-251")
+	E.db["movers"]["ElvNP_PlayerMover"]            = SM("TOP,UIParent,CENTER,0,-150")
+	E.db["movers"]["DurabilityFrameMover"]         = SM("TOPRIGHT,UIParent,TOPRIGHT,-530,-176")
 
 	E:StaggeredUpdateAll(nil, true)
 
