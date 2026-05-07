@@ -231,10 +231,10 @@ local function ApplyIberisProfile()
 	E.db["tooltip"]["cursorAnchorType"] = "ANCHOR_CURSOR_RIGHT"
 	E.db["tooltip"]["cursorAnchorX"] = 50
 	E.db["tooltip"]["cursorAnchorY"] = -25
-	E.db["tooltip"]["healthBar"]["font"] = "Expressway"
-	E.db["tooltip"]["healthBar"]["fontSize"] = 9
-	E.db["tooltip"]["healthBar"]["fontOutline"] = "OUTLINE"
-	E.db["tooltip"]["healthBar"]["height"] = 6
+	ensure(E.db["tooltip"], "healthBar")["font"] = "Expressway"
+	ensure(E.db["tooltip"], "healthBar")["fontSize"] = 9
+	ensure(E.db["tooltip"], "healthBar")["fontOutline"] = "OUTLINE"
+	ensure(E.db["tooltip"], "healthBar")["height"] = 6
 
 	-- ============================================================
 	-- Actionbars
@@ -247,29 +247,31 @@ local function ApplyIberisProfile()
 	E.db["actionbar"]["rightClickSelfCast"] = true
 
 	-- Bar 3 설정 (메인 스킬바 - 36사이즈)
-	E.db["actionbar"]["bar3"]["buttons"] = 12
-	E.db["actionbar"]["bar3"]["buttonsPerRow"] = 12
-	E.db["actionbar"]["bar3"]["buttonSize"] = 36
-	E.db["actionbar"]["bar3"]["buttonSpacing"] = 3
-	E.db["actionbar"]["bar3"]["backdropSpacing"] = 6
-	E.db["actionbar"]["bar3"]["macrotext"] = true
-	E.db["actionbar"]["bar3"]["macroTextPosition"] = "BOTTOM"
-	E.db["actionbar"]["bar3"]["macroTextYOffset"] = 0
-	E.db["actionbar"]["bar3"]["hotkeyFontOutline"] = "THICKOUTLINE"
-	E.db["actionbar"]["bar3"]["macroFontOutline"] = "THICKOUTLINE"
-	E.db["actionbar"]["bar3"]["countFontOutline"] = "THICKOUTLINE"
-	E.db["actionbar"]["bar3"]["visibility"] = "[petbattle] hide; show"
+	local bar3 = ensure(E.db["actionbar"], "bar3")
+	bar3["buttons"] = 12
+	bar3["buttonsPerRow"] = 12
+	bar3["buttonSize"] = 36
+	bar3["buttonSpacing"] = 3
+	bar3["backdropSpacing"] = 6
+	bar3["macrotext"] = true
+	bar3["macroTextPosition"] = "BOTTOM"
+	bar3["macroTextYOffset"] = 0
+	bar3["hotkeyFontOutline"] = "THICKOUTLINE"
+	bar3["macroFontOutline"] = "THICKOUTLINE"
+	bar3["countFontOutline"] = "THICKOUTLINE"
+	bar3["visibility"] = "[petbattle] hide; show"
 
 	-- Pet bar
-	E.db["actionbar"]["barPet"]["buttonsPerRow"] = 10
-	E.db["actionbar"]["barPet"]["buttonSize"] = 20
-	E.db["actionbar"]["barPet"]["buttonSpacing"] = 4
-	E.db["actionbar"]["barPet"]["backdropSpacing"] = 6
-	E.db["actionbar"]["barPet"]["backdrop"] = false
-	E.db["actionbar"]["barPet"]["point"] = "TOPLEFT"
-	E.db["actionbar"]["barPet"]["hotkeyFontOutline"] = "THICKOUTLINE"
-	E.db["actionbar"]["barPet"]["macroFontOutline"] = "THICKOUTLINE"
-	E.db["actionbar"]["barPet"]["countFontOutline"] = "THICKOUTLINE"
+	local barPet = ensure(E.db["actionbar"], "barPet")
+	barPet["buttonsPerRow"] = 10
+	barPet["buttonSize"] = 20
+	barPet["buttonSpacing"] = 4
+	barPet["backdropSpacing"] = 6
+	barPet["backdrop"] = false
+	barPet["point"] = "TOPLEFT"
+	barPet["hotkeyFontOutline"] = "THICKOUTLINE"
+	barPet["macroFontOutline"] = "THICKOUTLINE"
+	barPet["countFontOutline"] = "THICKOUTLINE"
 
 	-- ============================================================
 	-- Nameplates
@@ -337,180 +339,151 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["colors"]["colorhealthbyvalue"] = false
 	E.db["unitframe"]["colors"]["transparentHealth"] = true
 	E.db["unitframe"]["colors"]["transparentPower"] = false
-	E.db["unitframe"]["colors"]["transparentAurabars"] = true
-	E.db["unitframe"]["colors"]["transparentCastbar"] = false
-	E.db["unitframe"]["colors"]["useDeadBackdrop"] = true
-	E.db["unitframe"]["colors"]["health"]["r"] = 0.1
-	E.db["unitframe"]["colors"]["health"]["g"] = 0.1
-	E.db["unitframe"]["colors"]["health"]["b"] = 0.1
-	E.db["unitframe"]["colors"]["castColor"]["r"] = 0.1
-	E.db["unitframe"]["colors"]["castColor"]["g"] = 0.1
-	E.db["unitframe"]["colors"]["castColor"]["b"] = 0.1
-	E.db["unitframe"]["colors"]["auraBarBuff"]["r"] = 0.1
-	E.db["unitframe"]["colors"]["auraBarBuff"]["g"] = 0.1
-	E.db["unitframe"]["colors"]["auraBarBuff"]["b"] = 0.1
-	E.db["unitframe"]["colors"]["health_backdrop_dead"]["r"] = 0.14901960784314
-	E.db["unitframe"]["colors"]["health_backdrop_dead"]["g"] = 0.003921568627451
-	E.db["unitframe"]["colors"]["health_backdrop_dead"]["b"] = 0.003921568627451
-	E.db["unitframe"]["colors"]["power"]["MANA"]["r"] = 0.3098039215686275
-	E.db["unitframe"]["colors"]["power"]["MANA"]["g"] = 0.4509803921568628
-	E.db["unitframe"]["colors"]["power"]["MANA"]["b"] = 0.6313725490196078
+	local ufc = ensure(E.db, "unitframe", "colors")
+	ufc["transparentAurabars"] = true
+	ufc["transparentCastbar"] = false
+	ufc["useDeadBackdrop"] = true
+	ensure(ufc, "health")["r"] = 0.1
+	ensure(ufc, "health")["g"] = 0.1
+	ensure(ufc, "health")["b"] = 0.1
+	ensure(ufc, "castColor")["r"] = 0.1
+	ensure(ufc, "castColor")["g"] = 0.1
+	ensure(ufc, "castColor")["b"] = 0.1
+	ensure(ufc, "auraBarBuff")["r"] = 0.1
+	ensure(ufc, "auraBarBuff")["g"] = 0.1
+	ensure(ufc, "auraBarBuff")["b"] = 0.1
+	ensure(ufc, "health_backdrop_dead")["r"] = 0.14901960784314
+	ensure(ufc, "health_backdrop_dead")["g"] = 0.003921568627451
+	ensure(ufc, "health_backdrop_dead")["b"] = 0.003921568627451
+	ensure(ufc, "power", "MANA")["r"] = 0.3098039215686275
+	ensure(ufc, "power", "MANA")["g"] = 0.4509803921568628
+	ensure(ufc, "power", "MANA")["b"] = 0.6313725490196078
 
 	-- ============================================================
 	-- Unitframes - Player
 	-- ============================================================
-	E.db["unitframe"]["units"]["player"]["width"] = 255
-	E.db["unitframe"]["units"]["player"]["height"] = 55
-	E.db["unitframe"]["units"]["player"]["disableMouseoverGlow"] = true
-	E.db["unitframe"]["units"]["player"]["threatStyle"] = "GLOW"
-	E.db["unitframe"]["units"]["player"]["smartAuraPosition"] = "DEBUFFS_ON_BUFFS"
+	local player = ensure(uf, "player")
+	player["width"] = 255
+	player["height"] = 55
+	player["disableMouseoverGlow"] = true
+	player["threatStyle"] = "GLOW"
+	player["smartAuraPosition"] = "DEBUFFS_ON_BUFFS"
 
-	E.db["unitframe"]["units"]["player"]["portrait"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["portrait"]["overlay"] = true
-	E.db["unitframe"]["units"]["player"]["portrait"]["camDistanceScale"] = 1
+	ensure(player, "portrait")["enable"] = true
+	ensure(player, "portrait")["overlay"] = true
+	ensure(player, "portrait")["camDistanceScale"] = 1
 
-	E.db["unitframe"]["units"]["player"]["infoPanel"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["infoPanel"]["height"] = 22
-	E.db["unitframe"]["units"]["player"]["infoPanel"]["transparent"] = true
+	ensure(player, "infoPanel")["enable"] = true
+	ensure(player, "infoPanel")["height"] = 22
+	ensure(player, "infoPanel")["transparent"] = true
 
-	E.db["unitframe"]["units"]["player"]["health"]["attachTextTo"] = "InfoPanel"
-	E.db["unitframe"]["units"]["player"]["health"]["smoothbars"] = true
-	E.db["unitframe"]["units"]["player"]["health"]["xOffset"] = 4
-	E.db["unitframe"]["units"]["player"]["health"]["text_format"] = ""
+	ensure(player, "health")["attachTextTo"] = "InfoPanel"
+	ensure(player, "health")["smoothbars"] = true
+	ensure(player, "health")["xOffset"] = 4
+	ensure(player, "health")["text_format"] = ""
 
-	E.db["unitframe"]["units"]["player"]["power"]["text_format"] = "[power:current-percent]"
-	E.db["unitframe"]["units"]["player"]["power"]["attachTextTo"] = "Power"
-	E.db["unitframe"]["units"]["player"]["power"]["position"] = "CENTER"
-	E.db["unitframe"]["units"]["player"]["power"]["height"] = 12
-	E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 369
-	E.db["unitframe"]["units"]["player"]["power"]["hideonnpc"] = true
+	ensure(player, "power")["text_format"] = "[power:current-percent]"
+	ensure(player, "power")["attachTextTo"] = "Power"
+	ensure(player, "power")["position"] = "CENTER"
+	ensure(player, "power")["height"] = 12
+	ensure(player, "power")["detachedWidth"] = 369
+	ensure(player, "power")["hideonnpc"] = true
 
-	E.db["unitframe"]["units"]["player"]["castbar"]["icon"] = false
-	E.db["unitframe"]["units"]["player"]["castbar"]["overlayOnFrame"] = "InfoPanel"
-	E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 255
-	E.db["unitframe"]["units"]["player"]["castbar"]["height"] = 28
-	E.db["unitframe"]["units"]["player"]["castbar"]["insideInfoPanel"] = false
+	ensure(player, "castbar")["icon"] = false
+	ensure(player, "castbar")["overlayOnFrame"] = "InfoPanel"
+	ensure(player, "castbar")["width"] = 255
+	ensure(player, "castbar")["height"] = 28
+	ensure(player, "castbar")["insideInfoPanel"] = false
 
-	E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 140
-	E.db["unitframe"]["units"]["player"]["classbar"]["smoothbars"] = true
+	ensure(player, "classbar")["detachedWidth"] = 140
+	ensure(player, "classbar")["smoothbars"] = true
 
-	E.db["unitframe"]["units"]["player"]["buffs"]["attachTo"] = "FRAME"
-	E.db["unitframe"]["units"]["player"]["buffs"]["noDuration"] = false
-	E.db["unitframe"]["units"]["player"]["buffs"]["fontSize"] = 10
+	ensure(player, "buffs")["attachTo"] = "FRAME"
+	ensure(player, "buffs")["noDuration"] = false
+	ensure(player, "buffs")["fontSize"] = 10
 
-	E.db["unitframe"]["units"]["player"]["debuffs"]["attachTo"] = "BUFFS"
-	E.db["unitframe"]["units"]["player"]["debuffs"]["fontSize"] = 10
+	ensure(player, "debuffs")["attachTo"] = "BUFFS"
+	ensure(player, "debuffs")["fontSize"] = 10
 
-	E.db["unitframe"]["units"]["player"]["aurabar"]["enable"] = false
+	ensure(player, "aurabar")["enable"] = false
 
-	-- Player custom texts
-	if not E.db.unitframe.units.player.customTexts then
-		E.db.unitframe.units.player.customTexts = {}
-	end
-	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"] = {
-		["attachTextTo"] = "Health",
-		["xOffset"] = -8,
-		["yOffset"] = -1,
+	ensure(player, "customTexts")["BenikuiPlayerHealth"] = {
+		["attachTextTo"] = "Health",   ["xOffset"] = -8,  ["yOffset"] = -1,
 		["text_format"] = "[health:current-percent]",
-		["font"] = "Expressway",
-		["justifyH"] = "RIGHT",
-		["fontOutline"] = "NONE",
-		["enable"] = true,
-		["size"] = 22,
+		["font"] = "Expressway",       ["justifyH"] = "RIGHT",
+		["fontOutline"] = "NONE",      ["enable"] = true, ["size"] = 22,
 	}
-	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"] = {
-		["attachTextTo"] = "InfoPanel",
-		["xOffset"] = -8,
-		["yOffset"] = 0,
+	ensure(player, "customTexts")["BenikuiPlayerName"] = {
+		["attachTextTo"] = "InfoPanel", ["xOffset"] = -8, ["yOffset"] = 0,
 		["text_format"] = "[name]",
-		["font"] = "Expressway",
-		["justifyH"] = "RIGHT",
-		["fontOutline"] = "NONE",
-		["enable"] = true,
-		["size"] = 11,
+		["font"] = "Expressway",        ["justifyH"] = "RIGHT",
+		["fontOutline"] = "NONE",       ["enable"] = true, ["size"] = 11,
 	}
-	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"] = {
-		["attachTextTo"] = "InfoPanel",
-		["xOffset"] = 8,
-		["yOffset"] = 0,
+	ensure(player, "customTexts")["lvl"] = {
+		["attachTextTo"] = "InfoPanel", ["xOffset"] = 8,  ["yOffset"] = 0,
 		["text_format"] = "[level] 레벨",
-		["font"] = "Expressway",
-		["justifyH"] = "LEFT",
-		["fontOutline"] = "OUTLINE",
-		["enable"] = true,
-		["size"] = 11,
+		["font"] = "Expressway",        ["justifyH"] = "LEFT",
+		["fontOutline"] = "OUTLINE",    ["enable"] = true, ["size"] = 11,
 	}
 
 	-- ============================================================
 	-- Unitframes - Target
 	-- ============================================================
-	E.db["unitframe"]["units"]["target"]["width"] = 255
-	E.db["unitframe"]["units"]["target"]["height"] = 55
-	E.db["unitframe"]["units"]["target"]["orientation"] = "LEFT"
-	E.db["unitframe"]["units"]["target"]["disableMouseoverGlow"] = true
-	E.db["unitframe"]["units"]["target"]["smartAuraDisplay"] = "DISABLED"
-	E.db["unitframe"]["units"]["target"]["smartAuraPosition"] = "DEBUFFS_ON_BUFFS"
+	local target = ensure(uf, "target")
+	target["width"] = 255
+	target["height"] = 55
+	target["orientation"] = "LEFT"
+	target["disableMouseoverGlow"] = true
+	target["smartAuraDisplay"] = "DISABLED"
+	target["smartAuraPosition"] = "DEBUFFS_ON_BUFFS"
 
-	E.db["unitframe"]["units"]["target"]["portrait"]["enable"] = true
-	E.db["unitframe"]["units"]["target"]["portrait"]["overlay"] = true
-	E.db["unitframe"]["units"]["target"]["portrait"]["camDistanceScale"] = 1
+	ensure(target, "portrait")["enable"] = true
+	ensure(target, "portrait")["overlay"] = true
+	ensure(target, "portrait")["camDistanceScale"] = 1
 
-	E.db["unitframe"]["units"]["target"]["infoPanel"]["enable"] = true
-	E.db["unitframe"]["units"]["target"]["infoPanel"]["height"] = 22
-	E.db["unitframe"]["units"]["target"]["infoPanel"]["transparent"] = true
+	ensure(target, "infoPanel")["enable"] = true
+	ensure(target, "infoPanel")["height"] = 22
+	ensure(target, "infoPanel")["transparent"] = true
 
-	E.db["unitframe"]["units"]["target"]["health"]["attachTextTo"] = "InfoPanel"
-	E.db["unitframe"]["units"]["target"]["health"]["smoothbars"] = true
-	E.db["unitframe"]["units"]["target"]["health"]["xOffset"] = 4
-	E.db["unitframe"]["units"]["target"]["health"]["text_format"] = ""
+	ensure(target, "health")["attachTextTo"] = "InfoPanel"
+	ensure(target, "health")["smoothbars"] = true
+	ensure(target, "health")["xOffset"] = 4
+	ensure(target, "health")["text_format"] = ""
 
-	E.db["unitframe"]["units"]["target"]["name"]["text_format"] = ""
-	E.db["unitframe"]["units"]["target"]["name"]["position"] = "RIGHT"
-	E.db["unitframe"]["units"]["target"]["name"]["xOffset"] = 8
+	ensure(target, "name")["text_format"] = ""
+	ensure(target, "name")["position"] = "RIGHT"
+	ensure(target, "name")["xOffset"] = 8
 
-	E.db["unitframe"]["units"]["target"]["power"]["text_format"] = "[power:current-percent]"
-	E.db["unitframe"]["units"]["target"]["power"]["attachTextTo"] = "Power"
-	E.db["unitframe"]["units"]["target"]["power"]["position"] = "CENTER"
-	E.db["unitframe"]["units"]["target"]["power"]["height"] = 12
-	E.db["unitframe"]["units"]["target"]["power"]["detachedWidth"] = 300
-	E.db["unitframe"]["units"]["target"]["power"]["threatStyle"] = "GLOW"
+	ensure(target, "power")["text_format"] = "[power:current-percent]"
+	ensure(target, "power")["attachTextTo"] = "Power"
+	ensure(target, "power")["position"] = "CENTER"
+	ensure(target, "power")["height"] = 12
+	ensure(target, "power")["detachedWidth"] = 300
+	ensure(target, "power")["threatStyle"] = "GLOW"
 
-	E.db["unitframe"]["units"]["target"]["castbar"]["icon"] = false
-	E.db["unitframe"]["units"]["target"]["castbar"]["overlayOnFrame"] = "InfoPanel"
-	E.db["unitframe"]["units"]["target"]["castbar"]["width"] = 255
-	E.db["unitframe"]["units"]["target"]["castbar"]["height"] = 40
-	E.db["unitframe"]["units"]["target"]["castbar"]["insideInfoPanel"] = false
-	E.db["unitframe"]["units"]["target"]["castbar"]["iconPosition"] = "RIGHT"
-	E.db["unitframe"]["units"]["target"]["castbar"]["iconXOffset"] = 10
+	ensure(target, "castbar")["icon"] = false
+	ensure(target, "castbar")["overlayOnFrame"] = "InfoPanel"
+	ensure(target, "castbar")["width"] = 255
+	ensure(target, "castbar")["height"] = 40
+	ensure(target, "castbar")["insideInfoPanel"] = false
+	ensure(target, "castbar")["iconPosition"] = "RIGHT"
+	ensure(target, "castbar")["iconXOffset"] = 10
 
-	E.db["unitframe"]["units"]["target"]["buffs"]["fontSize"] = 10
-	E.db["unitframe"]["units"]["target"]["debuffs"]["fontSize"] = 10
-	E.db["unitframe"]["units"]["target"]["aurabar"]["enable"] = false
+	ensure(target, "buffs")["fontSize"] = 10
+	ensure(target, "debuffs")["fontSize"] = 10
+	ensure(target, "aurabar")["enable"] = false
 
-	if not E.db.unitframe.units.target.customTexts then
-		E.db.unitframe.units.target.customTexts = {}
-	end
-	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"] = {
-		["attachTextTo"] = "Health",
-		["xOffset"] = 8,
-		["yOffset"] = -1,
+	ensure(target, "customTexts")["BenikuiTargetHealth"] = {
+		["attachTextTo"] = "Health",    ["xOffset"] = 8,  ["yOffset"] = -1,
 		["text_format"] = "[health:current-percent]",
-		["font"] = "Expressway",
-		["justifyH"] = "LEFT",
-		["fontOutline"] = "NONE",
-		["enable"] = true,
-		["size"] = 22,
+		["font"] = "Expressway",        ["justifyH"] = "LEFT",
+		["fontOutline"] = "NONE",       ["enable"] = true, ["size"] = 22,
 	}
-	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"] = {
-		["attachTextTo"] = "InfoPanel",
-		["xOffset"] = 8,
-		["yOffset"] = 0,
+	ensure(target, "customTexts")["BenikuiTargetName"] = {
+		["attachTextTo"] = "InfoPanel", ["xOffset"] = 8,  ["yOffset"] = 0,
 		["text_format"] = "[name:medium] [difficultycolor][smartlevel] [shortclassification]",
-		["font"] = "Expressway",
-		["justifyH"] = "LEFT",
-		["fontOutline"] = "NONE",
-		["enable"] = true,
-		["size"] = 11,
+		["font"] = "Expressway",        ["justifyH"] = "LEFT",
+		["fontOutline"] = "NONE",       ["enable"] = true, ["size"] = 11,
 	}
 
 	-- ============================================================
@@ -884,7 +857,12 @@ IUI.installTable = {
 			PluginInstallFrame.Desc2:SetText("아래 버튼을 클릭하면 서약선 기준 설정이 한 번에 적용됩니다.")
 			PluginInstallFrame.Desc3:SetText(L["Importance: |cff07D400High|r"])
 			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", function() ApplyIberisProfile() end)
+			PluginInstallFrame.Option1:SetScript("OnClick", function()
+					local ok, err = pcall(ApplyIberisProfile)
+					if not ok then
+						DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 적용 오류: " .. tostring(err))
+					end
+				end)
 			PluginInstallFrame.Option1:SetText(L["Apply Iberis Profile"])
 		end,
 		[3] = function()
