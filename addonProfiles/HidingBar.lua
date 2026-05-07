@@ -1,7 +1,8 @@
 local IUI, E, L = unpack((select(2, ...)))
 
 function IUI:LoadHidingBarProfile()
+	-- HidingBarDBChar: 케릭터별 프로필 지정
+	-- HidingBarDB.profiles[2].name = "서약선" (계정 레벨에 존재)
 	if not HidingBarDBChar then HidingBarDBChar = {} end
-	-- 프로필 이름을 케릭터명으로 설정 (현재 케릭터 기준)
-	HidingBarDBChar["currentProfileName"] = UnitName("player") or "서약선"
+	HidingBarDBChar["currentProfileName"] = "서약선"
 end
