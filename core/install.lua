@@ -16,7 +16,9 @@ local function DeepCopy(orig)
 end
 
 -- ============================================================
--- 이베리스 프로필 적용 — E.Options.db:CopyProfile("서약선") 사용
+-- 이베리스 프로필 적용 — ElvDB 직접 조작 (AceDB CopyProfile 미사용)
+-- AceDB.CopyProfile은 서약선 본인 케릭에서 실행 시 자기 참조로 프로필이
+-- 초기화되는 버그가 있어 ElvDB 테이블을 직접 복사합니다.
 -- ============================================================
 local function ApplyIberisProfile()
 
@@ -26,57 +28,61 @@ local function ApplyIberisProfile()
 		return
 	end
 
-	-- AceDB CopyProfile: 서약선 프로필 전체를 현재 프로필로 복사
-	local ok, err = pcall(function()
-		E.Options.db:CopyProfile("서약선")
-	end)
-	if not ok then
-		-- CopyProfile 실패 시 직접 복사 (fallback)
-		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r CopyProfile 실패, 직접 복사 시도: " .. tostring(err))
-		local currentProfile = ElvDB.profileKeys and ElvDB.profileKeys[E.mynameRealm]
-		if currentProfile then
-			if not ElvDB.profiles[currentProfile] then
-				ElvDB.profiles[currentProfile] = {}
-			end
-			local src = DeepCopy(ElvDB.profiles["서약선"])
-			for k, v in pairs(src) do
-				ElvDB.profiles[currentProfile][k] = v
-			end
-		end
+	-- 현재 프로필 이름 확인
+	local currentProfile = ElvDB.profileKeys and ElvDB.profileKeys[E.mynameRealm]
+	if not currentProfile then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 현재 프로필을 찾을 수 없습니다.")
+		return
 	end
+
+	-- 서약선 본인은 이미 올바른 프로필이므로 스킵
+	if currentProfile == "서약선" then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 이미 서약선 프로필입니다.")
+		PluginInstallStepComplete.message = IUI.Title .. L["Profile Set"]
+		PluginInstallStepComplete:Show()
+		return
+	end
+
+	-- ElvDB.profiles[currentProfile] ← DeepCopy(ElvDB.profiles["서약선"])
+	if not ElvDB.profiles[currentProfile] then
+		ElvDB.profiles[currentProfile] = {}
+	end
+	local dst = ElvDB.profiles[currentProfile]
+	-- 기존 키 모두 제거 후 서약선 데이터 기록
+	for k in pairs(dst) do dst[k] = nil end
+	local src = DeepCopy(ElvDB.profiles["서약선"])
+	for k, v in pairs(src) do dst[k] = v end
 
 	-- ElvPrivateDB private 설정 복사 (normTex, glossTex, skins 등)
 	if ElvPrivateDB and ElvPrivateDB.profiles and ElvPrivateDB.profiles["서약선"] then
-		local src = ElvPrivateDB.profiles["서약선"]
-		if src.general and E.private.general then
-			for k, v in pairs(src.general) do
-				E.private.general[k] = v
+		local srcPriv = ElvPrivateDB.profiles["서약선"]
+		local currentPrivProfile = ElvPrivateDB.profileKeys and ElvPrivateDB.profileKeys[E.mynameRealm]
+
+		if currentPrivProfile and currentPrivProfile ~= "서약선" then
+			if not ElvPrivateDB.profiles[currentPrivProfile] then
+				ElvPrivateDB.profiles[currentPrivProfile] = {}
 			end
-		end
-		if src.skins then
-			for k, v in pairs(src.skins) do
-				if type(v) == "table" then
-					if E.private.skins and E.private.skins[k] then
-						for k2, v2 in pairs(v) do
-							E.private.skins[k][k2] = v2
-						end
+			local dstPriv = ElvPrivateDB.profiles[currentPrivProfile]
+
+			if srcPriv.general then
+				if not dstPriv.general then dstPriv.general = {} end
+				for k, v in pairs(srcPriv.general) do dstPriv.general[k] = v end
+			end
+			if srcPriv.skins then
+				if not dstPriv.skins then dstPriv.skins = {} end
+				for k, v in pairs(srcPriv.skins) do
+					if type(v) == "table" then
+						if not dstPriv.skins[k] then dstPriv.skins[k] = {} end
+						for k2, v2 in pairs(v) do dstPriv.skins[k][k2] = v2 end
+					else
+						dstPriv.skins[k] = v
 					end
-				elseif E.private.skins then
-					E.private.skins[k] = v
 				end
 			end
-		end
-		if src.benikui and E.private.benikui then
-			E.private.benikui.expressway = src.benikui.expressway
-		end
-	end
-
-	-- BenikUI 중간 패널 생성
-	local BUI_ext = ElvUI_BenikUI and ElvUI_BenikUI[1]
-	if BUI_ext then
-		local Layout = BUI_ext:GetModule("Layout")
-		if Layout and Layout.CreateMiddlePanel then
-			Layout:CreateMiddlePanel(true)
+			if srcPriv.benikui then
+				if not dstPriv.benikui then dstPriv.benikui = {} end
+				dstPriv.benikui.expressway = srcPriv.benikui.expressway
+			end
 		end
 	end
 
