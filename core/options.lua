@@ -30,16 +30,7 @@ local function AddOptions()
 				name = "설치 마법사 실행",
 				desc = "IberisUI 설치 마법사를 엽니다.",
 				func = function()
-					if not IUI.installTable then
-						DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 오류: installTable이 없습니다. UI를 재로드하세요.")
-						return
-					end
-					local pi = E:GetModule("PluginInstaller")
-					if not pi then
-						DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 오류: PluginInstaller 모듈 없음.")
-						return
-					end
-					pi:Queue(IUI.installTable)
+					IUI:SetupIberisUI()
 					E:ToggleOptions()
 				end,
 			},

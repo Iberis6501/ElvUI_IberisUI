@@ -7,17 +7,10 @@ local format = string.format
 -- ApplyIberisProfile — 내보내기 정확한 값 verbatim 적용
 -- ============================================================
 local function ApplyIberisProfile()
+	print("|cff00ff00IberisUI|r ApplyIberisProfile 진입")
 
-	-- ★ 서약선 원본 프로필 오염 방지
-	-- 현재 케릭터가 "서약선" 프로필을 사용 중이면 E.db 직접 쓰기를 건너뜀
-	local currentProfile = ElvDB and ElvDB.profileKeys and ElvDB.profileKeys[E.mynameRealm]
-	local skipDbWrite = (currentProfile == "서약선")
-	if skipDbWrite then
-		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 서약선 케릭터 — E.db 쓰기 건너뜀 (원본 보호)")
-	end
-
-	if not skipDbWrite then
-
+	-- 현재 프로필에 직접 기록 (ElvUI/BenikUI 설치마법사와 동일한 방식)
+	-- E.data:SetProfile() 호출 금지: OnProfileChanged → ElvUI 전체 재초기화 → 마법사 오동작
 	E.db["actionbar"]["bar1"]["backdropSpacing"] = 6
 	E.db["actionbar"]["bar1"]["buttonSize"] = 36
 	E.db["actionbar"]["bar1"]["buttonSpacing"] = 3
@@ -63,6 +56,7 @@ local function ApplyIberisProfile()
 	E.db["actionbar"]["bar4"]["macroTextPosition"] = "BOTTOM"
 	E.db["actionbar"]["bar4"]["macroTextYOffset"] = 0
 	E.db["actionbar"]["bar4"]["macrotext"] = true
+	E.db["actionbar"]["bar4"]["enabled"] = true
 	E.db["actionbar"]["bar4"]["point"] = "TOPLEFT"
 	E.db["actionbar"]["bar4"]["visibility"] = "[petbattle] hide; show"
 	E.db["actionbar"]["bar5"]["backdropSpacing"] = 6
@@ -164,7 +158,11 @@ local function ApplyIberisProfile()
 		E.db["benikui"]["colors"]["styleAlpha"] = 0.7
 		E.db["benikui"]["dashboards"]["tokens"]["enableTokens"] = false
 		E.db["benikui"]["misc"]["flightMode"]["enable"] = false
-		if E.db["benikui"]["panels"] and E.db["benikui"]["panels"]["BenikUI_액션바"] then
+		if not E.db["benikui"]["general"] then E.db["benikui"]["general"] = {} end
+		E.db["benikui"]["general"]["auras"] = false
+		if not E.db["benikui"]["panels"] then E.db["benikui"]["panels"] = {} end
+		if not E.db["benikui"]["panels"]["BenikUI_액션바"] then E.db["benikui"]["panels"]["BenikUI_액션바"] = {} end
+		do
 			local abPanel = E.db["benikui"]["panels"]["BenikUI_액션바"]
 			abPanel["clickThrough"] = true
 			abPanel["combatHide"] = false
@@ -224,9 +222,9 @@ local function ApplyIberisProfile()
 	E.db["chat"]["tabFont"] = "Expressway"
 	E.db["chat"]["tabFontOutline"] = "OUTLINE"
 	E.db["chat"]["tabFontSize"] = 11
-	E.db["chat"]["tabSelectorColor"]["b"] = 0.45
-	E.db["chat"]["tabSelectorColor"]["g"] = 0.83
-	E.db["chat"]["tabSelectorColor"]["r"] = 0.67
+	E.db["chat"]["tabSelectorColor"]["r"] = 0
+	E.db["chat"]["tabSelectorColor"]["g"] = 0.44
+	E.db["chat"]["tabSelectorColor"]["b"] = 0.87
 	E.db["convertPages"] = true
 	E.db["cooldown"]["auras"]["fontSize"] = 10
 	E.db["cooldown"]["global"]["fontSize"] = 15
@@ -238,6 +236,7 @@ local function ApplyIberisProfile()
 	E.db["databars"]["experience"]["hideAtMaxLevel"] = false
 	E.db["databars"]["experience"]["orientation"] = "VERTICAL"
 	E.db["databars"]["experience"]["showLevel"] = true
+	E.db["databars"]["experience"]["textYoffset"] = 10
 	E.db["databars"]["experience"]["width"] = 9
 	E.db["databars"]["petExperience"]["enable"] = false
 	E.db["databars"]["reputation"]["enable"] = true
@@ -252,34 +251,34 @@ local function ApplyIberisProfile()
 	E.db["datatexts"]["font"] = "Expressway"
 	E.db["datatexts"]["fontOutline"] = "OUTLINE"
 	E.db["datatexts"]["fontSize"] = 11
-	if E.db["datatexts"]["panels"]["BuiLeftChatDTPanel"] then
-		E.db["datatexts"]["panels"]["BuiLeftChatDTPanel"][1] = "BuiMail"
-		E.db["datatexts"]["panels"]["BuiLeftChatDTPanel"][2] = "System"
-		E.db["datatexts"]["panels"]["BuiLeftChatDTPanel"][3] = "ElvUI"
+	local dtPanels = E.db["datatexts"]["panels"]
+	dtPanels["BuiLeftChatDTPanel"] = dtPanels["BuiLeftChatDTPanel"] or {}
+	dtPanels["BuiLeftChatDTPanel"][1] = "BuiMail"
+	dtPanels["BuiLeftChatDTPanel"][2] = "System"
+	dtPanels["BuiLeftChatDTPanel"][3] = "ElvUI"
+	dtPanels["BuiMiddleDTPanel"] = dtPanels["BuiMiddleDTPanel"] or {}
+	dtPanels["BuiMiddleDTPanel"][1] = "LDB_ItemRack"
+	dtPanels["BuiMiddleDTPanel"][2] = "LDB_iWillRemember_MinimapButton"
+	dtPanels["BuiMiddleDTPanel"][3] = "LDB_AtlasLoot"
+	dtPanels["BuiMiddleDTPanel"][4] = "LDB_SavedClassicIcon"
+	dtPanels["BuiMiddleDTPanel"][5] = "LDB_FindParty"
+	dtPanels["BuiMiddleDTPanel"]["battleground"] = false
+	dtPanels["BuiMiddleDTPanel"]["enable"] = true
+	dtPanels["BuiRightChatDTPanel"] = dtPanels["BuiRightChatDTPanel"] or {}
+	dtPanels["BuiRightChatDTPanel"][1] = "Durability"
+	dtPanels["LeftChatDataPanel"] = dtPanels["LeftChatDataPanel"] or {}
+	dtPanels["LeftChatDataPanel"][3] = "QuickJoin"
+	dtPanels["LeftChatDataPanel"]["enable"] = false
+	if dtPanels["LocPlusLeftDT"] then
+		dtPanels["LocPlusLeftDT"][1] = "MovementSpeed"
 	end
-	if E.db["datatexts"]["panels"]["BuiMiddleDTPanel"] then
-		E.db["datatexts"]["panels"]["BuiMiddleDTPanel"][1] = "LDB_ItemRack"
-		E.db["datatexts"]["panels"]["BuiMiddleDTPanel"][2] = "LDB_iWillRemember_MinimapButton"
-		E.db["datatexts"]["panels"]["BuiMiddleDTPanel"][3] = "LDB_AtlasLoot"
-		E.db["datatexts"]["panels"]["BuiMiddleDTPanel"][4] = "LDB_SavedClassicIcon"
-		E.db["datatexts"]["panels"]["BuiMiddleDTPanel"][5] = "LDB_FindParty"
-		E.db["datatexts"]["panels"]["BuiMiddleDTPanel"]["battleground"] = false
-		E.db["datatexts"]["panels"]["BuiMiddleDTPanel"]["enable"] = true
-	end
-	if E.db["datatexts"]["panels"]["BuiRightChatDTPanel"] then
-		E.db["datatexts"]["panels"]["BuiRightChatDTPanel"][1] = "Durability"
-	end
-	if E.db["datatexts"]["panels"]["LeftChatDataPanel"] then
-		E.db["datatexts"]["panels"]["LeftChatDataPanel"][3] = "QuickJoin"
-		E.db["datatexts"]["panels"]["LeftChatDataPanel"]["enable"] = false
-	end
-	if E.db["datatexts"]["panels"]["LocPlusLeftDT"] then
-		E.db["datatexts"]["panels"]["LocPlusLeftDT"][1] = "MovementSpeed"
-	end
-	if E.db["datatexts"]["panels"]["RightChatDataPanel"] then
-		E.db["datatexts"]["panels"]["RightChatDataPanel"]["enable"] = false
-	end
+	dtPanels["RightChatDataPanel"] = dtPanels["RightChatDataPanel"] or {}
+	dtPanels["RightChatDataPanel"]["enable"] = false
+	E.db["datatexts"]["rightChatPanel"] = false
+	E.db["datatexts"]["battlePanel"] = E.db["datatexts"]["battlePanel"] or {}
+	E.db["datatexts"]["battlePanel"]["BuiMiddleDTPanel"] = {"","","","",""}
 	E.db["general"]["autoAcceptInvite"] = true
+	E.db["general"]["layoutSet"] = "tank"
 	E.db["general"]["autoRepair"] = "GUILD"
 	E.db["general"]["autoTrackReputation"] = true
 	E.db["general"]["backdropcolor"]["b"] = 0.025
@@ -784,8 +783,6 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["targettarget"]["threatStyle"] = "GLOW"
 	E.db["unitframe"]["units"]["targettarget"]["width"] = 125
 
-	end -- skipDbWrite
-
 	-- Private
 	if E.private["benikui"] then
 		E.private["benikui"]["expressway"] = true
@@ -825,22 +822,24 @@ local function ApplyIberisProfile()
 		E.global["general"]["smallerWorldMap"]   = false
 	end
 
-	-- BenikUI 중간 패널 생성
+	-- BenikUI 패널 갱신
 	local BUI_ext = ElvUI_BenikUI and ElvUI_BenikUI[1]
 	if BUI_ext then
-		local Layout = BUI_ext:GetModule("Layout")
-		if Layout and Layout.CreateMiddlePanel then Layout:CreateMiddlePanel(true) end
+		-- BuiMiddleDTPanel (중앙 데이터텍스트 패널)
+		-- forceReset 없이 호출: 우리가 설정한 width=1228, numPoints=5를 보존
+		-- forceReset=true 시 width=416, numPoints=3으로 덮어씌워짐
+		local Layout = BUI_ext:GetModule("Layout", true)
+		if Layout and Layout.CreateMiddlePanel then
+			Layout:CreateMiddlePanel()
+			if Layout.LoadDataTexts then Layout:LoadDataTexts() end
+		end
+
+		-- BenikUI_액션바 등 커스텀 패널 생성+설정
+		-- UpdatePanels = CreatePanel + SetupPanels + Resize + UpdatePanelTitle
+		local CP = BUI_ext:GetModule("CustomPanels", true)  -- silent=true: 없으면 nil 반환
+		if CP and CP.UpdatePanels then CP:UpdatePanels() end
 	end
 
-	-- profileKeys 업데이트 (서약선 케릭터는 원본 유지)
-	if currentProfile ~= "서약선" then
-	if ElvDB and ElvDB.profileKeys then
-		ElvDB.profileKeys[E.mynameRealm] = "이베리스"
-	end
-	if ElvPrivateDB and ElvPrivateDB.profileKeys then
-		ElvPrivateDB.profileKeys[E.mynameRealm] = "이베리스"
-	end
-	end -- currentProfile ~= "서약선"
 
 	-- HUD 편집 모드: 서약선 레이아웃 활성화 시도
 	-- 20주년 서버 Edit Mode API를 통해 서약선 HUD 프로필 적용
@@ -881,7 +880,7 @@ local function SetupAddons()
 		else DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r "..name.." 실패: "..tostring(err)) end
 	end
 	tryLoad("BigWigs",   function() IUI:LoadBigWigsProfile() end)
-	tryLoad("Details",   function() IUI:LoadDetailsAddonProfile() end)
+	tryLoad("Details",   function() IUI:LoadDetailsProfile() end)
 	tryLoad("MRT",       function() IUI:LoadMRTProfile() end)
 	tryLoad("HidingBar", function() IUI:LoadHidingBarProfile() end)
 	local msg = #addonNames > 0
@@ -895,7 +894,11 @@ end
 
 local function InstallComplete()
 	E.private.install_complete = E.version
-	if E.private.iberisui then E.private.iberisui.install_complete = IUI.Version end
+	-- 케릭터별 설치 완료 기록 (계정 공유 시 다른 케릭터에 영향 없도록)
+	IberisUIDB = IberisUIDB or {}
+	local charKey = E.myname .. "-" .. E.myrealm
+	IberisUIDB[charKey] = IberisUIDB[charKey] or {}
+	IberisUIDB[charKey].install_complete = true
 	ReloadUI()
 end
 
@@ -928,8 +931,14 @@ IUI.installTable = {
 			PluginInstallFrame.Desc3:SetText(L["Importance: |cff07D400High|r"])
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function()
+				print("|cff00ff00IberisUI|r 버튼 클릭됨 — 함수 호출 시작")
 				local ok, err = pcall(ApplyIberisProfile)
-				if not ok then DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 오류: "..tostring(err)) end
+				if ok then
+					print("|cff00ff00IberisUI|r 적용 성공")
+				else
+					print("|cffff0000IberisUI 오류:|r " .. tostring(err))
+					DEFAULT_CHAT_FRAME:AddMessage("|cffff0000IberisUI 오류:|r " .. tostring(err))
+				end
 			end)
 			PluginInstallFrame.Option1:SetText(L["Apply Iberis Profile"])
 		end,

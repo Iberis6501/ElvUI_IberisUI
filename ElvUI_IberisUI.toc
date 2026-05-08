@@ -4,6 +4,7 @@
 ## Title: |cff1784d1ElvUI|r |cffff9900IberisUI|r |cfd9b9b9bClassic|r
 ## Notes: 이베리스의 ElvUI Classic 개인 프로필 세팅 애드온
 ## RequiredDeps: ElvUI, ElvUI_BenikUI
+## SavedVariables: IberisUIDB
 ## DefaultState: Enabled
 ## X-ElvuiVersion: 15.05
 
