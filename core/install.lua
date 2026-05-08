@@ -5,12 +5,30 @@ local format = string.format
 
 -- ============================================================
 -- ApplyIberisProfile — 내보내기 정확한 값 verbatim 적용
+-- 해상도(QHD/FHD)별 좌표는 IUI.Resolutions에서 조회
 -- ============================================================
-local function ApplyIberisProfile()
-	print("|cff00ff00IberisUI|r ApplyIberisProfile 진입")
+local function ApplyIberisProfile(resolution)
+	resolution = resolution or IUI:GetResolution() or "QHD"
+	IUI:SetResolution(resolution)
+	local res = IUI.Resolutions[resolution] or IUI.Resolutions.QHD
+	print(format("|cff00ff00IberisUI|r ApplyIberisProfile 진입 (해상도: %s)", resolution))
+
+	-- UIScale ([서약선] 실측 0.7) — 모든 mover 픽셀 좌표 + 채팅창 위치 기준이 됨.
+	-- 누락 시 ElvUI가 디폴트 스케일 (1.0 또는 자동) 사용 → 모든 위치 어긋남.
+	if E.global and E.global.general then
+		E.global.general.UIScale = res.uiScale
+	end
+	if E.PixelScaleChanged then
+		pcall(function() E:PixelScaleChanged() end)
+	elseif E.UIScale then
+		pcall(function() E:UIScale() end)
+	end
 
 	-- 현재 프로필에 직접 기록 (ElvUI/BenikUI 설치마법사와 동일한 방식)
 	-- E.data:SetProfile() 호출 금지: OnProfileChanged → ElvUI 전체 재초기화 → 마법사 오동작
+	E.db["actionbar"]["bar1"]["enabled"] = true
+	E.db["actionbar"]["bar1"]["buttons"] = 12
+	E.db["actionbar"]["bar1"]["buttonsPerRow"] = 12
 	E.db["actionbar"]["bar1"]["backdropSpacing"] = 6
 	E.db["actionbar"]["bar1"]["buttonSize"] = 36
 	E.db["actionbar"]["bar1"]["buttonSpacing"] = 3
@@ -47,6 +65,7 @@ local function ApplyIberisProfile()
 	E.db["actionbar"]["bar3"]["macroTextYOffset"] = 0
 	E.db["actionbar"]["bar3"]["macrotext"] = true
 	E.db["actionbar"]["bar3"]["visibility"] = "[petbattle] hide; show"
+	E.db["actionbar"]["bar3"]["enabled"] = true
 	E.db["actionbar"]["bar4"]["backdropSpacing"] = 3
 	E.db["actionbar"]["bar4"]["buttonSize"] = 36
 	E.db["actionbar"]["bar4"]["buttonSpacing"] = 1
@@ -57,6 +76,8 @@ local function ApplyIberisProfile()
 	E.db["actionbar"]["bar4"]["macroTextYOffset"] = 0
 	E.db["actionbar"]["bar4"]["macrotext"] = true
 	E.db["actionbar"]["bar4"]["enabled"] = true
+	E.db["actionbar"]["bar4"]["buttons"] = 12
+	E.db["actionbar"]["bar4"]["buttonsPerRow"] = 1
 	E.db["actionbar"]["bar4"]["point"] = "TOPLEFT"
 	E.db["actionbar"]["bar4"]["visibility"] = "[petbattle] hide; show"
 	E.db["actionbar"]["bar5"]["backdropSpacing"] = 6
@@ -71,10 +92,12 @@ local function ApplyIberisProfile()
 	E.db["actionbar"]["bar5"]["macroTextYOffset"] = 0
 	E.db["actionbar"]["bar5"]["macrotext"] = true
 	E.db["actionbar"]["bar5"]["visibility"] = "[petbattle] hide; show"
+	E.db["actionbar"]["bar5"]["enabled"] = true
 	E.db["actionbar"]["bar6"]["backdrop"] = true
 	E.db["actionbar"]["bar6"]["backdropSpacing"] = 3
 	E.db["actionbar"]["bar6"]["buttonSize"] = 36
 	E.db["actionbar"]["bar6"]["buttonSpacing"] = 1
+	E.db["actionbar"]["bar6"]["buttons"] = 12
 	E.db["actionbar"]["bar6"]["buttonsPerRow"] = 1
 	E.db["actionbar"]["bar6"]["countFontOutline"] = "THICKOUTLINE"
 	E.db["actionbar"]["bar6"]["enabled"] = true
@@ -120,9 +143,9 @@ local function ApplyIberisProfile()
 	E.db["auras"]["debuffs"]["size"] = 30
 	E.db["bags"]["autoToggle"]["guildBank"] = true
 	E.db["bags"]["bagSize"] = 32
-	E.db["bags"]["bagWidth"] = 348
+	E.db["bags"]["bagWidth"] = res.panels.bagWidth
 	E.db["bags"]["bankSize"] = 32
-	E.db["bags"]["bankWidth"] = 348
+	E.db["bags"]["bankWidth"] = res.panels.bankWidth
 	E.db["bags"]["clearSearchOnClose"] = true
 	E.db["bags"]["countFont"] = "Expressway"
 	E.db["bags"]["countFontOutline"] = "OUTLINE"
@@ -171,7 +194,7 @@ local function ApplyIberisProfile()
 			abPanel["customStyleColor"]["g"] = 0.7
 			abPanel["customStyleColor"]["r"] = 0.9
 			abPanel["enable"] = true
-			abPanel["height"] = 166
+			abPanel["height"] = res.panels.abPanelHeight
 			abPanel["point"] = "CENTER"
 			abPanel["shadow"] = true
 			abPanel["strata"] = "BACKGROUND"
@@ -203,19 +226,18 @@ local function ApplyIberisProfile()
 			abPanel["tooltip"] = false
 			abPanel["transparency"] = true
 			abPanel["visibility"] = ""
-			abPanel["width"] = 1228
+			abPanel["width"] = res.panels.abPanelWidth
 		end
 		E.db["benikui"]["unitframes"]["target"]["getPlayerPortraitSize"] = false
 	end
 	E.db["chat"]["font"] = "Expressway"
-	E.db["chat"]["keywordSound"] = "Acoustic Guitar"
-	E.db["chat"]["keywords"] = "%MYNAME%,이베,약선"
+	-- chat.keywordSound / chat.keywords 제거 — 개인 알림 키워드는 신규 유저가 직접 설정
 	E.db["chat"]["panelColor"]["a"] = 0.75
 	E.db["chat"]["panelColor"]["b"] = 0.054
 	E.db["chat"]["panelColor"]["g"] = 0.054
 	E.db["chat"]["panelColor"]["r"] = 0.054
-	E.db["chat"]["panelHeight"] = 166
-	E.db["chat"]["panelWidth"] = 348
+	E.db["chat"]["panelHeight"] = res.panels.chatPanelHeight
+	E.db["chat"]["panelWidth"]  = res.panels.chatPanelWidth
 	E.db["chat"]["panelSnapLeftID"]  = 1
 	E.db["chat"]["panelSnapRightID"] = 4
 	E.db["chat"]["panelBackdrop"] = "SHOWBOTH"
@@ -232,7 +254,7 @@ local function ApplyIberisProfile()
 	E.db["databars"]["azerite"]["enable"] = false
 	E.db["databars"]["experience"]["font"] = "Expressway"
 	E.db["databars"]["experience"]["fontSize"] = 10
-	E.db["databars"]["experience"]["height"] = 166
+	E.db["databars"]["experience"]["height"] = res.panels.expBarHeight
 	E.db["databars"]["experience"]["hideAtMaxLevel"] = false
 	E.db["databars"]["experience"]["orientation"] = "VERTICAL"
 	E.db["databars"]["experience"]["showLevel"] = true
@@ -241,46 +263,46 @@ local function ApplyIberisProfile()
 	E.db["databars"]["petExperience"]["enable"] = false
 	E.db["databars"]["reputation"]["enable"] = true
 	E.db["databars"]["reputation"]["fontSize"] = 9
-	E.db["databars"]["reputation"]["height"] = 166
+	E.db["databars"]["reputation"]["height"] = res.panels.repBarHeight
 	E.db["databars"]["reputation"]["orientation"] = "VERTICAL"
 	E.db["databars"]["reputation"]["width"] = 9
 	E.db["databars"]["statusbar"] = "BuiFlat"
 	E.db["databars"]["threat"]["enable"] = false
-	E.db["databars"]["threat"]["height"] = 24
-	E.db["databars"]["threat"]["width"] = 472
+	E.db["databars"]["threat"]["height"] = res.panels.threatBarHeight
+	E.db["databars"]["threat"]["width"]  = res.panels.threatBarWidth
 	E.db["datatexts"]["font"] = "Expressway"
 	E.db["datatexts"]["fontOutline"] = "OUTLINE"
 	E.db["datatexts"]["fontSize"] = 11
 	local dtPanels = E.db["datatexts"]["panels"]
-	dtPanels["BuiLeftChatDTPanel"] = dtPanels["BuiLeftChatDTPanel"] or {}
-	dtPanels["BuiLeftChatDTPanel"][1] = "BuiMail"
-	dtPanels["BuiLeftChatDTPanel"][2] = "System"
-	dtPanels["BuiLeftChatDTPanel"][3] = "ElvUI"
-	dtPanels["BuiMiddleDTPanel"] = dtPanels["BuiMiddleDTPanel"] or {}
-	dtPanels["BuiMiddleDTPanel"][1] = "LDB_ItemRack"
-	dtPanels["BuiMiddleDTPanel"][2] = "LDB_iWillRemember_MinimapButton"
-	dtPanels["BuiMiddleDTPanel"][3] = "LDB_AtlasLoot"
-	dtPanels["BuiMiddleDTPanel"][4] = "LDB_SavedClassicIcon"
-	dtPanels["BuiMiddleDTPanel"][5] = "LDB_FindParty"
-	dtPanels["BuiMiddleDTPanel"]["battleground"] = false
-	dtPanels["BuiMiddleDTPanel"]["enable"] = true
-	dtPanels["BuiRightChatDTPanel"] = dtPanels["BuiRightChatDTPanel"] or {}
-	dtPanels["BuiRightChatDTPanel"][1] = "Durability"
-	dtPanels["LeftChatDataPanel"] = dtPanels["LeftChatDataPanel"] or {}
-	dtPanels["LeftChatDataPanel"][3] = "QuickJoin"
-	dtPanels["LeftChatDataPanel"]["enable"] = false
+	-- DT 패널 박기 — 등록되지 않은 panel은 ElvUI DT:UpdatePanelInfo가 nil 인덱싱 에러 발생.
+	-- BenikUI custom panels(BuiLeft/Middle/RightChatDTPanel)는 BenikUI Layout/Chat 모듈이
+	-- frame을 생성한 후 RegisterPanel로 등록함. 우리는 BUI Layout:CreateMiddlePanel + CP:UpdatePanels 호출
+	-- (블록 끝부분)에서 등록을 트리거하므로 그 시점 이전에 dtPanels 박기는 안전.
+	-- 그래도 신규 유저 환경에서 panel 등록 실패 가능성 대비 — pcall로 감싸기.
+	local DT = E:GetModule("DataTexts", true)
+	-- BenikUI custom panel(BuiLeft/Middle/Right ChatDTPanel)이 등록되어 있을 때만 박음.
+	-- 등록 안 된 panel에 박으면 ElvUI DT:UpdatePanelInfo가 nil panel로 호출되며 에러.
+	local function safeSetDT(panelName, fields, requireRegistered)
+		if requireRegistered and DT and DT.RegisteredPanels and not DT.RegisteredPanels[panelName] then
+			return
+		end
+		dtPanels[panelName] = dtPanels[panelName] or {}
+		for k, v in pairs(fields) do dtPanels[panelName][k] = v end
+	end
+	safeSetDT("BuiLeftChatDTPanel",  { [1] = "BuiMail", [2] = "System", [3] = "ElvUI" }, true)
+	-- BuiMiddleDTPanel은 여기서 박지 않음 — BUI Layout:CreateMiddlePanel 호출 후에 박는다.
+	-- (frame이 생성되고 RegisterPanel 등록되기 전 박으면 ElvUI 자동 갱신이 panel nil로 호출되어 에러)
+	safeSetDT("BuiRightChatDTPanel", { [1] = "Durability" }, true)
+	safeSetDT("LeftChatDataPanel",   { [3] = "QuickJoin", enable = false })
 	if dtPanels["LocPlusLeftDT"] then
 		dtPanels["LocPlusLeftDT"][1] = "MovementSpeed"
 	end
-	dtPanels["RightChatDataPanel"] = dtPanels["RightChatDataPanel"] or {}
-	dtPanels["RightChatDataPanel"]["enable"] = false
+	safeSetDT("RightChatDataPanel",  { enable = false })
 	E.db["datatexts"]["rightChatPanel"] = false
 	E.db["datatexts"]["battlePanel"] = E.db["datatexts"]["battlePanel"] or {}
 	E.db["datatexts"]["battlePanel"]["BuiMiddleDTPanel"] = {"","","","",""}
-	E.db["general"]["autoAcceptInvite"] = true
+	-- 자동화 옵션 (autoAcceptInvite/autoRepair/autoTrackReputation) 제거 — 개인 호불호 영역
 	E.db["general"]["layoutSet"] = "tank"
-	E.db["general"]["autoRepair"] = "GUILD"
-	E.db["general"]["autoTrackReputation"] = true
 	E.db["general"]["backdropcolor"]["b"] = 0.025
 	E.db["general"]["backdropcolor"]["g"] = 0.025
 	E.db["general"]["backdropcolor"]["r"] = 0.025
@@ -293,7 +315,7 @@ local function ApplyIberisProfile()
 	E.db["general"]["decimalLength"] = 2
 	E.db["general"]["font"] = "Expressway"
 	E.db["general"]["fontSize"] = 11
-	E.db["general"]["interruptAnnounce"] = "SAY"
+	-- general.interruptAnnounce 제거 — 방해 알림 채널은 개인 영역
 	E.db["general"]["itemLevel"]["displayCharacterInfo"] = false
 	E.db["general"]["itemLevel"]["displayInspectInfo"] = false
 	E.db["general"]["minimap"]["locationText"] = "HIDE"
@@ -319,87 +341,11 @@ local function ApplyIberisProfile()
 		E.db["locplus"]["shadow"] = true
 		E.db["locplus"]["trunc"] = true
 	end
-	E.db["movers"]["AdditionalPowerMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,288"
-	E.db["movers"]["AlertFrameMover"] = "TOP,UIParent,TOP,0,-208"
-	E.db["movers"]["ArenaHeaderMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-243,-381"
-	E.db["movers"]["BNETMover"] = "TOPLEFT,UIParent,TOPLEFT,368,-284"
-	E.db["movers"]["BelowMinimapContainerMover"] = "TOP,UIParent,TOP,0,-75"
-	E.db["movers"]["BenikUI_액션바_Mover"] = "BOTTOM,ElvUIParent,BOTTOM,0,22"
-	E.db["movers"]["BossHeaderMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-243,-381"
-	E.db["movers"]["BuffsMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-158,-3"
-	E.db["movers"]["BuiDashboardMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-8"
-	E.db["movers"]["ClassBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,360"
-	E.db["movers"]["DTPanelBuiMiddleDTPanelMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,2"
-	E.db["movers"]["DebuffsMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-158,-128"
-	E.db["movers"]["DurabilityFrameMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-530,-176"
-	E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,145"
-	E.db["movers"]["ElvAB_10"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
-	E.db["movers"]["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,0,105"
-	E.db["movers"]["ElvAB_3"] = "BOTTOM,ElvUIParent,BOTTOM,0,66"
-	E.db["movers"]["ElvAB_4"] = "TOPRIGHT,UIParent,TOPRIGHT,-4,-327"
-	E.db["movers"]["ElvAB_5"] = "BOTTOM,ElvUIParent,BOTTOM,0,27"
-	E.db["movers"]["ElvAB_6"] = "TOPRIGHT,UIParent,TOPRIGHT,-45,-327"
-	E.db["movers"]["ElvAB_7"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,298"
-	E.db["movers"]["ElvAB_8"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,332"
-	E.db["movers"]["ElvAB_9"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,366"
-	E.db["movers"]["ElvNP_PlayerMover"] = "TOP,UIParent,CENTER,0,-150"
-	E.db["movers"]["ElvUF_AssistMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-240,-349"
-	E.db["movers"]["ElvUF_BodyGuardMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,4,444"
-	E.db["movers"]["ElvUF_FocusCastbarMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-518,223"
-	E.db["movers"]["ElvUF_FocusMover"] = "BOTTOM,ElvUIParent,BOTTOM,-292,301"
-	E.db["movers"]["ElvUF_FocusTargetMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-491,301"
-	E.db["movers"]["ElvUF_PartyMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,227"
-	E.db["movers"]["ElvUF_PetCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,232"
-	E.db["movers"]["ElvUF_PetMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,301"
-	E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-231,147"
-	E.db["movers"]["ElvUF_PlayerMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,333"
-	E.db["movers"]["ElvUF_Raid1Mover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,226"
-	E.db["movers"]["ElvUF_Raid2Mover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,227"
-	E.db["movers"]["ElvUF_Raid3Mover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,3,227"
-	E.db["movers"]["ElvUF_RaidpetMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,3,-470"
-	E.db["movers"]["ElvUF_TankMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,3,-301"
-	E.db["movers"]["ElvUF_TargetCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,231,147"
-	E.db["movers"]["ElvUF_TargetMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-491,333"
-	E.db["movers"]["ElvUF_TargetTargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,292,301"
-	E.db["movers"]["ElvUIBagMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-2,22"
-	E.db["movers"]["ElvUIBankMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,2,23"
-	E.db["movers"]["ExperienceBarMover"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,351,22"
-	E.db["movers"]["GMMover"] = "TOPLEFT,UIParent,TOPLEFT,158,-138"
-	E.db["movers"]["HonorBarMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-2,-251"
-	E.db["movers"]["LeftChatMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,2,22"
-	E.db["movers"]["LocationMover"] = "TOP,ElvUIParent,TOP,0,-7"
-	E.db["movers"]["LootFrameMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,368,-188"
-	E.db["movers"]["LossControlMover"] = "BOTTOM,ElvUIParent,BOTTOM,-1,507"
-	E.db["movers"]["MicrobarMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,158,-5"
-	E.db["movers"]["MinimapMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-4,-6"
-	E.db["movers"]["MirrorTimer1Mover"] = "TOP,ElvUIParent,TOP,-1,-96"
-	E.db["movers"]["MirrorTimer2Mover"] = "TOP,MirrorTimer1,BOTTOM,0,0"
-	E.db["movers"]["MirrorTimer3Mover"] = "TOP,MirrorTimer2,BOTTOM,0,0"
-	E.db["movers"]["ObjectiveFrameMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-295,-231"
-	E.db["movers"]["PetAB"] = "BOTTOM,UIParent,BOTTOM,110,193"
-	E.db["movers"]["PetExperienceBarMover"] = "TOP,UIParent,TOP,0,-544"
-	E.db["movers"]["PlayerNameplate"] = "BOTTOM,ElvUIParent,BOTTOM,0,359"
-	E.db["movers"]["PlayerPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,350"
-	E.db["movers"]["ProfessionsMover"] = "TOPLEFT,UIParent,TOPLEFT,4,-120"
-	E.db["movers"]["QuestTimerFrameMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-421,-253"
-	E.db["movers"]["QuestWatchFrameMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-290,-228"
-	E.db["movers"]["ReputationBarMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-351,22"
-	E.db["movers"]["RightChatMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-2,22"
-	E.db["movers"]["ShiftAB"] = "BOTTOM,ElvUIParent,BOTTOM,-120,193"
-	E.db["movers"]["SocialMenuMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-187"
-	E.db["movers"]["SquareMinimapButtonBarMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-4,-298"
-	E.db["movers"]["TargetPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,231,215"
-	E.db["movers"]["ThreatBarMover"] = "TOP,UIParent,TOP,0,-222"
-	E.db["movers"]["TimeAlertFrameMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,368,-232"
-	E.db["movers"]["TopCenterContainerMover"] = "TOP,UIParent,TOP,0,-34"
-	E.db["movers"]["TotemBarMover"] = "TOPLEFT,UIParent,TOPLEFT,368,-430"
-	E.db["movers"]["TotemTrackerMover"] = "TOPLEFT,UIParent,TOPLEFT,368,-465"
-	E.db["movers"]["VOICECHAT"] = "TOPLEFT,ElvUIParent,TOPLEFT,368,-210"
-	E.db["movers"]["VehicleLeaveButton"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,457,378"
-	E.db["movers"]["VehicleSeatMover"] = "TOPLEFT,UIParent,TOPLEFT,368,-336"
-	E.db["movers"]["WatchFrameMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-122,-292"
-	E.db["movers"]["reputationHolderMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-320"
-	E.db["movers"]["tokenHolderMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-123"
+	-- 무버 좌표 — 해상도별 테이블에서 일괄 적용
+	E.db["movers"] = E.db["movers"] or {}
+	for k, v in pairs(res.movers) do
+		E.db["movers"][k] = v
+	end
 	E.db["nameplates"]["colors"]["selection"][0] = E.db["nameplates"]["colors"]["selection"][0] or {}
 	E.db["nameplates"]["colors"]["selection"][0]["b"] = 0.25
 	E.db["nameplates"]["colors"]["selection"][0]["g"] = 0.25
@@ -507,7 +453,7 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["font"] = "Expressway"
 	E.db["unitframe"]["fontOutline"] = "OUTLINE"
 	E.db["unitframe"]["fontSize"] = 11
-	E.db["unitframe"]["targetSound"] = true
+	-- unitframe.targetSound 제거 — 대상 변경 효과음은 개인 호불호
 	E.db["unitframe"]["units"]["arena"]["width"] = 225
 	E.db["unitframe"]["units"]["assist"]["enable"] = false
 	E.db["unitframe"]["units"]["boss"]["buffs"]["anchorPoint"] = "RIGHT"
@@ -809,10 +755,10 @@ local function ApplyIberisProfile()
 		local mp = E.global["datatexts"]["customPanels"]
 		if not mp["BuiMiddleDTPanel"] then mp["BuiMiddleDTPanel"] = {} end
 		mp["BuiMiddleDTPanel"]["benikuiStyle"]   = false
-		mp["BuiMiddleDTPanel"]["height"]          = 19
+		mp["BuiMiddleDTPanel"]["height"]          = res.panels.middleDTHeight
 		mp["BuiMiddleDTPanel"]["numPoints"]        = 5
 		mp["BuiMiddleDTPanel"]["tooltipXOffset"]   = 3
-		mp["BuiMiddleDTPanel"]["width"]            = 1228
+		mp["BuiMiddleDTPanel"]["width"]            = res.panels.middleDTWidth
 	end
 	if E.global and E.global["general"] then
 		if E.global["general"]["WorldMapCoordinates"] then
@@ -831,6 +777,17 @@ local function ApplyIberisProfile()
 		local Layout = BUI_ext:GetModule("Layout", true)
 		if Layout and Layout.CreateMiddlePanel then
 			Layout:CreateMiddlePanel()
+			-- 이 시점에 BuiMiddleDTPanel frame이 생성되고 DT:RegisterPanel 호출됨
+			-- → dtPanels에 안전하게 박을 수 있음
+			local mpDT = E.db["datatexts"]["panels"]
+			mpDT["BuiMiddleDTPanel"] = mpDT["BuiMiddleDTPanel"] or {}
+			mpDT["BuiMiddleDTPanel"][1] = "LDB_ItemRack"
+			mpDT["BuiMiddleDTPanel"][2] = "LDB_iWillRemember_MinimapButton"
+			mpDT["BuiMiddleDTPanel"][3] = "LDB_AtlasLoot"
+			mpDT["BuiMiddleDTPanel"][4] = "LDB_SavedClassicIcon"
+			mpDT["BuiMiddleDTPanel"][5] = "LDB_FindParty"
+			mpDT["BuiMiddleDTPanel"]["battleground"] = false
+			mpDT["BuiMiddleDTPanel"]["enable"]       = true
 			if Layout.LoadDataTexts then Layout:LoadDataTexts() end
 		end
 
@@ -841,27 +798,24 @@ local function ApplyIberisProfile()
 	end
 
 
-	-- HUD 편집 모드: 서약선 레이아웃 활성화 시도
-	-- 20주년 서버 Edit Mode API를 통해 서약선 HUD 프로필 적용
-	if C_EditMode then
-		local ok, layouts = pcall(function() return C_EditMode.GetLayouts and C_EditMode.GetLayouts() end)
-		if ok and layouts and layouts.layouts then
-			for _, layout in ipairs(layouts.layouts) do
-				local name = layout.layoutName or layout.name or ""
-				if name:find("서약선") or name:find("이베리스") then
-					pcall(function()
-						if C_EditMode.SetActiveLayout then
-							C_EditMode.SetActiveLayout(layout.layoutIndex or _)
-						end
-					end)
-					DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r HUD 레이아웃 전환: " .. name)
-					break
-				end
+	-- HUD EditMode 자동 전환은 신규 유저 환경에 [서약선] 레이아웃이 없어 무의미하고,
+	-- Anniversary Classic의 Blizzard_EditMode와 ElvUI Minimap mover 사이에 알려진
+	-- "Cannot anchor protected frames" 경고와 충돌 우려 → 코드 제거.
+
+	E:StaggeredUpdateAll(nil, true)
+
+	-- ActionBars 모듈 갱신 — buttons/buttonsPerRow 변경 반영
+	-- 참고: AB:Initialize() 호출은 모듈 충돌 가능 → 사용하지 않음.
+	-- ReloadUI 후 SV에서 다시 로드되며 자연스럽게 적용됨.
+	local AB = E:GetModule("ActionBars", true)
+	if AB then
+		for i = 1, 10 do
+			local barName = "bar"..i
+			if AB.PositionAndSizeBar then
+				pcall(function() AB:PositionAndSizeBar(barName) end)
 			end
 		end
 	end
-
-	E:StaggeredUpdateAll(nil, true)
 
 	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 이베리스 프로필 적용 완료!")
 	PluginInstallStepComplete.message = IUI.Title .. L["Profile Set"]
@@ -879,10 +833,15 @@ local function SetupAddons()
 		if ok then tinsert(addonNames, name)
 		else DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r "..name.." 실패: "..tostring(err)) end
 	end
-	tryLoad("BigWigs",   function() IUI:LoadBigWigsProfile() end)
-	tryLoad("Details",   function() IUI:LoadDetailsProfile() end)
-	tryLoad("MRT",       function() IUI:LoadMRTProfile() end)
-	tryLoad("HidingBar", function() IUI:LoadHidingBarProfile() end)
+	tryLoad("BigWigs",          function() IUI:LoadBigWigsProfile() end)
+	tryLoad("Details",          function() IUI:LoadDetailsProfile() end)
+	tryLoad("MRT",              function() IUI:LoadMRTProfile() end)
+	tryLoad("HidingBar",        function() IUI:LoadHidingBarProfile() end)
+	tryLoad("InvenRaidFrames3", function() IUI:LoadInvenRaidFrames3Profile() end)
+	tryLoad("Questie",          function() IUI:LoadQuestieProfile() end)
+	tryLoad("ShamanPower",      function() IUI:LoadShamanPowerProfile() end)
+	tryLoad("TacoTip",          function() IUI:LoadTacoTipProfile() end)
+	tryLoad("Guidelime",        function() IUI:LoadGuidelimeProfile() end)
 	local msg = #addonNames > 0
 		and format("|cfffff400저장:|r %s (재로드 후 반영)", table.concat(addonNames, ", "))
 		or "|cffff8000실패|r — 채팅창 오류 확인"
@@ -894,83 +853,132 @@ end
 
 local function InstallComplete()
 	E.private.install_complete = E.version
-	-- 케릭터별 설치 완료 기록 (계정 공유 시 다른 케릭터에 영향 없도록)
 	IberisUIDB = IberisUIDB or {}
-	local charKey = E.myname .. "-" .. E.myrealm
-	IberisUIDB[charKey] = IberisUIDB[charKey] or {}
-	IberisUIDB[charKey].install_complete = true
+	IberisUIDB.install_complete = true
 	ReloadUI()
 end
 
 -- ============================================================
--- 설치 마법사
+-- 설치 마법사 — 4단계 구성
+--   1: 이베리스 프로필 (해상도 선택 → ApplyIberisProfile)
+--   2: 외부 애드온 배치
+--   3: 채팅창 설정
+--   4: 완료/리로드
 -- ============================================================
+local function HideOption2()
+	if PluginInstallFrame.Option2 then PluginInstallFrame.Option2:Hide() end
+end
+local function HideOption3()
+	if PluginInstallFrame.Option3 then PluginInstallFrame.Option3:Hide() end
+end
+
+-- IberisUI 영문 로고 (FontString 기반) — 프레임 정중앙에 표시, 모든 단계 공통
+local function CreateIberisLogo()
+	if PluginInstallFrame.IberisUILogo then return PluginInstallFrame.IberisUILogo end
+	local logo = PluginInstallFrame:CreateFontString(nil, "OVERLAY")
+	logo:SetFont(E["media"].normFont, 36, "THICKOUTLINE")
+	logo:SetText("|cffff9900Iberis|r|cffffffffUI|r")
+	-- 부모 프레임 정중앙
+	logo:ClearAllPoints()
+	logo:SetPoint("CENTER", PluginInstallFrame, "CENTER", 0, 0)
+	-- 그림자
+	logo:SetShadowColor(0, 0, 0, 1)
+	logo:SetShadowOffset(2, -2)
+	PluginInstallFrame.IberisUILogo = logo
+	return logo
+end
+local function ShowIberisLogo() CreateIberisLogo():Show() end
+
+local function ProfileApplyHandler(resolution)
+	return function()
+		print(format("|cff00ff00IberisUI|r %s 프로필 적용 시작", resolution))
+		local ok, err = pcall(ApplyIberisProfile, resolution)
+		if ok then
+			print("|cff00ff00IberisUI|r 적용 성공")
+		else
+			print("|cffff0000IberisUI 오류:|r "..tostring(err))
+			DEFAULT_CHAT_FRAME:AddMessage("|cffff0000IberisUI 오류:|r "..tostring(err))
+		end
+	end
+end
+
 IUI.installTable = {
 	["Name"] = "|cffff9900IberisUI|r",
 	["Title"] = "|cffff9900IberisUI|r 프로필 설치",
 	["Pages"] = {
+		-- ------------------------------------------------------------
+		-- Step 1: 이베리스 프로필 (해상도 선택 후 적용)
+		-- ------------------------------------------------------------
 		[1] = function()
 			PluginInstallFrame:BuiStyle("Outside")
 			PluginInstallTitleFrame:BuiStyle("Outside")
-			PluginInstallTutorialImage:Size(384, 96)
-			PluginInstallTutorialImage:Point("BOTTOM", 0, 100)
+			-- 중앙 파란 튜토리얼 이미지 제거
+			PluginInstallTutorialImage:SetTexture(nil)
 			PluginInstallTutorialImage2:SetTexture(nil)
 			PluginInstallTitleFrame.text:SetFont(E["media"].normFont, 16, "OUTLINE")
+
+			HideOption3()
 			PluginInstallFrame.SubTitle:SetFormattedText(L["Welcome to IberisUI version %s, for ElvUI %s."], IUI.Version, E.version)
-			PluginInstallFrame.Desc1:SetText("|cffff9900이베리스(Iberis)|r 개인 프로필 애드온에 오신 것을 환영합니다.")
-			PluginInstallFrame.Desc2:SetText("이베리스 설정을 현재 케릭터에 적용합니다.\n\n|cffff8000팁: 기존 설정 보존 시 먼저 새 프로필을 만드세요.|r")
-			PluginInstallFrame.Desc3:SetText("계속 버튼을 눌러 진행하세요.")
+			PluginInstallFrame.Desc1:SetText("|cffff9900이베리스(Iberis)|r 프로필 적용")
+			PluginInstallFrame.Desc2:SetText("32인치 모니터 기준 — 해상도를 선택하세요.")
+			PluginInstallFrame.Desc3:SetText("|cff07D400QHD|r 3840×2160   /   |cff07D400FHD|r 1920×1080")
+
 			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", function() InstallComplete() end)
-			PluginInstallFrame.Option1:SetText(L["Skip Process"])
+			PluginInstallFrame.Option1:SetScript("OnClick", ProfileApplyHandler("QHD"))
+			PluginInstallFrame.Option1:SetText("QHD 적용")
+
+			if PluginInstallFrame.Option2 then
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", ProfileApplyHandler("FHD"))
+				PluginInstallFrame.Option2:SetText("FHD 적용")
+			end
+
+			ShowIberisLogo()
 		end,
+		-- ------------------------------------------------------------
+		-- Step 2: 외부 애드온 배치
+		-- ------------------------------------------------------------
 		[2] = function()
-			PluginInstallFrame.SubTitle:SetText(L["Layout"])
-			PluginInstallFrame.Desc1:SetText("이베리스 프로필 설정을 즉시 적용합니다.")
-			PluginInstallFrame.Desc2:SetText("(유닛프레임·액션바·채팅·네임플레이트·무버 포함)")
-			PluginInstallFrame.Desc3:SetText(L["Importance: |cff07D400High|r"])
-			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", function()
-				print("|cff00ff00IberisUI|r 버튼 클릭됨 — 함수 호출 시작")
-				local ok, err = pcall(ApplyIberisProfile)
-				if ok then
-					print("|cff00ff00IberisUI|r 적용 성공")
-				else
-					print("|cffff0000IberisUI 오류:|r " .. tostring(err))
-					DEFAULT_CHAT_FRAME:AddMessage("|cffff0000IberisUI 오류:|r " .. tostring(err))
-				end
-			end)
-			PluginInstallFrame.Option1:SetText(L["Apply Iberis Profile"])
-		end,
-		[3] = function()
-			PluginInstallFrame.SubTitle:SetText("외부 애드온 프로필")
-			PluginInstallFrame.Desc1:SetText("Details, MRT, Guidelime, HidingBar 설정 저장")
-			PluginInstallFrame.Desc2:SetText("(재로드 후 반영)")
+			HideOption2(); HideOption3(); ShowIberisLogo()
+			PluginInstallFrame.SubTitle:SetText("외부 애드온 배치")
+			PluginInstallFrame.Desc1:SetText("BigWigs / Details / MRT / HidingBar / InvenRaidFrames3 / Questie / ShamanPower / TacoTip 위치·프로필 적용")
+			PluginInstallFrame.Desc2:SetText("재로드 후 위치가 반영됩니다.")
 			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
+
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function()
 				local ok, err = pcall(SetupAddons)
 				if not ok then DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 오류: "..tostring(err)) end
 			end)
-			PluginInstallFrame.Option1:SetText("애드온 설정 적용")
+			PluginInstallFrame.Option1:SetText("애드온 배치 적용")
 		end,
-		[4] = function()
-			PluginInstallFrame.SubTitle:SetText("채팅 창 설정")
-			PluginInstallFrame.Desc1:SetText("ElvUI 기본 채팅 설정을 실행합니다.\n(전리품 창 → 오른쪽 패널)")
-			PluginInstallFrame.Desc2:SetText("완료 버튼 재로드 후 좌우 패널이 정상 적용됩니다.")
+		-- ------------------------------------------------------------
+		-- Step 3: 채팅창 설정
+		-- ------------------------------------------------------------
+		[3] = function()
+			HideOption2(); HideOption3(); ShowIberisLogo()
+			PluginInstallFrame.SubTitle:SetText("채팅창 설정")
+			PluginInstallFrame.Desc1:SetText("ElvUI 채팅창을 좌·우 채팅 패널에 임베드합니다.")
+			PluginInstallFrame.Desc2:SetText("일반/길드/파티 → 좌측, 전리품 → 우측 패널.")
 			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
+
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function()
 				local ok, err = pcall(function() IUI:SetupChatWindows() end)
 				if not ok then DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 오류: "..tostring(err)) end
 			end)
-			PluginInstallFrame.Option1:SetText("채팅 설정")
+			PluginInstallFrame.Option1:SetText("채팅창 설치")
 		end,
-		[5] = function()
+		-- ------------------------------------------------------------
+		-- Step 4: 완료/리로드
+		-- ------------------------------------------------------------
+		[4] = function()
+			HideOption2(); HideOption3(); ShowIberisLogo()
 			PluginInstallFrame.SubTitle:SetText(L["Installation Complete"])
 			PluginInstallFrame.Desc1:SetText("IberisUI 설치 완료!")
-			PluginInstallFrame.Desc2:SetText("'완료' 버튼을 클릭하면 UI가 재로드됩니다.")
+			PluginInstallFrame.Desc2:SetText("'완료' 버튼을 누르면 UI가 재로드됩니다.")
 			PluginInstallFrame.Desc3:SetText("")
+
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function() InstallComplete() end)
 			PluginInstallFrame.Option1:SetText(L["Finished"])
@@ -978,7 +986,12 @@ IUI.installTable = {
 			PluginInstallStepComplete:Show()
 		end,
 	},
-	["StepTitles"] = {[1]="시작",[2]=L["Layout"],[3]="외부 애드온",[4]="채팅 창",[5]=L["Installation Complete"]},
-	StepTitlesColor={1,1,1}, StepTitlesColorSelected={1,0.6,0},
-	StepTitleWidth=200, StepTitleButtonWidth=200, StepTitleTextJustification="CENTER",
+	["StepTitles"] = {
+		[1] = "프로필",
+		[2] = "외부 애드온",
+		[3] = "채팅창",
+		[4] = L["Installation Complete"],
+	},
+	StepTitlesColor = {1,1,1}, StepTitlesColorSelected = {1,0.6,0},
+	StepTitleWidth = 200, StepTitleButtonWidth = 200, StepTitleTextJustification = "CENTER",
 }

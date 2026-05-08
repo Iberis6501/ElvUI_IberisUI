@@ -3,7 +3,7 @@ local EP = LibStub("LibElvUIPlugin-1.0")
 local addon, Engine = ...
 local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 
-local IUI = E.Libs.AceAddon:NewAddon(addon, "AceConsole-3.0", "AceEvent-3.0")
+local IUI = E.Libs.AceAddon:NewAddon(addon, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0")
 
 Engine[1] = IUI
 Engine[2] = E

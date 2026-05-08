@@ -1,6 +1,7 @@
 local IUI, E, L = unpack((select(2, ...)))
 
 function IUI:LoadMRTProfile()
+	local res = IUI:GetResolutionData()
 	if not VMRT then VMRT = {} end
 
 	-- ============================================================
@@ -23,8 +24,8 @@ function IUI:LoadMRTProfile()
 	VMRT["MarksBar"]["enabled"] = true
 	VMRT["MarksBar"]["Strata"] = "HIGH"
 	VMRT["MarksBar"]["Scale"] = 101
-	VMRT["MarksBar"]["Left"] = 0.714597225189209
-	VMRT["MarksBar"]["Top"] = 224.5321044921875
+	VMRT["MarksBar"]["Left"] = res.mrt.marksBarLeft
+	VMRT["MarksBar"]["Top"]  = res.mrt.marksBarTop
 	VMRT["MarksBar"]["pulltimer_right"] = 10
 	VMRT["MarksBar"]["Fix"] = true
 	VMRT["MarksBar"]["pulltimer"] = 10

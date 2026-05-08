@@ -1,0 +1,16 @@
+## Interface: 120005
+## Author: Iberis
+## Version: 2.00
+## Title: |cff1784d1ElvUI|r |cffff9900IberisUI|r
+## Notes: Iberis personal profile addon (Seoyaksun) for ElvUI Classic
+## Notes-koKR: 신규 유저용 [서약선] 캐릭터 ElvUI/외부 애드온 배치 배포 애드온
+## RequiredDeps: ElvUI, ElvUI_BenikUI
+## SavedVariablesPerCharacter: IberisUIDB
+## DefaultState: Enabled
+## X-ElvuiVersion: 15.05
+
+locales\load_locales.xml
+defaults\load_defaults.xml
+init.lua
+core\load_core.xml
+addonProfiles\load_addonProfiles.xml
