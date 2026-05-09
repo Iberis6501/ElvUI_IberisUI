@@ -96,7 +96,10 @@ ElvUI and ElvUI_BenikUI retain their own respective licenses.
 
 ## Changelog / 작업 내역
 
-### v2.00 (2026-05)
+### v2.01 (2026-05-10)
+- CI: CurseForge 자동 업로드 시크릿 이름 매칭 수정 (v2.00 빌드는 GitHub Release에만 발행되고 CurseForge에는 누락됨)
+
+### v2.00 (2026-05-10)
 - 첫 CurseForge 정식 배포
 - 본섭/판다/불성/오리지널/디스커버리 5개 클라이언트 동시 지원
 - BigWigs MonoUI 바 프로필 추가
