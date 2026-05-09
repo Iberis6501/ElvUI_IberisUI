@@ -1,0 +1,13 @@
+package-as: ElvUI_IberisUI
+
+enable-nolib-creation: no
+
+license-output: LICENSE
+
+ignore:
+  - .github
+  - .gitignore
+  - .pkgmeta
+  - assets
+  - "**/*.bak"
+  - "**/*.old"

@@ -1,0 +1,37 @@
+ElvUI_IberisUI — All Rights Reserved
+Copyright (c) 2026 Iberis (https://github.com/Iberis6501)
+
+This addon is a configuration distribution that replicates the UI setup
+of the [Seoyaksun] character. It depends on, but does NOT include, the
+following addons (which retain their own respective licenses):
+
+  - ElvUI            by Elv     (https://github.com/tukui-org/ElvUI)
+  - ElvUI_BenikUI    by Benik   (https://github.com/Benik/ElvUI_BenikUI)
+
+----------------------------------------------------------------------
+PERMISSIONS
+
+  - You may install and use this addon freely in World of Warcraft.
+  - You may modify the source code for your own private personal use.
+
+RESTRICTIONS
+
+  - You may NOT redistribute, repackage, mirror, or publish this addon
+    or any modified version of it, in whole or in part, on any platform
+    other than the official channels listed below.
+  - You may NOT remove or alter this notice or the author attribution.
+  - All rights not explicitly granted above are reserved by the
+    copyright holder.
+
+OFFICIAL CHANNELS
+
+  - GitHub:     https://github.com/Iberis6501/ElvUI_IberisUI
+  - CurseForge: https://www.curseforge.com/wow/addons/iberisui
+
+----------------------------------------------------------------------
+THE ADDON IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE ADDON OR THE USE OR OTHER
+DEALINGS IN THE ADDON.

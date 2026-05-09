@@ -8,6 +8,7 @@
 ## SavedVariablesPerCharacter: IberisUIDB
 ## DefaultState: Enabled
 ## X-ElvuiVersion: 15.05
+## X-Curse-Project-ID: 1538314
 
 locales\load_locales.xml
 defaults\load_defaults.xml
