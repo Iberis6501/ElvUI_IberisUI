@@ -4,7 +4,7 @@ local IUI, E, L = unpack((select(2, ...)))
 -- Window 1 (일반)  : 좌측 패널, BOTTOMLEFT
 -- Window 4 (전리품) : 우측 BOTTOMRIGHT (DOCKED 0)
 -- Window 5 (길드&파티): 좌측 패널 탭3
--- 채팅창 크기는 IUI:GetResolutionData().chatFrames에서 조회
+-- 채팅창 크기는 IUI:GetProfileData().chatFrames에서 조회
 
 -- Window 1 (일반) 메시지 그룹
 local WIN1_GROUPS = {

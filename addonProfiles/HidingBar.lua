@@ -119,11 +119,11 @@ local function deepCopy(t)
 end
 
 function IUI:LoadHidingBarProfile()
-	local res = IUI:GetResolutionData()
+	local res = IUI:GetProfileData()
 	if not HidingBarDB then HidingBarDB = {} end
 	HidingBarDB.profiles = HidingBarDB.profiles or {}
 
-	-- 해상도별 좌표를 SeoyaksunProfile 사본에 주입
+	-- 좌표를 SeoyaksunProfile 사본에 주입
 	local profile = deepCopy(SeoyaksunProfile)
 	if profile.bars and profile.bars[1] and profile.bars[1].config then
 		profile.bars[1].config.position       = res.hidingBar.barPosition

@@ -1,9 +1,9 @@
 local IUI, E, L = unpack((select(2, ...)))
 
 -- BenikUI 패턴: LoadAddOn → 프로필 namespaces 설정 → SetProfile
--- 키: "서약선". InfoBox 위치는 해상도별로 적용.
+-- 키: "서약선".
 function IUI:LoadBigWigsProfile()
-	local res = IUI:GetResolutionData()
+	local res = IUI:GetProfileData()
 	local key = "서약선"
 	local font, fontsize = "Expressway", 11
 

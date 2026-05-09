@@ -71,10 +71,10 @@ local function deepCopy(t)
 end
 
 function IUI:LoadShamanPowerProfile()
-	local res = IUI:GetResolutionData()
+	local res = IUI:GetProfileData()
 	local sp = res.shamanPower
 
-	-- 해상도별 좌표를 SeoyaksunProfile 사본에 주입
+	-- 좌표를 SeoyaksunProfile 사본에 주입
 	local profile = deepCopy(SeoyaksunProfile)
 	profile.loadoutBarPosition = {
 		x = sp.loadoutBar.x, y = sp.loadoutBar.y,

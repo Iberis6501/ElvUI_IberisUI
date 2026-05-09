@@ -29,7 +29,7 @@ local function applyInstancePosition(i, cfg)
 end
 
 function IUI:LoadDetailsProfile()
-	local res = IUI:GetResolutionData()
+	local res = IUI:GetProfileData()
 
 	if not _detalhes_global then _detalhes_global = {} end
 

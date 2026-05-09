@@ -28,10 +28,10 @@ local function deepCopy(t)
 end
 
 function IUI:LoadQuestieProfile()
-	local res = IUI:GetResolutionData()
+	local res = IUI:GetProfileData()
 	local q   = res.questie
 
-	-- 해상도별 좌표를 SeoyaksunProfile 사본에 주입
+	-- 좌표를 SeoyaksunProfile 사본에 주입
 	local profile = deepCopy(SeoyaksunProfile)
 	profile.TrackerLocation = {
 		q.trackerLocation[1], q.trackerLocation[2], q.trackerLocation[3],

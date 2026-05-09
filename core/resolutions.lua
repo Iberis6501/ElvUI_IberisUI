@@ -1,21 +1,13 @@
--- 해상도별 [서약선] 좌표/사이즈 데이터
--- 32인치 모니터 기준
---   QHD = 3840 x 2160 (실측)
---   FHD = 1920 x 1080 (추후 측정 예정 — 일단 QHD 동일)
+-- IberisUI 프로필 데이터 — [서약선] 캐릭 실측값
+-- 32인치 모니터 / UIScale 0.7 기준 (4K UHD 3840×2160 환경에서 실측됨)
+-- UIScale이 모든 픽셀 좌표에 곱해지므로 다른 해상도에서도 동일하게 동작.
 
 local IUI, E, L = unpack((select(2, ...)))
 
-local function deepCopy(t)
-	if type(t) ~= "table" then return t end
-	local r = {}
-	for k, v in pairs(t) do r[k] = deepCopy(v) end
-	return r
-end
-
 -- ============================================================
--- QHD (3840 x 2160) — [서약선] 캐릭 실측값
+-- IberisUI 단일 프로필 — [서약선] 캐릭 실측값
 -- ============================================================
-local QHD = {
+local PROFILE = {
 	-- ElvUI movers (모두 절대 좌표)
 	movers = {
 		["AdditionalPowerMover"]            = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,288",
@@ -105,7 +97,7 @@ local QHD = {
 	-- mover 좌표/채팅창 위치 등 모든 픽셀 좌표에 곱해지므로 누락되면 위치가 모두 어긋남.
 	uiScale = 0.7,
 
-	-- ElvUI 패널 사이즈 (해상도 영향)
+	-- ElvUI 패널 사이즈
 	panels = {
 		chatPanelWidth   = 348,  chatPanelHeight   = 166,
 		bagWidth         = 348,  bankWidth         = 348,
@@ -197,30 +189,10 @@ local QHD = {
 	},
 }
 
--- ============================================================
--- FHD (1920 x 1080) — 추후 실측 예정. 일단 QHD 복사.
--- ============================================================
-local FHD = deepCopy(QHD)
+-- 단일 프로필 노출
+IUI.Profile = PROFILE
 
-IUI.Resolutions = {
-	QHD = QHD,
-	FHD = FHD,
-}
-
--- 활성 해상도 조회 — IberisUIDB.resolution. 기본값 "QHD".
--- IberisUIDB는 SavedVariablesPerCharacter라 캐릭별 분리됨.
-function IUI:GetResolution()
-	IberisUIDB = IberisUIDB or {}
-	return IberisUIDB.resolution or "QHD"
-end
-
-function IUI:SetResolution(name)
-	if not IUI.Resolutions[name] then return end
-	IberisUIDB = IberisUIDB or {}
-	IberisUIDB.resolution = name
-end
-
--- 활성 해상도 데이터 테이블 반환
-function IUI:GetResolutionData()
-	return IUI.Resolutions[IUI:GetResolution()] or IUI.Resolutions.QHD
+-- 프로필 데이터 조회 — addonProfiles/* 및 install.lua에서 사용
+function IUI:GetProfileData()
+	return PROFILE
 end

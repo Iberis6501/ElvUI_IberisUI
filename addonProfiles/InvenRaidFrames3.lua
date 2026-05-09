@@ -14,10 +14,10 @@ local function deepCopy(t)
 end
 
 function IUI:LoadInvenRaidFrames3Profile()
-	local res = IUI:GetResolutionData()
+	local res = IUI:GetProfileData()
 	local ir  = res.invenRaid
 
-	-- [서약선] 프로필 통째로 복사 + 해상도별 좌표 주입
+	-- [서약선] 프로필 통째로 복사 + 좌표 주입
 	local profile = deepCopy(Engine.SeoyaksunInvenRaidProfile or {})
 	profile.px     = ir.px
 	profile.py     = ir.py

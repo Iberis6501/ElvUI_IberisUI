@@ -15,7 +15,7 @@ function IUI:LoadGuidelimeProfile()
 	GuidelimeData["autoSelectFlight"]       = true
 	GuidelimeData["arrowDistance"]          = false
 
-	-- 메인 프레임 위치/크기 ([서약선] QHD 실측 — TOPLEFT 기준 좌측 상단)
+	-- 메인 프레임 위치/크기 ([서약선] 실측 — TOPLEFT 기준 좌측 상단)
 	-- 화살표(커서) 위치/크기/투명도도 외형이라 같이 가져옴.
 	-- 개인 진행 데이터(guideSkip/currentGuide)는 제외.
 	if not GuidelimeDataChar then GuidelimeDataChar = {} end

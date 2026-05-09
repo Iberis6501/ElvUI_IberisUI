@@ -1,7 +1,7 @@
 local IUI, E, L = unpack((select(2, ...)))
 
 function IUI:LoadMRTProfile()
-	local res = IUI:GetResolutionData()
+	local res = IUI:GetProfileData()
 	if not VMRT then VMRT = {} end
 
 	-- ============================================================

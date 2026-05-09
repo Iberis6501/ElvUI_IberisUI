@@ -5,13 +5,11 @@ local format = string.format
 
 -- ============================================================
 -- ApplyIberisProfile — 내보내기 정확한 값 verbatim 적용
--- 해상도(QHD/FHD)별 좌표는 IUI.Resolutions에서 조회
+-- 모든 좌표/사이즈는 IUI:GetProfileData()에서 조회 (단일 프로필)
 -- ============================================================
-local function ApplyIberisProfile(resolution)
-	resolution = resolution or IUI:GetResolution() or "QHD"
-	IUI:SetResolution(resolution)
-	local res = IUI.Resolutions[resolution] or IUI.Resolutions.QHD
-	print(format("|cff00ff00IberisUI|r ApplyIberisProfile 진입 (해상도: %s)", resolution))
+local function ApplyIberisProfile()
+	local res = IUI:GetProfileData()
+	print("|cff00ff00IberisUI|r ApplyIberisProfile 진입")
 
 	-- UIScale ([서약선] 실측 0.7) — 모든 mover 픽셀 좌표 + 채팅창 위치 기준이 됨.
 	-- 누락 시 ElvUI가 디폴트 스케일 (1.0 또는 자동) 사용 → 모든 위치 어긋남.
@@ -860,7 +858,7 @@ end
 
 -- ============================================================
 -- 설치 마법사 — 4단계 구성
---   1: 이베리스 프로필 (해상도 선택 → ApplyIberisProfile)
+--   1: 이베리스 프로필 적용 (UI 스케일 + ElvUI/BenikUI 설정)
 --   2: 외부 애드온 배치
 --   3: 채팅창 설정
 --   4: 완료/리로드
@@ -889,10 +887,10 @@ local function CreateIberisLogo()
 end
 local function ShowIberisLogo() CreateIberisLogo():Show() end
 
-local function ProfileApplyHandler(resolution)
+local function ProfileApplyHandler()
 	return function()
-		print(format("|cff00ff00IberisUI|r %s 프로필 적용 시작", resolution))
-		local ok, err = pcall(ApplyIberisProfile, resolution)
+		print("|cff00ff00IberisUI|r 프로필 적용 시작")
+		local ok, err = pcall(ApplyIberisProfile)
 		if ok then
 			print("|cff00ff00IberisUI|r 적용 성공")
 		else
@@ -917,21 +915,16 @@ IUI.installTable = {
 			PluginInstallTutorialImage2:SetTexture(nil)
 			PluginInstallTitleFrame.text:SetFont(E["media"].normFont, 16, "OUTLINE")
 
+			HideOption2()
 			HideOption3()
 			PluginInstallFrame.SubTitle:SetFormattedText(L["Welcome to IberisUI version %s, for ElvUI %s."], IUI.Version, E.version)
 			PluginInstallFrame.Desc1:SetText("|cffff9900이베리스(Iberis)|r 프로필 적용")
-			PluginInstallFrame.Desc2:SetText("32인치 모니터 기준 — 해상도를 선택하세요.")
-			PluginInstallFrame.Desc3:SetText("|cff07D400QHD|r 3840×2160   /   |cff07D400FHD|r 1920×1080")
+			PluginInstallFrame.Desc2:SetText("UI 스케일 0.7 기준 — 해상도(4K/QHD/FHD) 무관하게 동일 배치로 적용됩니다.")
+			PluginInstallFrame.Desc3:SetText("|cff07D400※|r 32인치 모니터 기준 실측값")
 
 			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", ProfileApplyHandler("QHD"))
-			PluginInstallFrame.Option1:SetText("QHD 적용")
-
-			if PluginInstallFrame.Option2 then
-				PluginInstallFrame.Option2:Show()
-				PluginInstallFrame.Option2:SetScript("OnClick", ProfileApplyHandler("FHD"))
-				PluginInstallFrame.Option2:SetText("FHD 적용")
-			end
+			PluginInstallFrame.Option1:SetScript("OnClick", ProfileApplyHandler())
+			PluginInstallFrame.Option1:SetText("UI 스케일 적용")
 
 			ShowIberisLogo()
 		end,
