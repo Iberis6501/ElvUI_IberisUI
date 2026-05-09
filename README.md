@@ -10,6 +10,8 @@
 
 ---
 
+&nbsp;
+
 ## 인사말
 
 이베리스 애드온 공유해드리고 있는 **서약선**이라고 합니다.
@@ -28,6 +30,8 @@
 
 ---
 
+&nbsp;
+
 ## 권장 환경 / Recommended Setup
 
 본 애드온은 **3840×2160 (4K UHD), UIScale 0.7** 환경에서 제작/테스트되었습니다.
@@ -37,6 +41,8 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 > Designed and tested on **3840×2160 (4K UHD) with UIScale 0.7**. Other resolutions should work but may differ slightly from the intended layout.
 
 ---
+
+&nbsp;
 
 ## 주의사항 / Notes
 
@@ -48,6 +54,8 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 (When reporting issues, please reproduce with only ElvUI, BenikUI, and IberisUI enabled.)
 
 ---
+
+&nbsp;
 
 ## 지원 클라이언트 / Supported Clients
 
@@ -61,6 +69,8 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 
 ---
 
+&nbsp;
+
 ## 요구사항 / Requirements
 
 - **[ElvUI](https://tukui.org/elvui)** v15.13+
@@ -71,6 +81,8 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 > ⚠️ IberisUI **does not include** ElvUI or BenikUI. They must be installed separately.
 
 ---
+
+&nbsp;
 
 ## 설치 / Installation
 
@@ -93,6 +105,8 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 ---
 
+&nbsp;
+
 ## 설치 마법사 / Setup Wizard
 
 | 단계 | 내용 |
@@ -103,6 +117,8 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 | 4. 완료 | UI 리로드 |
 
 ---
+
+&nbsp;
 
 ## 적용 프로필 / Applied Profiles
 
@@ -127,6 +143,8 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 ---
 
+&nbsp;
+
 ## 알려진 제약 / Known Issues
 
 - 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 [GitHub Issues](https://github.com/Iberis6501/ElvUI_IberisUI/issues)로 알려주세요.
@@ -136,6 +154,8 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 > Limited testing on Retail / MoP Classic / Classic Era — author plays primarily on TBC Anniversary. The installer overwrites your existing ElvUI profile, and chat frame positions are hard-locked by design.
 
 ---
+
+&nbsp;
 
 ## 크레딧 / Credits
 
@@ -150,6 +170,8 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 ---
 
+&nbsp;
+
 ## 라이선스 / License
 
 **All Rights Reserved.** [LICENSE](LICENSE) 참조.
@@ -160,6 +182,8 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ---
 
+&nbsp;
+
 ## 링크 / Links
 
 - **GitHub:** https://github.com/Iberis6501/ElvUI_IberisUI
@@ -167,6 +191,8 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 - **버그 리포트 / Issues:** https://github.com/Iberis6501/ElvUI_IberisUI/issues
 
 ---
+
+&nbsp;
 
 ## 작업 내역 / Changelog
 
