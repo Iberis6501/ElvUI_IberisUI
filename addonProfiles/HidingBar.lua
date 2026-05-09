@@ -4,6 +4,9 @@ local IUI, E, L = unpack((select(2, ...)))
 -- 출처: WTF/Account/CGS7315/SavedVariables/HidingBar.lua (188~412 라인)
 -- 신규 유저 환경에서도 동작하도록 프로필 객체를 통째로 박는다.
 local SeoyaksunProfile = {
+	-- 외부 레벨 isDefault: HidingBar 인스톨 시 charDB.currentProfileName이 매칭 실패해
+	-- nil로 리셋돼도 default 프로필로 우리 게 잡히도록. 본섭 fresh install 대응.
+	["isDefault"] = true,
 	["config"] = {
 		["addFromDataBroker"] = true,
 		["mbtnSettings"] = {
@@ -130,6 +133,13 @@ function IUI:LoadHidingBarProfile()
 		profile.bars[1].config.secondPosition = res.hidingBar.secondPosition
 	end
 
+	-- 기존 프로필들의 isDefault 해제 (default 후보 중복 방지)
+	for _, p in ipairs(HidingBarDB.profiles) do
+		if p.name ~= "서약선" then
+			p.isDefault = false
+		end
+	end
+
 	-- 기존 "서약선" 프로필이 있으면 덮어쓰고, 없으면 추가
 	local idx
 	for i, p in ipairs(HidingBarDB.profiles) do
@@ -141,7 +151,7 @@ function IUI:LoadHidingBarProfile()
 		table.insert(HidingBarDB.profiles, profile)
 	end
 
-	-- 캐릭터별 활성 프로필 지정
+	-- 캐릭터별 활성 프로필 지정 (currentProfileName 매칭 우선, 실패 시 isDefault로 폴백)
 	if not HidingBarDBChar then HidingBarDBChar = {} end
 	HidingBarDBChar.currentProfileName = "서약선"
 end

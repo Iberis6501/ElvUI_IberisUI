@@ -259,6 +259,9 @@ local function ApplyIberisProfile()
 	E.db["cooldown"]["global"]["fontSize"] = 15
 	E.db["cooldown"]["unitframe"]["fontSize"] = 10
 	E.db["databars"]["azerite"]["enable"] = false
+	-- honor 바: 본섭/불성/오리지널 모두 비활성 (사용자 요청, 별도 배치 없음)
+	-- 본섭 외 클라이언트엔 honor 키가 없을 수 있어 ensure로 방어
+	ensure(E.db.databars, "honor").enable = false
 	E.db["databars"]["experience"]["font"] = "Expressway"
 	E.db["databars"]["experience"]["fontSize"] = 10
 	E.db["databars"]["experience"]["height"] = res.panels.expBarHeight

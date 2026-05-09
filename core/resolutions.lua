@@ -90,7 +90,7 @@ local PROFILE = {
 		["VehicleSeatMover"]                = "TOPLEFT,UIParent,TOPLEFT,368,-336",
 		["WatchFrameMover"]                 = "TOPRIGHT,ElvUIParent,TOPRIGHT,-122,-292",
 		["reputationHolderMover"]           = "TOPLEFT,ElvUIParent,TOPLEFT,4,-320",
-		["tokenHolderMover"]                = "TOPLEFT,ElvUIParent,TOPLEFT,4,-123",
+		["tokenHolderMover"]                = "TOPLEFT,ElvUIParent,TOPLEFT,4,-233",
 	},
 
 	-- ElvUI UIScale ([서약선] 실측값)
