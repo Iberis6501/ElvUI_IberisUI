@@ -64,14 +64,22 @@
 
 ## 설치 / Installation
 
-### CurseForge App (추천)
-`IberisUI` 검색 후 설치. 의존 애드온이 자동으로 함께 설치됩니다.
+필수 의존성을 먼저 설치하고, 그 다음 IberisUI를 설치하세요.
 
-### 수동 설치
-1. 최신 릴리즈 zip 다운로드.
-2. `Interface/AddOns/`에 `ElvUI_IberisUI/` 폴더 압축 해제.
+### 1단계: ElvUI 설치 (Tukui.org)
+ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elvui)에서 직접 다운로드 후 `Interface/AddOns/`에 압축 해제하세요.
 
-게임 첫 접속 시 설치 마법사가 자동 실행됩니다. 이후 `/iberisui` 명령어로 재실행 가능.
+### 2단계: BenikUI + IberisUI 설치
+
+**CurseForge App (추천)**
+- CurseForge App에서 **`BenikUI`** 검색 → 설치
+- CurseForge App에서 **`IberisUI`** 검색 → 설치
+
+**수동 설치**
+1. [BenikUI](https://www.curseforge.com/wow/addons/benikui)와 [IberisUI](https://www.curseforge.com/wow/addons/iberisui) 각각의 zip을 다운로드
+2. `Interface/AddOns/`에 압축 해제
+
+게임 첫 접속 시 IberisUI 설치 마법사가 자동 실행됩니다. 이후 `/iberisui` 명령어로 재실행 가능.
 
 ## 설치 마법사 / Setup Wizard
 
@@ -105,7 +113,7 @@
 
 ## 알려진 제약 / Known Issues
 
-- 작자가 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 [GitHub Issues](https://github.com/Iberis6501/ElvUI_IberisUI/issues)로 알려주세요.
+- 제작자가 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 [GitHub Issues](https://github.com/Iberis6501/ElvUI_IberisUI/issues)로 알려주세요.
 - ElvUI 설치 마법사가 자동 스킵됩니다. **기존 ElvUI 프로필이 IberisUI 프로필로 덮어써집니다** — 기존 설정을 보존하려면 적용 전 백업하세요.
 - 채팅창(ChatFrame1/4) 위치는 외부 코드의 변경을 즉시 차단(hard-lock)합니다. **의도된 동작**입니다.
 
@@ -113,7 +121,7 @@
 
 ## 크레딧 / Credits
 
-이 애드온은 다음 작자분들의 작업물에 의존하며, 그 위에서 동작합니다:
+이 애드온은 다음 제작자분들의 작업물에 의존하며, 그 위에서 동작합니다:
 
 - **[ElvUI](https://github.com/tukui-org/ElvUI)** — Elv & Tukui team
 - **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** — Benik
@@ -146,6 +154,8 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 - ElvUI 호환 버전 표기 v15.05 → v15.13
 - BenikUI 링크 GitHub(404) → CurseForge로 정정
 - WowUp 언급 제거 (CurseForge App만 안내)
+- 설치 안내 정확화: ElvUI는 Tukui.org에서 별도 설치 (CF에 없음), BenikUI/IberisUI는 CF에서 각각 설치
+- "작자" → "제작자" 표기 통일
 
 ### v2.01 (2026-05-10)
 - CI: CurseForge 자동 업로드 시크릿 이름 매칭 수정 (v2.00 빌드는 GitHub Release에만 발행되고 CurseForge에는 누락됨)
