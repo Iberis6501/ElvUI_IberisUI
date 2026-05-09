@@ -12,11 +12,13 @@
 
 ## 인사말
 
-이베리스 통합애드온 공유해드리고 있는 **서약선**이라고 합니다.
+이베리스 애드온 공유해드리고 있는 **서약선**이라고 합니다.
 
 정말 오랜만에 업데이트해서 글 올립니다. ㅎㅎ
 
-현재는 **20주년 기념서버에서 불성**을 플레이하고 있고, 본섭과 클래식은 플레이하고 있지 않아서 소소한 오류 체크는 하지 못합니다. 근데 아마 프레임 구조만 변경하는 애드온이라 별다른 에러는 없을 거예요.
+현재는 **20주년 불성기념서버** 에서만 플레이하고 있어서, 본섭과 클래식 서버 쪽은 오류 체크가 어렵습니다.
+
+근데 프레임 구조만 변경하는 애드온이라서 별다른 에러는 없을 거예요.
 
 그리고 그 동안 좀 번거롭던 설치 과정을 아주 **심플하게 변경**했습니다. ElvUI 설치하듯이 작업하시면 됩니다.
 
@@ -28,7 +30,9 @@
 
 ## 권장 환경 / Recommended Setup
 
-본 애드온은 **3840×2160 (4K UHD), UIScale 0.7** 환경에서 제작/테스트되었습니다. UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하게 동작하도록 설계됐지만, 기준 환경에서 가장 의도된 모습을 보여줍니다.
+본 애드온은 **3840×2160 (4K UHD), UIScale 0.7** 환경에서 제작/테스트되었습니다.
+
+UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하게 동작하도록 설계됐지만, 기준 환경에서 가장 의도된 모습을 보여줍니다.
 
 > Designed and tested on **3840×2160 (4K UHD) with UIScale 0.7**. Other resolutions should work but may differ slightly from the intended layout.
 
@@ -39,7 +43,9 @@
 1. 사소한 에러가 발생할 경우 채팅창에 `/console scriptErrors 0`을 입력해주세요.
 2. 액션바가 안 보이는 분들은 **CurseForge App**을 통해 업데이트 진행하시면 됩니다.
 3. **반드시 [ElvUI](https://tukui.org/elvui) 와 [ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui) 가 필요합니다.**
-4. 버그 리포트 시에는 **ElvUI / BenikUI / IberisUI만 켜고 재현**해주시면 원인 파악이 빠릅니다. (When reporting issues, please reproduce with only ElvUI, BenikUI, and IberisUI enabled.)
+4. 버그 리포트 시에는 **ElvUI / BenikUI / IberisUI만 켜고 재현**해주시면 원인 파악이 빠릅니다.
+
+(When reporting issues, please reproduce with only ElvUI, BenikUI, and IberisUI enabled.)
 
 ---
 
@@ -113,7 +119,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 ## 알려진 제약 / Known Issues
 
-- 제작자가 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 [GitHub Issues](https://github.com/Iberis6501/ElvUI_IberisUI/issues)로 알려주세요.
+- 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 [GitHub Issues](https://github.com/Iberis6501/ElvUI_IberisUI/issues)로 알려주세요.
 - ElvUI 설치 마법사가 자동 스킵됩니다. **기존 ElvUI 프로필이 IberisUI 프로필로 덮어써집니다** — 기존 설정을 보존하려면 적용 전 백업하세요.
 - 채팅창(ChatFrame1/4) 위치는 외부 코드의 변경을 즉시 차단(hard-lock)합니다. **의도된 동작**입니다.
 
@@ -126,7 +132,9 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 - **[ElvUI](https://github.com/tukui-org/ElvUI)** — Elv & Tukui team
 - **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** — Benik
 
-프로젝트 구조(멀티 클라이언트 TOC 패턴, 설치 마법사 패턴)는 ElvUI_BenikUI에서 영감을 받았습니다. 두 프로젝트의 소스 코드는 본 배포물에 포함되지 않습니다.
+프로젝트 구조(멀티 클라이언트 TOC 패턴, 설치 마법사 패턴)는 ElvUI_BenikUI에서 영감을 받았습니다.
+
+두 프로젝트의 소스 코드는 본 배포물에 포함되지 않습니다.
 
 ## 라이선스 / License
 
