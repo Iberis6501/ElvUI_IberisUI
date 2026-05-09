@@ -23,7 +23,7 @@
 ## Requirements / 요구사항
 
 - **[ElvUI](https://tukui.org/elvui)** v15.05+
-- **[ElvUI_BenikUI](https://github.com/Benik/ElvUI_BenikUI)** v2.41+
+- **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** v2.41+
 
 > ⚠️ IberisUI **does not include** ElvUI or BenikUI. They must be installed separately.
 > IberisUI는 ElvUI와 BenikUI를 **포함하지 않습니다**. 별도로 먼저 설치하세요.
@@ -74,7 +74,7 @@ On first login the setup wizard runs automatically. Re-run anytime with `/iberis
 This addon is built on top of, and depends on, the work of these authors:
 
 - **[ElvUI](https://github.com/tukui-org/ElvUI)** by Elv and the Tukui team
-- **[ElvUI_BenikUI](https://github.com/Benik/ElvUI_BenikUI)** by Benik
+- **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** by Benik
 
 The project structure (multi-client TOC layout, install wizard pattern) is inspired by ElvUI_BenikUI. No source code from those projects is included in this distribution.
 
