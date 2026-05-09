@@ -18,10 +18,11 @@ function IUI:LoadMRTProfile()
 	VMRT["Note"]["OptionsFormatting"] = true
 
 	-- ============================================================
-	-- MarksBar (공격대 마크 바 위치/스케일)
+	-- MarksBar (공격대 마크 바 위치/스케일) — 본섭에서 채팅창 가려서 비활성
+	-- 위치/스케일 데이터는 유지 (재활성화 시 사용)
 	-- ============================================================
 	VMRT["MarksBar"] = VMRT["MarksBar"] or {}
-	VMRT["MarksBar"]["enabled"] = true
+	VMRT["MarksBar"]["enabled"] = false
 	VMRT["MarksBar"]["Strata"] = "HIGH"
 	VMRT["MarksBar"]["Scale"] = 101
 	VMRT["MarksBar"]["Left"] = res.mrt.marksBarLeft
