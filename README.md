@@ -10,6 +10,7 @@
 
 ---
 
+
 ## 인사말
 
 이베리스 애드온 공유해드리고 있는 **서약선**이라고 합니다.
@@ -28,6 +29,7 @@
 
 ---
 
+
 ## 권장 환경 / Recommended Setup
 
 본 애드온은 **3840×2160 (4K UHD), UIScale 0.7** 환경에서 제작/테스트되었습니다.
@@ -37,6 +39,7 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 > Designed and tested on **3840×2160 (4K UHD) with UIScale 0.7**. Other resolutions should work but may differ slightly from the intended layout.
 
 ---
+
 
 ## 주의사항 / Notes
 
@@ -49,6 +52,7 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 
 ---
 
+
 ## 지원 클라이언트 / Supported Clients
 
 | 클라이언트 | 폴더 | TOC |
@@ -59,6 +63,7 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 | 불성 (TBC Anniversary) | `_anniversary_` | `ElvUI_IberisUI_TBC.toc` |
 | 오리지널 / 디스커버리 (Classic Era / SoD) | `_classic_era_` | `ElvUI_IberisUI_Vanilla.toc` |
 
+
 ## 요구사항 / Requirements
 
 - **[ElvUI](https://tukui.org/elvui)** v15.13+
@@ -67,6 +72,7 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 > ⚠️ IberisUI는 ElvUI와 BenikUI를 **포함하지 않습니다**. 별도로 먼저 설치하세요.
 >
 > ⚠️ IberisUI **does not include** ElvUI or BenikUI. They must be installed separately.
+
 
 ## 설치 / Installation
 
@@ -87,6 +93,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 게임 첫 접속 시 IberisUI 설치 마법사가 자동 실행됩니다. 이후 `/iberisui` 명령어로 재실행 가능.
 
+
 ## 설치 마법사 / Setup Wizard
 
 | 단계 | 내용 |
@@ -95,6 +102,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 | 2. 외부 애드온 | 설치된 외부 애드온 자동 감지 → 프로필 적용 |
 | 3. 채팅창 | 좌측 일반/커뮤니티 탭, 우측 전리품 채팅창 구성 |
 | 4. 완료 | UI 리로드 |
+
 
 ## 적용 프로필 / Applied Profiles
 
@@ -117,6 +125,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 | **ShamanPower** | 주술사 도우미 | 활성화 |
 | **TacoTip** | 툴팁 애드온 | 활성화 |
 
+
 ## 알려진 제약 / Known Issues
 
 - 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 [GitHub Issues](https://github.com/Iberis6501/ElvUI_IberisUI/issues)로 알려주세요.
@@ -124,6 +133,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 - 채팅창(ChatFrame1/4) 위치는 외부 코드의 변경을 즉시 차단(hard-lock)합니다. **의도된 동작**입니다.
 
 > Limited testing on Retail / MoP Classic / Classic Era — author plays primarily on TBC Anniversary. The installer overwrites your existing ElvUI profile, and chat frame positions are hard-locked by design.
+
 
 ## 크레딧 / Credits
 
@@ -136,6 +146,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 두 프로젝트의 소스 코드는 본 배포물에 포함되지 않습니다.
 
+
 ## 라이선스 / License
 
 **All Rights Reserved.** [LICENSE](LICENSE) 참조.
@@ -144,6 +155,7 @@ IberisUI를 자유롭게 사용하시고 사적인 용도의 수정은 가능합
 
 ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
+
 ## 링크 / Links
 
 - **GitHub:** https://github.com/Iberis6501/ElvUI_IberisUI
@@ -151,6 +163,7 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 - **버그 리포트 / Issues:** https://github.com/Iberis6501/ElvUI_IberisUI/issues
 
 ---
+
 
 ## 작업 내역 / Changelog
 
