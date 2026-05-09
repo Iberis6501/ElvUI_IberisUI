@@ -16,31 +16,11 @@ function IUI:ApplyTacoTipPatches()
 		end
 	end
 
-	-- patch 2: 마우스오버 시 NotifyInspect → LCI 캐시 갱신
-	-- TacoTip은 UPDATE_MOUSEOVER_UNIT만 받고 NotifyInspect 호출 안 해서 이전 캐시 표시 버그 발생.
-	-- (1) InspectFrame 열려있으면 skip
-	-- (2) GUID별 6초 throttle
-	-- (3) 같은 unit 재호출 무시
-	if not IUI._tacotipInspectFrame then
-		local f = CreateFrame("Frame")
-		f:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-		local lastInspect = {}
-		local lastGuid = nil
-		f:SetScript("OnEvent", function()
-			if _G.InspectFrame and _G.InspectFrame:IsShown() then return end
-			if not (UnitExists("mouseover") and UnitIsPlayer("mouseover")) then return end
-			if not (_G.CanInspect and _G.CanInspect("mouseover")) then return end
-			local guid = UnitGUID("mouseover")
-			if not guid then return end
-			if guid == lastGuid then return end
-			local now = GetTime()
-			if lastInspect[guid] and (now - lastInspect[guid]) < 6 then return end
-			lastInspect[guid] = now
-			lastGuid = guid
-			pcall(NotifyInspect, "mouseover")
-		end)
-		IUI._tacotipInspectFrame = f
-	end
+	-- patch 2 제거됨: 마우스오버 NotifyInspect 자동 호출
+	-- 이유: 사거리 밖 대상에서 "너무 멀리 있습니다" 에러 음성 발생.
+	-- UIErrorsFrame 후킹/CheckInteractDistance로도 음성 차단 실패 (클라이언트 Error Speech가 별도 경로).
+	-- 트레이드오프: TacoTip 첫 마우스오버에서 이전 캐시 정보가 잠깐 표시될 수 있으나
+	-- TacoTip 자체가 UPDATE_MOUSEOVER_UNIT에서 캐시 갱신하므로 다음 마우스오버부터 정상.
 end
 
 function IUI:LoadTacoTipProfile()
