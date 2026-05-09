@@ -176,9 +176,17 @@ local function ApplyIberisProfile()
 	E.db["bags"]["vendorGrays"]["details"] = true
 	E.db["bags"]["vendorGrays"]["enable"] = true
 	if E.db["benikui"] then
+		-- BenikUI 정보막대(notifiers): 클라이언트별로 키 케이싱이 다름
+		--   불성/오리지널: E.db.benikui.Databars (대문자 D)
+		--   본섭(Mainline): E.db.benikui.databars (소문자 d)
+		-- 둘 다 써둠 — 해당 클라가 안 쓰는 쪽은 dead key라 무해.
 		ensure(E.db.benikui, "Databars", "experience", "notifiers").enable = false
 		ensure(E.db.benikui, "Databars", "reputation", "notifiers").enable = false
 		ensure(E.db.benikui, "Databars", "threat").enable = false
+		ensure(E.db.benikui, "databars", "experience", "notifiers").enable = false
+		ensure(E.db.benikui, "databars", "reputation", "notifiers").enable = false
+		ensure(E.db.benikui, "databars", "experience").buiStyle = false
+		ensure(E.db.benikui, "databars", "reputation").buiStyle = false
 		local abStyle = ensure(E.db.benikui, "actionbars", "style")
 		abStyle.bar1 = false; abStyle.bar2 = false; abStyle.bar3 = false; abStyle.bar5 = false
 		abStyle.bar7 = false; abStyle.bar8 = false; abStyle.bar9 = false; abStyle.bar10 = false
