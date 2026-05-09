@@ -3,6 +3,19 @@ local ReloadUI = ReloadUI
 local tinsert, wipe = table.insert, table.wipe or wipe
 local format = string.format
 
+-- 중첩 테이블 경로 보장 — 본섭/타 클라/fresh install에서 외부 애드온 DB
+-- 서브테이블이 없을 때 nil 인덱싱 에러 방지. 마지막 키 직전까지 테이블 생성 후 마지막 테이블 반환.
+-- 사용: ensure(E.db.benikui, "Databars", "experience").notifiers = {...}
+local function ensure(root, ...)
+	local n = select("#", ...)
+	for i = 1, n do
+		local k = select(i, ...)
+		root[k] = root[k] or {}
+		root = root[k]
+	end
+	return root
+end
+
 -- ============================================================
 -- ApplyIberisProfile — 내보내기 정확한 값 verbatim 적용
 -- 모든 좌표/사이즈는 IUI:GetProfileData()에서 조회 (단일 프로필)
@@ -163,22 +176,18 @@ local function ApplyIberisProfile()
 	E.db["bags"]["vendorGrays"]["details"] = true
 	E.db["bags"]["vendorGrays"]["enable"] = true
 	if E.db["benikui"] then
-		E.db["benikui"]["Databars"]["experience"]["notifiers"]["enable"] = false
-		E.db["benikui"]["Databars"]["reputation"]["notifiers"]["enable"] = false
-		E.db["benikui"]["Databars"]["threat"]["enable"] = false
-		E.db["benikui"]["actionbars"]["style"]["bar1"] = false
-		E.db["benikui"]["actionbars"]["style"]["bar10"] = false
-		E.db["benikui"]["actionbars"]["style"]["bar2"] = false
-		E.db["benikui"]["actionbars"]["style"]["bar3"] = false
-		E.db["benikui"]["actionbars"]["style"]["bar5"] = false
-		E.db["benikui"]["actionbars"]["style"]["bar7"] = false
-		E.db["benikui"]["actionbars"]["style"]["bar8"] = false
-		E.db["benikui"]["actionbars"]["style"]["bar9"] = false
-		E.db["benikui"]["actionbars"]["toggleButtons"]["chooseAb"] = "BAR1"
-		E.db["benikui"]["colors"]["abAlpha"] = 0.7
-		E.db["benikui"]["colors"]["styleAlpha"] = 0.7
-		E.db["benikui"]["dashboards"]["tokens"]["enableTokens"] = false
-		E.db["benikui"]["misc"]["flightMode"]["enable"] = false
+		ensure(E.db.benikui, "Databars", "experience", "notifiers").enable = false
+		ensure(E.db.benikui, "Databars", "reputation", "notifiers").enable = false
+		ensure(E.db.benikui, "Databars", "threat").enable = false
+		local abStyle = ensure(E.db.benikui, "actionbars", "style")
+		abStyle.bar1 = false; abStyle.bar2 = false; abStyle.bar3 = false; abStyle.bar5 = false
+		abStyle.bar7 = false; abStyle.bar8 = false; abStyle.bar9 = false; abStyle.bar10 = false
+		ensure(E.db.benikui, "actionbars", "toggleButtons").chooseAb = "BAR1"
+		local colors = ensure(E.db.benikui, "colors")
+		colors.abAlpha = 0.7
+		colors.styleAlpha = 0.7
+		ensure(E.db.benikui, "dashboards", "tokens").enableTokens = false
+		ensure(E.db.benikui, "misc", "flightMode").enable = false
 		if not E.db["benikui"]["general"] then E.db["benikui"]["general"] = {} end
 		E.db["benikui"]["general"]["auras"] = false
 		if not E.db["benikui"]["panels"] then E.db["benikui"]["panels"] = {} end
@@ -226,7 +235,7 @@ local function ApplyIberisProfile()
 			abPanel["visibility"] = ""
 			abPanel["width"] = res.panels.abPanelWidth
 		end
-		E.db["benikui"]["unitframes"]["target"]["getPlayerPortraitSize"] = false
+		ensure(E.db.benikui, "unitframes", "target").getPlayerPortraitSize = false
 	end
 	E.db["chat"]["font"] = "Expressway"
 	-- chat.keywordSound / chat.keywords 제거 — 개인 알림 키워드는 신규 유저가 직접 설정
