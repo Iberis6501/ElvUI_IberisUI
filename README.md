@@ -37,7 +37,7 @@
 ## 주의사항 / Notes
 
 1. 사소한 에러가 발생할 경우 채팅창에 `/console scriptErrors 0`을 입력해주세요.
-2. 액션바가 안 보이는 분들은 **자동 업데이트 프로그램(CurseForge App / WowUp)** 을 통해 업데이트 진행하시면 됩니다.
+2. 액션바가 안 보이는 분들은 **CurseForge App**을 통해 업데이트 진행하시면 됩니다.
 3. **반드시 [ElvUI](https://tukui.org/elvui) 와 [ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui) 가 필요합니다.**
 4. 버그 리포트 시에는 **ElvUI / BenikUI / IberisUI만 켜고 재현**해주시면 원인 파악이 빠릅니다. (When reporting issues, please reproduce with only ElvUI, BenikUI, and IberisUI enabled.)
 
@@ -64,7 +64,7 @@
 
 ## 설치 / Installation
 
-### CurseForge App / WowUp (추천)
+### CurseForge App (추천)
 `IberisUI` 검색 후 설치. 의존 애드온이 자동으로 함께 설치됩니다.
 
 ### 수동 설치
@@ -92,16 +92,16 @@
 - 무버: 40여 개 프레임 일괄 재배치
 
 ### 외부 애드온
-| 애드온 | 적용 프로필 |
-|---|---|
-| **BigWigs** | MonoUI 바 레이아웃 |
-| **Details** | ElvUI Frame Style 스킨, 4창 구성 (위협수준 / 치유 / 피해 / 총합) |
-| **InvenRaidFrames3** | 서약선 레이드 레이아웃 |
-| **MRT** | Note 창, MarksBar 비활성, CDs 프로필 (전문화별 쿨타임), InviteTool |
-| **HidingBar** | 캐릭터별 프로필 |
-| **Questie** | 활성화 |
-| **ShamanPower** | 활성화 |
-| **TacoTip** | 활성화 |
+| 애드온 | 종류 | 적용 프로필 |
+|---|---|---|
+| **BigWigs** | 레이드 경보 | MonoUI 바 레이아웃 |
+| **Details** | 데미지 미터기 | ElvUI Frame Style 스킨, 4창 구성 (위협수준 / 치유 / 피해 / 총합) |
+| **InvenRaidFrames3** | 공격대 창 | 서약선 레이드 레이아웃 |
+| **MRT** | 공격대 도우미 | Note 창, MarksBar 비활성, CDs 프로필 (전문화별 쿨타임), InviteTool |
+| **HidingBar** | 미니맵 버튼 정렬 | 캐릭터별 프로필 |
+| **Questie** | 퀘스트 도우미 | 활성화 |
+| **ShamanPower** | 주술사 도우미 | 활성화 |
+| **TacoTip** | 툴팁 애드온 | 활성화 |
 
 ## 알려진 제약 / Known Issues
 
@@ -142,8 +142,10 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 - 한글 우선 톤으로 README/Description 재작성, 와우인벤 스타일 인사말 포함
 - 권장 환경(4K UHD + UIScale 0.7) 명시
 - 알려진 제약 솔직하게 표기 (검증 부족 클라이언트, 마법사 덮어쓰기, 채팅 hard-lock)
+- 외부 애드온 표에 한글 종류 표기 추가 (BigWigs=레이드 경보, Details=데미지 미터기 등)
 - ElvUI 호환 버전 표기 v15.05 → v15.13
 - BenikUI 링크 GitHub(404) → CurseForge로 정정
+- WowUp 언급 제거 (CurseForge App만 안내)
 
 ### v2.01 (2026-05-10)
 - CI: CurseForge 자동 업로드 시크릿 이름 매칭 수정 (v2.00 빌드는 GitHub Release에만 발행되고 CurseForge에는 누락됨)
