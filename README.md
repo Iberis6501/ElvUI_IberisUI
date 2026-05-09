@@ -1,94 +1,109 @@
 # ElvUI_IberisUI
 
-ElvUI + BenikUI 기반의 이베리스 개인 프로필 세팅 애드온입니다.  
-서약선(펜구스의 흉포) 케릭터의 설정을 기반으로 제작되었습니다.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Iberis6501/ElvUI_IberisUI/main/assets/logo_512.png" width="256" alt="IberisUI logo" />
+</p>
 
-## 요구사항
-
-- [ElvUI](https://tukui.org/elvui) (v15.05 이상)
-- [ElvUI_BenikUI](https://www.tukui.org/addons.php?id=benikui) (v2.41 이상)
-
-## 사용 방법
-
-1. `Interface/AddOns/` 폴더에 설치
-2. 게임 접속 시 설치 마법사 자동 실행 (5단계)
-3. 이후 `/iberisui` 명령어로 마법사 재실행 가능
-
-## 설치 마법사 단계
-
-| 단계 | 내용 |
-|------|------|
-| 1. 시작 | 환영 화면, 건너뛰기 옵션 |
-| 2. 레이아웃 | ElvUI 전체 프로필 적용 (유닛프레임, 액션바, 무버 등) |
-| 3. 외부 애드온 | 지원 애드온 자동 감지 후 설정 적용 |
-| 4. 채팅 창 | 창 이름·메시지 종류 설정, 개인 채널(애옹·추추) 제외 |
-| 5. 완료 | UI 재로드 |
-
-## 적용 설정 목록
-
-### ElvUI
-| 항목 | 내용 |
-|------|------|
-| 폰트 | Expressway (일반), Bui Visitor1 (네임플레이트) |
-| 유닛프레임 | 플레이어/타겟 255×55, InfoPanel 22px, 커스텀 텍스트 포함 |
-| 데이터바 | Reputation/Experience 세로 9px 바, BuiFlat 텍스처 |
-| 채팅 패널 | 너비 348px, 높이 166px |
-| 네임플레이트 | Bui Visitor1 폰트, BuiFlat 상태바 |
-| 무버 | 40여 개 프레임 위치 일괄 적용 |
-| 미니맵 | 크기 150, 위치 텍스트 숨김 |
-| BuiMiddleDTPanel | LDB_ItemRack, AtlasLoot 등 구성 |
-
-### 외부 애드온
-| 애드온 | 적용 내용 |
-|--------|-----------|
-| **Details** | 스킨(ElvUI Frame Style), 상태바, run_code 등 표시 설정 |
-| **MRT** | Note 창 설정, MarksBar 위치, CDs 서약선 프로필(전문화별 쿨타임), InviteTool |
-| **Guidelime** | 창 높이, 단계 표시 옵션 |
-| **HidingBar** | 현재 케릭터명으로 프로필 이름 설정 |
-| **LFGBulletinBoard** | TBC 레이드/던전 필터 설정 (SSC, BT, Kara 등) |
-
-### 채팅 창
-| 창 | 이름 | 주요 메시지 |
-|----|------|------------|
-| 1 | 일반 | 일반·귓속말·파티·레이드·길드·채널 등 전체 |
-| 2 | 기록 | 경험치·명예·스킬 등 전투 정보 (숨김) |
-| 3 | 음성 대화 설정 | 음성 텍스트 (숨김) |
-| 4 | 전리품 / 거래 요청 | 아이템 획득·골드·스킬 |
-| 5 | 길드&파티 | 길드·파티·레이드·귓속말 |
-| 6 | 거래 | 기본 (숨김) |
+> A one-click installer that replicates Iberis's complete ElvUI/BenikUI UI — including pre-configured profiles for BigWigs, Details, MRT, and more — across Retail and all Classic clients.
+>
+> 이베리스의 [서약선] 캐릭터 ElvUI/BenikUI 환경을 그대로 복제 배포하는 애드온. 본섭부터 모든 클래식 클라이언트까지 지원.
 
 ---
 
-## 작업 내역
+## Supported Clients / 지원 클라이언트
 
-### 2026-05-07
+| Client | Folder | TOC |
+|---|---|---|
+| Retail (본섭) | `_retail_` | `ElvUI_IberisUI_Mainline.toc` |
+| Mists Classic (판다) | `_classic_` | `ElvUI_IberisUI_Mists.toc` |
+| Wrath Classic | `_wrath_` | `ElvUI_IberisUI_Wrath.toc` |
+| TBC Anniversary (불성) | `_anniversary_` | `ElvUI_IberisUI_TBC.toc` |
+| Classic Era / SoD (오리지널/디스커버리) | `_classic_era_` | `ElvUI_IberisUI_Vanilla.toc` |
 
-- **v1.00** 최초 제작
-  - `ElvUI_BenikUI` 구조를 참고하여 애드온 기본 골격 구성
-  - `서약선 - 펜구스의 흉포` 케릭터의 ElvUI 프로필 데이터 기반으로 `install.lua` 작성
-  - 설치 마법사 3단계 구성 (환영 → 프로필 적용 → 완료)
-  - `/iberisui` 슬래시 명령어 등록
-  - ElvUI 옵션 패널에 IberisUI 탭 추가
-  - AceLocale 대신 단순 Lua 테이블 방식으로 한국어 로케일 처리
-  - GitHub 저장소 연동 (`main` 브랜치)
+## Requirements / 요구사항
 
-- **v1.01** 외부 애드온 프로필 및 채팅 창 설정 추가
-  - `addonProfiles/` 디렉터리 신설: Pawn, ItemRack, HidingBar, LFGBulletinBoard, FindParty
-  - `core/chat.lua` 신설: 채팅 창 5개 구성, 메시지 그룹 초기화 후 재설정
-  - 개인 채널(애옹·추추) 제외, 파티찾기·LookingForGroup 유지
-  - 설치 마법사 3단계 → 5단계로 확장 (외부 애드온·채팅 창 단계 추가)
+- **[ElvUI](https://tukui.org/elvui)** v15.05+
+- **[ElvUI_BenikUI](https://github.com/Benik/ElvUI_BenikUI)** v2.41+
 
-- **v1.02** 외부 애드온 프로필 교체
-  - Pawn, ItemRack, FindParty 제거
-  - Details, MRT, Guidelime 추가
-  - MRT: Note 창, MarksBar, CDs 서약선 프로필(전문화별 쿨타임), InviteTool
-  - Details: ElvUI Frame Style 스킨, 상태바, run_code 설정
-  - Guidelime: 창 높이·단계 표시 옵션
+> ⚠️ IberisUI **does not include** ElvUI or BenikUI. They must be installed separately.
+> IberisUI는 ElvUI와 BenikUI를 **포함하지 않습니다**. 별도로 먼저 설치하세요.
 
-- **v1.03** 버그 수정 및 해상도 대응
-  - **옵션 패널**: `E.Options.args.plugins.args` → `E.Options.args.iberisui` (최상위)로 수정, ElvUI 좌측 사이드바에 IberisUI 탭 표시
-  - **프로필 미적용 수정**: `E.private.iberisui` nil 크래시 수정, install_complete 기본값 false로 변경
-  - **FHD/QHD 해상도 대응**: UIScale 해상도별 자동 계산 + 모든 mover 좌표를 SM() 함수로 비율 스케일링
-    - FHD(1080p): UIScale 0.711 (기준)
-    - QHD(1440p): UIScale 0.5334, mover ×1.778
-    - 기타 해상도: 비율 자동 계산
+## Installation / 설치
+
+### Via CurseForge App / WowUp (recommended)
+1. Search for `IberisUI` and install. Required dependencies are pulled in automatically.
+
+### Manual
+1. Download the latest release zip.
+2. Extract `ElvUI_IberisUI/` into `Interface/AddOns/`.
+
+On first login the setup wizard runs automatically. Re-run anytime with `/iberisui`.
+
+## Setup Wizard / 설치 마법사
+
+| Step | Description |
+|---|---|
+| 1. UI Scale | 단일 버튼으로 ElvUI 프로필 일괄 적용 (UIScale 0.7 기준) |
+| 2. External Addons | 설치된 외부 애드온 자동 감지 → 프로필 적용 |
+| 3. Chat Frames | 좌측 일반/커뮤니티 탭, 우측 전리품 채팅창 구성 |
+| 4. Finish | UI 리로드 |
+
+## Applied Profiles / 적용 프로필
+
+### ElvUI
+- Fonts: Expressway / Bui Visitor1
+- Unitframes: Player/Target 255×55, InfoPanel 22px, custom texts
+- Databars: 9px vertical, BuiFlat texture
+- Chat: 348×166 panels
+- Movers: 40+ frames repositioned
+
+### External Addons
+| Addon | Profile |
+|---|---|
+| **BigWigs** | MonoUI bar layout |
+| **Details** | ElvUI Frame Style skin, 4-window layout (threat / heal / damage / total) |
+| **InvenRaidFrames3** | Seoyaksun raid layout |
+| **MRT** | Note window, MarksBar disabled, CDs profile (per-spec cooldowns), InviteTool |
+| **HidingBar** | Per-character profile |
+| **Questie** | Active |
+| **ShamanPower** | Active |
+| **TacoTip** | Active |
+
+## Credits / 크레딧
+
+This addon is built on top of, and depends on, the work of these authors:
+
+- **[ElvUI](https://github.com/tukui-org/ElvUI)** by Elv and the Tukui team
+- **[ElvUI_BenikUI](https://github.com/Benik/ElvUI_BenikUI)** by Benik
+
+The project structure (multi-client TOC layout, install wizard pattern) is inspired by ElvUI_BenikUI. No source code from those projects is included in this distribution.
+
+## License
+
+**All Rights Reserved.** See [LICENSE](LICENSE).
+
+You may use IberisUI freely and modify it for private personal use. Redistribution or republishing of any portion of this addon outside the [official GitHub repository](https://github.com/Iberis6501/ElvUI_IberisUI) and the [official CurseForge page](https://www.curseforge.com/wow/addons/iberisui) is not permitted.
+
+ElvUI and ElvUI_BenikUI retain their own respective licenses.
+
+## Links
+
+- **GitHub:** https://github.com/Iberis6501/ElvUI_IberisUI
+- **CurseForge:** https://www.curseforge.com/wow/addons/iberisui
+- **Issues / Bug reports:** https://github.com/Iberis6501/ElvUI_IberisUI/issues
+
+---
+
+## Changelog / 작업 내역
+
+### v2.00 (2026-05)
+- 첫 CurseForge 정식 배포
+- 본섭/판다/불성/오리지널/디스커버리 5개 클라이언트 동시 지원
+- BigWigs MonoUI 바 프로필 추가
+- 본섭 BenikUI Databars nil 인덱싱 에러 차단
+- ChatFrame 위치 hard-lock (외부 코드의 위치 변경 즉시 차단)
+- Details/InvenRaidFrames3 프로필을 SV에서 자동 추출 → verbatim 박음
+- 단일 `IUI.Profile` 테이블 (해상도 분기 제거 — UIScale 0.7이 모든 픽셀에 곱해짐)
+
+### v1.x (2026-05-07 ~)
+초기 v1.0~1.03 개발 기록은 [git log](https://github.com/Iberis6501/ElvUI_IberisUI/commits/main)에서 확인.
