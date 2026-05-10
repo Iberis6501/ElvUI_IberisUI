@@ -1,10 +1,183 @@
-> 이베리스의 [서약선] 캐릭터 ElvUI/BenikUI 환경을 그대로 복제 배포하는 애드온. 본섭부터 모든 클래식 클라이언트까지 지원.
->
 > A one-click installer that replicates Iberis's complete ElvUI/BenikUI UI — including pre-configured profiles for BigWigs, Details, MRT, and more — across Retail and all Classic clients.
+>
+> 이베리스의 [서약선] 캐릭터 ElvUI/BenikUI 환경을 그대로 복제 배포하는 애드온. 본섭부터 모든 클래식 클라이언트까지 지원.
 
 &nbsp;
 
 ---
+
+# English
+
+## Greetings
+
+Hi, I'm **서약선 (Iberis)**, the author who shares the IberisUI addon.
+
+It's been a while since the last update! I currently play only on the **20th Anniversary TBC server**, so testing on Retail and other Classic clients is a bit limited. That said, since this addon only modifies frame layouts and profiles, you shouldn't run into any major errors.
+
+The previously cumbersome installation has been **simplified**. It now installs just like ElvUI.
+
+> 💡 Current build is based on **ElvUI 15.13**.
+>
+> ⚠️ Always **back up** your settings before applying any addon. ^^
+
+&nbsp;
+
+---
+
+## Recommended Setup
+
+This addon was built and tested on **3840×2160 (4K UHD) with UIScale 0.7**.
+
+UIScale multiplies every pixel, so the layout is designed to work at other resolutions, but the intended look is most accurate at the reference setup.
+
+&nbsp;
+
+---
+
+## Notes
+
+1. If you see minor errors, type `/console scriptErrors 0` in chat.
+2. If action bars are missing, update through the **CurseForge App**.
+3. **[ElvUI](https://tukui.org/elvui) and [ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui) are required.**
+4. When reporting issues, please reproduce with **only ElvUI, BenikUI, and IberisUI enabled** — it makes the cause much easier to identify.
+
+&nbsp;
+
+---
+
+## Supported Clients
+
+| Client | Folder | TOC |
+|---|---|---|
+| Retail | `_retail_` | `ElvUI_IberisUI_Mainline.toc` |
+| Mists Classic | `_classic_` | `ElvUI_IberisUI_Mists.toc` |
+| Wrath Classic | `_wrath_` | `ElvUI_IberisUI_Wrath.toc` |
+| TBC Anniversary | `_anniversary_` | `ElvUI_IberisUI_TBC.toc` |
+| Classic Era / SoD | `_classic_era_` | `ElvUI_IberisUI_Vanilla.toc` |
+
+&nbsp;
+
+---
+
+## Requirements
+
+- **[ElvUI](https://tukui.org/elvui)** v15.13+
+- **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** v2.41+
+
+> ⚠️ IberisUI **does not include** ElvUI or BenikUI. They must be installed separately.
+
+&nbsp;
+
+---
+
+## Installation
+
+Install the required dependencies first, then install IberisUI.
+
+### Step 1: Install ElvUI (from Tukui.org)
+ElvUI is **not on CurseForge**. Download it directly from [tukui.org/elvui](https://tukui.org/elvui) and extract into `Interface/AddOns/`.
+
+### Step 2: Install BenikUI + IberisUI
+
+**CurseForge App (Recommended)**
+- Search for **`BenikUI`** → Install
+- Search for **`IberisUI`** → Install
+
+**Manual install**
+1. Download the zips for [BenikUI](https://www.curseforge.com/wow/addons/benikui) and [IberisUI](https://www.curseforge.com/wow/addons/iberisui)
+2. Extract into `Interface/AddOns/`
+
+The IberisUI setup wizard runs automatically on first login. You can re-run it later via `/iberisui`.
+
+&nbsp;
+
+---
+
+## Setup Wizard
+
+| Step | Description |
+|---|---|
+| 1. UI Scale | Apply ElvUI profile in one click (UIScale 0.7 baseline) |
+| 2. External addons | Auto-detect installed addons → apply profiles |
+| 3. Chat frames | Left = General/Community tabs, Right = Loot chat |
+| 4. Done | UI reload |
+
+&nbsp;
+
+---
+
+## Applied Profiles
+
+### ElvUI
+- Fonts: Expressway / Bui Visitor1
+- Unit frames: Player/Target 255×55, InfoPanel 22px, custom text
+- Databars: 9px vertical bars, BuiFlat texture
+- Chat: 348×166 panels
+- Movers: ~40 frames repositioned
+
+### External Addons
+| Addon | Type | Applied Profile |
+|---|---|---|
+| **BigWigs** | Raid alerts | MonoUI bar layout |
+| **Details** | Damage meter | ElvUI Frame Style skin, 4-window layout (Threat / Healing / Damage / Total) |
+| **InvenRaidFrames3** | Raid frames | 서약선 raid layout |
+| **MRT** | Raid helper | Note window, MarksBar disabled, CDs profile (per-spec cooldowns), InviteTool |
+| **HidingBar** | Minimap button organizer | Per-character profile |
+| **Questie** | Quest helper | Enabled |
+| **ShamanPower** | Shaman helper | Enabled |
+| **TacoTip** | Tooltip addon | Enabled |
+
+&nbsp;
+
+---
+
+## Known Issues
+
+- The author primarily plays on **TBC Anniversary (20th anniversary server)**, so testing on **Retail / MoP Classic / Classic Era** is limited. Please report any issues you find via GitHub Issues.
+- The ElvUI install wizard is auto-skipped, and **your existing ElvUI profile will be overwritten** by the IberisUI profile — back up first if you want to preserve your current setup.
+- Chat frame (ChatFrame1/4) positions are hard-locked against external changes. **This is intentional.**
+
+&nbsp;
+
+---
+
+## Credits
+
+This addon depends on and runs on top of the following projects:
+
+- **[ElvUI](https://github.com/tukui-org/ElvUI)** — Elv & Tukui team
+- **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** — Benik
+
+The project structure (multi-client TOC pattern, install wizard pattern) was inspired by ElvUI_BenikUI.
+
+Source code from these projects is **not included** in this distribution.
+
+&nbsp;
+
+---
+
+## License
+
+**All Rights Reserved.**
+
+You may freely use IberisUI and modify it for personal use. Redistributing or republishing any part of this addon outside of the official GitHub repository and CurseForge page is **not permitted**.
+
+ElvUI and ElvUI_BenikUI are governed by their own licenses.
+
+&nbsp;
+
+---
+
+## Links
+
+- **GitHub:** https://github.com/Iberis6501/ElvUI_IberisUI
+- **Bug Reports / Issues:** https://github.com/Iberis6501/ElvUI_IberisUI/issues
+
+&nbsp;
+
+---
+
+# 한국어 / Korean
 
 ## 인사말
 
@@ -26,32 +199,28 @@
 
 ---
 
-## 권장 환경 / Recommended Setup
+## 권장 환경
 
 본 애드온은 **3840×2160 (4K UHD), UIScale 0.7** 환경에서 제작/테스트되었습니다.
 
 UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하게 동작하도록 설계됐지만, 기준 환경에서 가장 의도된 모습을 보여줍니다.
 
-> Designed and tested on **3840×2160 (4K UHD) with UIScale 0.7**. Other resolutions should work but may differ slightly from the intended layout.
-
 &nbsp;
 
 ---
 
-## 주의사항 / Notes
+## 주의사항
 
 1. 사소한 에러가 발생할 경우 채팅창에 `/console scriptErrors 0`을 입력해주세요.
 2. 액션바가 안 보이는 분들은 **CurseForge App**을 통해 업데이트 진행하시면 됩니다.
 3. **반드시 [ElvUI](https://tukui.org/elvui) 와 [ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui) 가 필요합니다.**
-4. 버그 리포트 시에는 **ElvUI / BenikUI / IberisUI만 켜고 재현**해주시면 원인 파악이 빠릅니다. 
-
-(When reporting issues, please reproduce with only ElvUI, BenikUI, and IberisUI enabled.)
+4. 버그 리포트 시에는 **ElvUI / BenikUI / IberisUI만 켜고 재현**해주시면 원인 파악이 빠릅니다.
 
 &nbsp;
 
 ---
 
-## 지원 클라이언트 / Supported Clients
+## 지원 클라이언트
 
 | 클라이언트 | 폴더 | TOC |
 |---|---|---|
@@ -65,20 +234,18 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 
 ---
 
-## 요구사항 / Requirements
+## 요구사항
 
 - **[ElvUI](https://tukui.org/elvui)** v15.13+
 - **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** v2.41+
 
 > ⚠️ IberisUI는 ElvUI와 BenikUI를 **포함하지 않습니다**. 별도로 먼저 설치하세요.
->
-> ⚠️ IberisUI **does not include** ElvUI or BenikUI. They must be installed separately.
 
 &nbsp;
 
 ---
 
-## 설치 / Installation
+## 설치
 
 필수 의존성을 먼저 설치하고, 그 다음 IberisUI를 설치하세요.
 
@@ -101,7 +268,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 ---
 
-## 설치 마법사 / Setup Wizard
+## 설치 마법사
 
 | 단계 | 내용 |
 |---|---|
@@ -114,7 +281,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 ---
 
-## 적용 프로필 / Applied Profiles
+## 적용 프로필
 
 ### ElvUI
 - 폰트: Expressway / Bui Visitor1
@@ -139,26 +306,24 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 ---
 
-## 알려진 제약 / Known Issues
+## 알려진 제약
 
 - 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 GitHub Issues로 알려주세요.
 - ElvUI 설치 마법사가 자동 스킵됩니다. **기존 ElvUI 프로필이 IberisUI 프로필로 덮어써집니다** — 기존 설정을 보존하려면 적용 전 백업하세요.
 - 채팅창(ChatFrame1/4) 위치는 외부 코드의 변경을 즉시 차단(hard-lock)합니다. **의도된 동작**입니다.
 
-> Limited testing on Retail / MoP Classic / Classic Era — author plays primarily on TBC Anniversary. The installer overwrites your existing ElvUI profile, and chat frame positions are hard-locked by design.
-
 &nbsp;
 
 ---
 
-## 크레딧 / Credits
+## 크레딧
 
 이 애드온은 다음 제작자분들의 작업물에 의존하며, 그 위에서 동작합니다:
 
 - **[ElvUI](https://github.com/tukui-org/ElvUI)** — Elv & Tukui team
 - **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** — Benik
 
-프로젝트 구조(멀티 클라이언트 TOC 패턴, 설치 마법사 패턴)는 ElvUI_BenikUI에서 영감을 받았습니다. 
+프로젝트 구조(멀티 클라이언트 TOC 패턴, 설치 마법사 패턴)는 ElvUI_BenikUI에서 영감을 받았습니다.
 
 두 프로젝트의 소스 코드는 본 배포물에 포함되지 않습니다.
 
@@ -166,7 +331,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 ---
 
-## 라이선스 / License
+## 라이선스
 
 **All Rights Reserved.**
 
@@ -178,7 +343,7 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ---
 
-## 링크 / Links
+## 링크
 
 - **GitHub:** https://github.com/Iberis6501/ElvUI_IberisUI
 - **버그 리포트 / Issues:** https://github.com/Iberis6501/ElvUI_IberisUI/issues
