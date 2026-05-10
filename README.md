@@ -348,6 +348,12 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.05 (2026-05-10)
+- 서약선 캐릭터 게임 내 변경 사항 반영:
+  - HidingBar 프로필: bar `size` 15 → 20
+  - HidingBar 프로필: `LibDBIcon10_RaidBook` mbtnSetting 추가
+  - BuiMiddleDTPanel 슬롯 2: `LDB_iWillRemember_MinimapButton` → `LDB_RaidBook`
+
 ### v2.04 (2026-05-10)
 - CurseForge 모더레이션 정책 추가 대응:
   - 영문/한글 `## Links` 섹션 두 개 → 페이지 최하단 통합 `## Links / 링크` 한 곳으로 (cross-hosting 링크는 페이지 하단 위치 정책 준수)
