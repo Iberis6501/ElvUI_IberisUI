@@ -348,6 +348,13 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.06 (2026-05-10)
+- RAID_WARNING(공격대 경보) sticky 채널 자동 설정:
+  - WoW 기본은 `/경보` 한 번 보내면 다음 엔터 시 SAY로 자동 복귀 (sticky 아님)
+  - `IUI:ApplyStickyChannels()` 추가 — `ChatTypeInfo.RAID_WARNING.sticky = 1`
+  - `IUI:Initialize()`에서 매 로그인마다 호출 (ChatTypeInfo는 세션마다 reset됨)
+  - `IUI:SetupChatWindows()`에서도 즉시 적용
+
 ### v2.05 (2026-05-10)
 - 서약선 캐릭터 게임 내 변경 사항 반영:
   - HidingBar 프로필: bar `size` 15 → 20

@@ -15,6 +15,9 @@ function IUI:Initialize()
 	-- IberisUIDB는 SavedVariablesPerCharacter — 캐릭별 분리. charKey 매핑 불필요.
 	IberisUIDB = IberisUIDB or {}
 
+	-- 매 로그인마다 sticky 채널 재적용 (ChatTypeInfo는 세션마다 reset됨)
+	if self.ApplyStickyChannels then self:ApplyStickyChannels() end
+
 	-- DataTexts.lua:551 (panel nil 인덱스) 에러 방지
 	-- ElvUI DT:UpdatePanelInfo가 등록되지 않은 panelName으로 호출되면 panel.db nil 인덱스 에러.
 	-- panel을 우리가 dtPanels에 박을 때마다 발생 가능 (BUI custom panel 등록 시점 차이).

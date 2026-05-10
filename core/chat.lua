@@ -32,6 +32,15 @@ local WIN5_GROUPS = {
 	"CHANNEL","BN_WHISPER","INSTANCE_CHAT","INSTANCE_CHAT_LEADER",
 }
 
+-- WoW 기본은 RAID_WARNING(공격대 경보)이 sticky 아님 → /경보 한 번 보내면 다음 엔터 시 SAY로 복귀.
+-- 매 게임 세션마다 ChatTypeInfo가 reset되므로 PLAYER_LOGIN 이후 매번 다시 sticky=1 박아야 함.
+function IUI:ApplyStickyChannels()
+	if not ChatTypeInfo then return end
+	if ChatTypeInfo.RAID_WARNING then
+		ChatTypeInfo.RAID_WARNING.sticky = 1
+	end
+end
+
 local function applyMsgGroups(frame, groups)
 	if not frame then return end
 	-- 기존 그룹 전부 제거 후 재설정
@@ -167,6 +176,9 @@ function IUI:SetupChatWindows()
 	E.db.chat.panelSnapping    = true
 	E.db.chat.panelSnapLeftID  = 1
 	E.db.chat.panelSnapRightID = 4
+
+	-- 9. sticky 채널 즉시 적용 (RAID_WARNING)
+	IUI:ApplyStickyChannels()
 
 	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 설정 완료 — 좌우 패널 도킹 + chat-cache 저장.")
 	-- PluginInstallStepComplete는 마법사 frame일 때만 존재. 자동 재적용 시점에는 nil 가능.
