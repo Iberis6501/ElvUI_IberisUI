@@ -74,8 +74,8 @@ UIScale multiplies every pixel, so the layout is designed to work at other resol
 
 Install the required dependencies first, then install IberisUI.
 
-### Step 1: Install ElvUI (from Tukui.org)
-ElvUI is **not on CurseForge**. Download it directly from [tukui.org/elvui](https://tukui.org/elvui) and extract into `Interface/AddOns/`.
+### Step 1: Install ElvUI
+ElvUI is a required dependency and is distributed through its [official site](https://tukui.org/elvui) (not available on CurseForge). Please follow the installation instructions provided there.
 
 ### Step 2: Install BenikUI + IberisUI
 
@@ -133,7 +133,7 @@ The IberisUI setup wizard runs automatically on first login. You can re-run it l
 
 ## Known Issues
 
-- The author primarily plays on **TBC Anniversary (20th anniversary server)**, so testing on **Retail / MoP Classic / Classic Era** is limited. Please report any issues you find via GitHub Issues.
+- The author primarily plays on **TBC Anniversary (20th anniversary server)**, so testing on **Retail / MoP Classic / Classic Era** is limited. Please report any issues you find via the bug tracker linked at the bottom of the page.
 - The ElvUI install wizard is auto-skipped, and **your existing ElvUI profile will be overwritten** by the IberisUI profile — back up first if you want to preserve your current setup.
 - Chat frame (ChatFrame1/4) positions are hard-locked against external changes. **This is intentional.**
 
@@ -163,15 +163,6 @@ Source code from these projects is **not included** in this distribution.
 You may freely use IberisUI and modify it for personal use. Redistributing or republishing any part of this addon outside of the official GitHub repository and CurseForge page is **not permitted**.
 
 ElvUI and ElvUI_BenikUI are governed by their own licenses.
-
-&nbsp;
-
----
-
-## Links
-
-- **GitHub:** https://github.com/Iberis6501/ElvUI_IberisUI
-- **Bug Reports / Issues:** https://github.com/Iberis6501/ElvUI_IberisUI/issues
 
 &nbsp;
 
@@ -249,8 +240,8 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 
 필수 의존성을 먼저 설치하고, 그 다음 IberisUI를 설치하세요.
 
-### 1단계: ElvUI 설치 (Tukui.org)
-ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elvui)에서 직접 다운로드 후 `Interface/AddOns/`에 압축 해제하세요.
+### 1단계: ElvUI 설치
+ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvui)에서 배포됩니다 (CurseForge에는 없음). 해당 사이트의 안내에 따라 설치해주세요.
 
 ### 2단계: BenikUI + IberisUI 설치
 
@@ -308,7 +299,7 @@ ElvUI는 **CurseForge에 없습니다**. [tukui.org/elvui](https://tukui.org/elv
 
 ## 알려진 제약
 
-- 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 GitHub Issues로 알려주세요.
+- 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 페이지 하단 링크의 버그 리포트로 알려주세요.
 - ElvUI 설치 마법사가 자동 스킵됩니다. **기존 ElvUI 프로필이 IberisUI 프로필로 덮어써집니다** — 기존 설정을 보존하려면 적용 전 백업하세요.
 - 채팅창(ChatFrame1/4) 위치는 외부 코드의 변경을 즉시 차단(hard-lock)합니다. **의도된 동작**입니다.
 
@@ -343,7 +334,7 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ---
 
-## 링크
+## Links / 링크
 
 - **GitHub:** https://github.com/Iberis6501/ElvUI_IberisUI
-- **버그 리포트 / Issues:** https://github.com/Iberis6501/ElvUI_IberisUI/issues
+- **Bug Reports / Issues / 버그 리포트:** https://github.com/Iberis6501/ElvUI_IberisUI/issues
