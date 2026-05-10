@@ -12,8 +12,6 @@
 
 ---
 
-# English
-
 ## Greetings
 
 Hi, I'm **서약선 (Iberis)**, the author who shares the IberisUI addon.
@@ -173,8 +171,6 @@ ElvUI and ElvUI_BenikUI are governed by their own licenses.
 &nbsp;
 
 ---
-
-# 한국어 / Korean
 
 ## 인사말
 
