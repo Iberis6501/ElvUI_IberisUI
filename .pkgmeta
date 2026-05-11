@@ -10,5 +10,6 @@ ignore:
   - .pkgmeta
   - assets
   - media
+  - CLAUDE.md
   - "**/*.bak"
   - "**/*.old"
