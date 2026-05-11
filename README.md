@@ -122,14 +122,14 @@ The IberisUI setup wizard runs automatically on first login. You can re-run it l
 ### External Addons
 | Addon | Type | Applied Profile |
 |---|---|---|
-| **BigWigs** | Raid alerts | MonoUI bar layout |
-| **Details** | Damage meter | ElvUI Frame Style skin, 4-window layout (Threat / Healing / Damage / Total) |
-| **InvenRaidFrames3** | Raid frames | 서약선 raid layout |
-| **MRT** | Raid helper | Note window, MarksBar disabled, CDs profile (per-spec cooldowns), InviteTool |
-| **HidingBar** | Minimap button organizer | Per-character profile |
-| **Questie** | Quest helper | Enabled |
-| **ShamanPower** | Shaman helper | Enabled |
-| **TacoTip** | Tooltip addon | Enabled |
+| **[BigWigs](https://www.curseforge.com/wow/search?search=bigwigs)** | Raid alerts | MonoUI bar layout |
+| **[Details](https://www.curseforge.com/wow/search?search=details+damage+meter)** | Damage meter | ElvUI Frame Style skin, 4-window layout (Threat / Healing / Damage / Total) |
+| **[InvenRaidFrames3](https://www.curseforge.com/wow/addons/inven-raid-frame)** | Raid frames | 서약선 raid layout |
+| **[MRT](https://www.curseforge.com/wow/addons/method-raid-tools)** | Raid helper | Note window, MarksBar disabled, CDs profile (per-spec cooldowns), InviteTool |
+| **[HidingBar](https://www.curseforge.com/wow/addons/hidingbar)** | Minimap button organizer | Per-character profile |
+| **[Questie](https://www.curseforge.com/wow/addons/questie)** | Quest helper | Enabled |
+| **[ShamanPower](https://www.curseforge.com/wow/addons/shamanpower)** | Shaman helper | Enabled |
+| **[TacoTip](https://www.curseforge.com/wow/addons/tacotip-gearscore-talents)** | Tooltip addon | Enabled |
 
 &nbsp;
 
@@ -286,14 +286,14 @@ ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvu
 ### 외부 애드온
 | 애드온 | 종류 | 적용 프로필 |
 |---|---|---|
-| **BigWigs** | 레이드 경보 | MonoUI 바 레이아웃 |
-| **Details** | 데미지 미터기 | ElvUI Frame Style 스킨, 4창 구성 (위협수준 / 치유 / 피해 / 총합) |
-| **InvenRaidFrames3** | 공격대 창 | 서약선 레이드 레이아웃 |
-| **MRT** | 공격대 도우미 | Note 창, MarksBar 비활성, CDs 프로필 (전문화별 쿨타임), InviteTool |
-| **HidingBar** | 미니맵 버튼 정렬 | 캐릭터별 프로필 |
-| **Questie** | 퀘스트 도우미 | 활성화 |
-| **ShamanPower** | 주술사 도우미 | 활성화 |
-| **TacoTip** | 툴팁 애드온 | 활성화 |
+| **[BigWigs](https://www.curseforge.com/wow/search?search=bigwigs)** | 레이드 경보 | MonoUI 바 레이아웃 |
+| **[Details](https://www.curseforge.com/wow/search?search=details+damage+meter)** | 데미지 미터기 | ElvUI Frame Style 스킨, 4창 구성 (위협수준 / 치유 / 피해 / 총합) |
+| **[InvenRaidFrames3](https://www.curseforge.com/wow/addons/inven-raid-frame)** | 공격대 창 | 서약선 레이드 레이아웃 |
+| **[MRT](https://www.curseforge.com/wow/addons/method-raid-tools)** | 공격대 도우미 | Note 창, MarksBar 비활성, CDs 프로필 (전문화별 쿨타임), InviteTool |
+| **[HidingBar](https://www.curseforge.com/wow/addons/hidingbar)** | 미니맵 버튼 정렬 | 캐릭터별 프로필 |
+| **[Questie](https://www.curseforge.com/wow/addons/questie)** | 퀘스트 도우미 | 활성화 |
+| **[ShamanPower](https://www.curseforge.com/wow/addons/shamanpower)** | 주술사 도우미 | 활성화 |
+| **[TacoTip](https://www.curseforge.com/wow/addons/tacotip-gearscore-talents)** | 툴팁 애드온 | 활성화 |
 
 &nbsp;
 
