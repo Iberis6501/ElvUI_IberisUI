@@ -348,6 +348,11 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.09 (2026-05-12)
+- Retail(Midnight) 전용 호환 패치 — Anniversary/TBC/Wrath/Vanilla 동작 영향 없음:
+  - **InvenRaidFrames3 프로필 적용 수정**: Retail 빌드는 `InvenRaidFrames3DB.profileKeys["<player> - <realm>"]` 만 읽도록 변경됨. 기존 `CharDB.profile_Xm` 박기는 무시되어 [서약선] 프로필이 적용 안 되던 문제 해소 (`addonProfiles/InvenRaidFrames3.lua`)
+  - **MRT `VMRT.ExCD2.gnGUIDs` nil 에러 우회**: Midnight 클라이언트에서 MRT의 ExCD2 ADDON_LOADED가 `if ExRT.isMN then return end`로 early-return하면서 `gnGUIDs` 초기화 코드를 건너뛰는데, INSPECT_READY 핸들러는 같은 가드가 없어 인스펙트 시마다 `attempt to perform indexed assignment on field 'gnGUIDs' (a nil value)` 발생. MRT 로드 시 우리 쪽에서 빈 테이블 미리 박음 (`core/compat.lua`)
+
 ### v2.08 (2026-05-11)
 - ChatFrame5("커뮤니티") 페이드 아웃 시 `oldAlpha` nil 에러 방지:
   - Blizzard `FCF_FadeOutChatFrame`이 `max(GetAlpha, chatFrame.oldAlpha)` 호출 시 nil 인자
