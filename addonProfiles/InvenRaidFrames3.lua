@@ -38,7 +38,7 @@ function IUI:LoadInvenRaidFrames3Profile()
 	InvenRaidFrames3DB.minimapButton.dragable = true
 	InvenRaidFrames3DB.minimapButton.rounding = 10
 
-	-- 핵심: InvenRaidFrames3는 CharDB.profile_Xm을 읽음 (Core.lua:167)
+	-- Anniversary 빌드의 InvenRaidFrames3는 CharDB.profile_Xm을 읽음 (Core.lua:167)
 	-- 글로벌 DB가 아닌 캐릭별 CharDB에 박아야 적용됨.
 	if not InvenRaidFrames3CharDB then InvenRaidFrames3CharDB = {} end
 	InvenRaidFrames3CharDB.profile      = "서약선"
@@ -49,4 +49,14 @@ function IUI:LoadInvenRaidFrames3Profile()
 	InvenRaidFrames3CharDB.profile_40m   = "서약선"
 	InvenRaidFrames3CharDB.profile_spec1 = "서약선"
 	InvenRaidFrames3CharDB.profile_spec2 = "서약선"
+
+	-- Retail(Midnight) 빌드는 DB.profileKeys["<player> - <realm>"] 만 읽음 (Profile.lua:225-226)
+	if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+		local player = UnitName("player")
+		local realm  = GetRealmName()
+		if player and realm then
+			InvenRaidFrames3DB.profileKeys = InvenRaidFrames3DB.profileKeys or {}
+			InvenRaidFrames3DB.profileKeys[player .. " - " .. realm] = "서약선"
+		end
+	end
 end
