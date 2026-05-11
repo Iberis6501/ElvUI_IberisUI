@@ -180,6 +180,12 @@ function IUI:SetupChatWindows()
 	-- 9. sticky 채널 즉시 적용 (RAID_WARNING)
 	IUI:ApplyStickyChannels()
 
+	-- 10. FCF_FadeOutChatFrame이 ChatFrame_OnEnter 전에 트리거되면 oldAlpha=nil → max() 에러
+	for i = 1, NUM_CHAT_WINDOWS do
+		local cf = _G["ChatFrame"..i]
+		if cf and cf.oldAlpha == nil then cf.oldAlpha = 1 end
+	end
+
 	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 설정 완료 — 좌우 패널 도킹 + chat-cache 저장.")
 	-- PluginInstallStepComplete는 마법사 frame일 때만 존재. 자동 재적용 시점에는 nil 가능.
 	if PluginInstallStepComplete then
