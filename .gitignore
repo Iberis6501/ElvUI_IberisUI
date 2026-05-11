@@ -1,3 +1,6 @@
 # WoW 런타임 생성 파일
 *.bak
 *.old
+
+# assets는 별도 private repo에서 관리
+assets/

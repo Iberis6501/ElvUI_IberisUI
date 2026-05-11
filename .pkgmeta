@@ -9,5 +9,6 @@ ignore:
   - .gitignore
   - .pkgmeta
   - assets
+  - media
   - "**/*.bak"
   - "**/*.old"

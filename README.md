@@ -1,7 +1,7 @@
 # ElvUI_IberisUI
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Iberis6501/ElvUI_IberisUI/main/assets/logo_512.png" width="256" alt="IberisUI logo" />
+  <img src="https://raw.githubusercontent.com/Iberis6501/ElvUI_IberisUI/main/media/logo_512.png" width="256" alt="IberisUI logo" />
 </p>
 
 > A one-click installer that replicates Iberis's complete ElvUI/BenikUI UI — including pre-configured profiles for BigWigs, Details, MRT, and more — across Retail and all Classic clients.
@@ -347,6 +347,11 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 ---
 
 ## 작업 내역 / Changelog
+
+### v2.07 (2026-05-11)
+- 외부 애드온 호환 shim 추가 (`core/compat.lua`):
+  - BfA 이후 제거된 컨테이너 API 17개를 `C_Container.*`에서 전역으로 alias — Postal 등 구버전 애드온의 `GetContainerItemID` 등 nil 호출 해소
+  - `InterfaceAddOnsList_Update` no-op 스텁 — Guidelime 옵션창 토글 시 발생하던 nil 호출 해소
 
 ### v2.06 (2026-05-10)
 - RAID_WARNING(공격대 경보) sticky 채널 자동 설정:
