@@ -9,6 +9,65 @@ function IUI:SetupIberisUI()
 	end
 end
 
+-- 클릭하면 URL 입력박스 다이얼로그를 띄움 (Ctrl+C로 복사 후 ESC/Enter로 닫기)
+function IUI:InstallURLHandler()
+	if IUI._urlHookInstalled then return end
+	IUI._urlHookInstalled = true
+
+	StaticPopupDialogs["IBERISUI_URL"] = {
+		text = "URL 복사: Ctrl+C 후 닫기",
+		button1 = CLOSE,
+		hasEditBox = 1,
+		editBoxWidth = 350,
+		OnShow = function(self)
+			-- 신형 StaticPopup_Game(Anniversary)는 self.EditBox, 레거시는 self.editBox
+			local eb = self.EditBox or self.editBox
+			if eb then
+				eb:SetText(self.data or "")
+				eb:HighlightText()
+				eb:SetFocus()
+			end
+		end,
+		EditBoxOnEnterPressed  = function(self) self:GetParent():Hide() end,
+		EditBoxOnEscapePressed = function(self) self:GetParent():Hide() end,
+		EditBoxOnTextChanged   = function(self) self:SetText(self:GetParent().data or "") end,
+		timeout = 0, whileDead = 1, hideOnEscape = 1, preferredIndex = 3,
+	}
+
+	-- SetItemRef를 hook해서 "url:..." hyperlink 클릭 시 우리 다이얼로그 표시
+	local origSetItemRef = _G.SetItemRef
+	_G.SetItemRef = function(link, text, button, chatFrame)
+		if link and link:sub(1, 4) == "url:" then
+			StaticPopup_Show("IBERISUI_URL", nil, nil, link:sub(5))
+			return
+		end
+		return origSetItemRef(link, text, button, chatFrame)
+	end
+end
+
+function IUI:PrintLoadMessage()
+	if not DEFAULT_CHAT_FRAME then return end
+	IUI:InstallURLHandler()
+
+	local v = IUI.Version or "?"
+	local prev = IberisUIDB.lastSeenVersion
+	local title = IUI.Title or "IberisUI "
+	local cfUrl = "https://www.curseforge.com/wow/addons/iberisui"
+	local cfLink = format("|cffffd200|Hurl:%s|h[%s]|h|r", cfUrl, cfUrl)
+
+	if prev == nil then
+		DEFAULT_CHAT_FRAME:AddMessage(format("%s버전 %s이 로드되었습니다.", title, v))
+		DEFAULT_CHAT_FRAME:AddMessage(format("명령어 |cff7fff7f/iberisui|r — CurseForge: %s", cfLink))
+	elseif prev ~= v then
+		DEFAULT_CHAT_FRAME:AddMessage(format("%s버전 %s이 로드되었습니다. (이전: v%s)", title, v, prev))
+		DEFAULT_CHAT_FRAME:AddMessage(format("변경 사항 확인: %s", cfLink))
+	else
+		DEFAULT_CHAT_FRAME:AddMessage(format("%s버전 %s이 로드되었습니다.", title, v))
+	end
+
+	IberisUIDB.lastSeenVersion = v
+end
+
 function IUI:Initialize()
 	self:RegisterChatCommand("iberisui", "SetupIberisUI")
 
@@ -180,6 +239,9 @@ function IUI:Initialize()
 	if IUI.ApplyTacoTipPatches then
 		pcall(function() IUI:ApplyTacoTipPatches() end)
 	end
+
+	-- 로딩/업데이트 안내 메시지
+	IUI:PrintLoadMessage()
 
 	-- 설치 미완료 시 마법사 자동 실행
 	if not IberisUIDB.install_complete then
