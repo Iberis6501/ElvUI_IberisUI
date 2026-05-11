@@ -348,6 +348,16 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.08 (2026-05-11)
+- ChatFrame5("커뮤니티") 페이드 아웃 시 `oldAlpha` nil 에러 방지:
+  - Blizzard `FCF_FadeOutChatFrame`이 `max(GetAlpha, chatFrame.oldAlpha)` 호출 시 nil 인자
+  - `oldAlpha`는 `ChatFrame_OnEnter`에서 처음 세팅 — 마우스 진입 전 fade 트리거 시 누락
+  - `SetupChatWindows` 마지막에 모든 `ChatFrame.oldAlpha = 1` 안전망 추가
+- 로드/업데이트 안내 메시지 추가:
+  - 채팅창에 IberisUI 버전 자동 출력 (첫 로드 / 업데이트 / 동일 버전 3분기 자동 감지)
+  - 업데이트 분기: "버전 X 로드됨 (이전: vY)" + 변경 사항 링크 표시
+  - CurseForge 링크는 클릭 가능 hyperlink — 클릭 시 URL 입력박스 다이얼로그 (Ctrl+C 복사)
+
 ### v2.07 (2026-05-11)
 - 외부 애드온 호환 shim 추가 (`core/compat.lua`):
   - BfA 이후 제거된 컨테이너 API 17개를 `C_Container.*`에서 전역으로 alias — Postal 등 구버전 애드온의 `GetContainerItemID` 등 nil 호출 해소
