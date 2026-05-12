@@ -174,7 +174,7 @@ ElvUI and ElvUI_BenikUI are governed by their own licenses.
 
 ## 인사말
 
-이베리스 애드온 공유해드리고 있는 **서약선**이라고 합니다.
+**이베리스 UI** 공유해드리고 있는 **서약선**이라고 합니다.
 
 정말 오랜만에 업데이트해서 글 올립니다. ㅎㅎ
 
