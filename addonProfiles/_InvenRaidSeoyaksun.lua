@@ -31,14 +31,15 @@ Engine.SeoyaksunInvenRaidProfile = {
 },
 ["petscale"] = 0.82,
 ["py"] = -652.808349609375,
-["lock"] = true,
+["lock"] = false,
 ["shiftmove"] = true,
 ["enableTankFrame"] = false,
 ["hideBlizzardParty"] = true,
 ["height"] = 40,
+["border"] = false,
 ["borderEdgeValue"] = 1,
 ["px"] = 2.285762310028076,
-["enableSpellTimer"] = false,
+["enableSpellTimer"] = true,
 ["petcolumn"] = 20,
 ["partyTagParty"] = {
 0,
@@ -50,6 +51,9 @@ Engine.SeoyaksunInvenRaidProfile = {
 ["width"] = 69,
 ["petpy"] = 227.7413616943359,
 ["column"] = 5,
+["grouporder"] = {
+5, 6, 7, 8, 1, 2, 3, 4,
+},
 ["colors"] = {
 ["ENERGY"] = {
 nil,

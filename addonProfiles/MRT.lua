@@ -18,11 +18,10 @@ function IUI:LoadMRTProfile()
 	VMRT["Note"]["OptionsFormatting"] = true
 
 	-- ============================================================
-	-- MarksBar (공격대 마크 바 위치/스케일) — 본섭에서 채팅창 가려서 비활성
-	-- 위치/스케일 데이터는 유지 (재활성화 시 사용)
+	-- MarksBar (공격대 마크 바)
 	-- ============================================================
 	VMRT["MarksBar"] = VMRT["MarksBar"] or {}
-	VMRT["MarksBar"]["enabled"] = false
+	VMRT["MarksBar"]["enabled"] = true
 	VMRT["MarksBar"]["Strata"] = "HIGH"
 	VMRT["MarksBar"]["Scale"] = 101
 	VMRT["MarksBar"]["Left"] = res.mrt.marksBarLeft
@@ -31,6 +30,10 @@ function IUI:LoadMRTProfile()
 	VMRT["MarksBar"]["Fix"] = true
 	VMRT["MarksBar"]["pulltimer"] = 10
 	VMRT["MarksBar"]["Show"] = { true, true, true, true, true }
+	-- Show[3] = 징표 기둥 표시. Retail에서만 끔 (Anniversary는 그대로 켜둠).
+	if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+		VMRT["MarksBar"]["Show"][3] = false
+	end
 
 	-- ============================================================
 	-- InviteTool
