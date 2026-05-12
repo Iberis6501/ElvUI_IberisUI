@@ -348,6 +348,17 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.10 (2026-05-12)
+- 서약선 캐릭터 게임 내 설정 변경 반영:
+  - **InvenRaidFrames3 [서약선] 프로필** (`addonProfiles/_InvenRaidSeoyaksun.lua`):
+    - `grouporder = {5,6,7,8,1,2,3,4}` 추가 (공격대 그룹 순서 — 전 클라이언트 공통)
+    - `border = false` 추가 (Retail 한정 효과 — Anniversary 기본값이 이미 false라 무해)
+    - `lock = false` (잠금 해제)
+    - `enableSpellTimer = true` (주문 타이머 활성)
+  - **MRT MarksBar** (`addonProfiles/MRT.lua`):
+    - `enabled = true` — 징표바 사용으로 전환 (기존 false)
+    - Retail 한정 `Show[3] = false` — 징표 기둥 표시 끔 (Anniversary는 그대로 켜둠)
+
 ### v2.09 (2026-05-12)
 - Retail(Midnight) 전용 호환 패치 — Anniversary/TBC/Wrath/Vanilla 동작 영향 없음:
   - **InvenRaidFrames3 프로필 적용 수정**: Retail 빌드는 `InvenRaidFrames3DB.profileKeys["<player> - <realm>"]` 만 읽도록 변경됨. 기존 `CharDB.profile_Xm` 박기는 무시되어 [서약선] 프로필이 적용 안 되던 문제 해소 (`addonProfiles/InvenRaidFrames3.lua`)
