@@ -348,6 +348,21 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.11 (2026-05-13)
+- **ChatFrame5("커뮤니티") 흰 배경 + region oldAlpha nil 에러 차단** (`core/chat.lua`, `core/core.lua`):
+  - `FCF_FadeOutChatFrame`이 ChatFrame 본체의 oldAlpha뿐 아니라 region 객체(`Background`/`TopLeftTexture` 등 9개)의 oldAlpha도 순회 → 이전 v2.08 fix는 본체만 처리해서 region nil 에러 재발
+  - 새 함수 `IUI:ApplyChatFadeFix()` — 모든 ChatFrame + 9개 region oldAlpha=1 초기화 + ChatFrame5는 region 텍스처 `SetTexture(nil)` + `SetAlpha(0)`로 흰 배경 노출 차단
+  - `IUI:Initialize()`에서 즉시 + 1초 지연 두 번 호출 → ChatFrame5가 SV 복원된 후에도 재적용. 매 로그인마다 자동 적용 (마법사 재실행 불필요)
+- **[서약선] 프로필 ElvUI 설정 대량 추가** (`core/install.lua`) — 마법사 재실행 시 반영:
+  - 액션바 재사용 대기시간 폰트 18 → 12 (`cooldown.actionbar.fontSize`)
+  - 플레이어 버프 활성: 한 줄 10개 × 최대 2줄, 24px 아이콘, 본인이 안 건 버프 + 영구 버프(축복/오라 등) 모두 표시 (`player.buffs.*`)
+  - 대상 버프 동일 사이즈/줄/필터 설정 (`target.buffs.*`)
+  - 플레이어/대상 디버프 아이콘 끔 — classtimer로만 표시 (`player.debuffs.enable`, `target.debuffs.enable = false`)
+  - 플레이어/대상 classtimer(aurabar) 활성: 강화효과(buffs) 위 attach, 본인+남이 건 디버프 모두 표시 (`player.aurabar.*`, `target.aurabar.*`)
+  - 대상 우상단 CC 강조 큰 아이콘 element 끔 (`target.auras.enable = false`) — 본인이 건 디버프가 missing-texture 분홍 사각형으로 노출되던 현상 해소
+  - 이름표 우측 CC 강조 element 끔 (ENEMY_NPC/ENEMY_PLAYER/FRIENDLY_PLAYER `auras.enable = false`)
+- **기존 유저 안내**: ElvUI 설정 항목은 마법사 재실행해야 [서약선] 프로필 기준으로 새로 박힘. 다만 유저가 직접 커스텀한 ElvUI 설정이 있다면 마법사 재실행 시 해당 키가 [서약선] 기본값으로 덮어써짐 — 마법사 재실행 여부는 유저 선택. 채팅창 fix(`core/chat.lua`, `core/core.lua`)는 매 로그인마다 자동 적용되므로 마법사 재실행 불필요.
+
 ### v2.10 (2026-05-12)
 - 서약선 캐릭터 게임 내 설정 변경 반영:
   - **InvenRaidFrames3 [서약선] 프로필** (`addonProfiles/_InvenRaidSeoyaksun.lua`):

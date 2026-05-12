@@ -41,6 +41,42 @@ function IUI:ApplyStickyChannels()
 	end
 end
 
+-- ChatFrame region 텍스처 이름 (FCF_FadeOutChatFrame이 순회하는 9개)
+local CHAT_REGIONS = {
+	"Background", "TopLeftTexture", "BottomLeftTexture",
+	"TopRightTexture", "BottomRightTexture",
+	"LeftTexture", "RightTexture", "BottomTexture", "TopTexture",
+}
+
+-- FCF_FadeOutChatFrame nil 에러 + ChatFrame5 흰 배경 동시 차단.
+-- (1) ChatFrame 본체 + 9개 region 객체의 oldAlpha를 1로 초기화 — max(GetAlpha, oldAlpha) nil 에러 방지.
+-- (2) ChatFrame5는 ElvUI Chat 모듈이 styling 안 해서 Blizzard 기본 region 텍스처가 그대로 노출됨
+--     → 텍스처를 비우고 SetAlpha(0) — fade 사이클에서 흰색 노출 차단.
+-- 매 로그인마다 호출되어야 함 (region 객체는 SV 저장 안 됨 → 매 세션 nil 상태로 시작).
+function IUI:ApplyChatFadeFix()
+	for i = 1, NUM_CHAT_WINDOWS do
+		local cf = _G["ChatFrame"..i]
+		if cf then
+			if cf.oldAlpha == nil then cf.oldAlpha = 1 end
+			for _, r in ipairs(CHAT_REGIONS) do
+				local obj = _G["ChatFrame"..i..r]
+				if obj and obj.oldAlpha == nil then obj.oldAlpha = 1 end
+			end
+		end
+	end
+
+	-- ChatFrame5(커뮤니티) region 텍스처 강제 제거 — 흰 배경 차단
+	if _G.ChatFrame5 then
+		for _, r in ipairs(CHAT_REGIONS) do
+			local obj = _G["ChatFrame5"..r]
+			if obj then
+				if obj.SetTexture then pcall(obj.SetTexture, obj, nil) end
+				pcall(obj.SetAlpha, obj, 0)
+			end
+		end
+	end
+end
+
 local function applyMsgGroups(frame, groups)
 	if not frame then return end
 	-- 기존 그룹 전부 제거 후 재설정
@@ -180,11 +216,8 @@ function IUI:SetupChatWindows()
 	-- 9. sticky 채널 즉시 적용 (RAID_WARNING)
 	IUI:ApplyStickyChannels()
 
-	-- 10. FCF_FadeOutChatFrame이 ChatFrame_OnEnter 전에 트리거되면 oldAlpha=nil → max() 에러
-	for i = 1, NUM_CHAT_WINDOWS do
-		local cf = _G["ChatFrame"..i]
-		if cf and cf.oldAlpha == nil then cf.oldAlpha = 1 end
-	end
+	-- 10. ChatFrame oldAlpha nil 에러 + ChatFrame5 흰 배경 차단
+	IUI:ApplyChatFadeFix()
 
 	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 설정 완료 — 좌우 패널 도킹 + chat-cache 저장.")
 	-- PluginInstallStepComplete는 마법사 frame일 때만 존재. 자동 재적용 시점에는 nil 가능.

@@ -77,6 +77,14 @@ function IUI:Initialize()
 	-- 매 로그인마다 sticky 채널 재적용 (ChatTypeInfo는 세션마다 reset됨)
 	if self.ApplyStickyChannels then self:ApplyStickyChannels() end
 
+	-- ChatFrame oldAlpha nil 에러 + ChatFrame5 흰 배경 차단.
+	-- region 객체는 SV 저장 안 됨 → 매 세션 nil 상태. ChatFrame5는 SV에서 복원되므로
+	-- E:Delay로 살짝 늦춰 ChatFrame5 복원 후 region 텍스처 제거가 확실히 적용되도록 함.
+	if self.ApplyChatFadeFix then
+		pcall(function() self:ApplyChatFadeFix() end)
+		E:Delay(1, function() pcall(function() IUI:ApplyChatFadeFix() end) end)
+	end
+
 	-- DataTexts.lua:551 (panel nil 인덱스) 에러 방지
 	-- ElvUI DT:UpdatePanelInfo가 등록되지 않은 panelName으로 호출되면 panel.db nil 인덱스 에러.
 	-- panel을 우리가 dtPanels에 박을 때마다 발생 가능 (BUI custom panel 등록 시점 차이).
