@@ -28,7 +28,7 @@ local SeoyaksunProfile = {
 			["LibDBIcon10_iWillRemember_MinimapButton"] = { ["tstmp"] = 1778164447 },
 			["LibDBIcon10_LoonBestInSlot"]        = { ["tstmp"] = 1774619893 },
 			["LibDBIcon10_BIS-TBC"]               = { ["tstmp"] = 1778164447 },
-			["LibDBIcon10_RaidBook"]              = { ["tstmp"] = 1778400480 },
+			["LibDBIcon10_IberisRaidAuction"]     = { ["tstmp"] = 1778400480 },
 			["LibDBIcon10_BigWigs"]               = { true, ["tstmp"] = 1778164447 },
 			["LibDBIcon10_DetailsStreamer"]       = { true, ["tstmp"] = 1778164447 },
 			["LibDBIcon10_WeakAuras"]             = { ["tstmp"] = 1778164447 },

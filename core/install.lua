@@ -833,7 +833,7 @@ local function ApplyIberisProfile()
 			local mpDT = E.db["datatexts"]["panels"]
 			mpDT["BuiMiddleDTPanel"] = mpDT["BuiMiddleDTPanel"] or {}
 			mpDT["BuiMiddleDTPanel"][1] = "LDB_ItemRack"
-			mpDT["BuiMiddleDTPanel"][2] = "LDB_RaidBook"
+			mpDT["BuiMiddleDTPanel"][2] = "LDB_IberisRaidAuction"
 			mpDT["BuiMiddleDTPanel"][3] = "LDB_AtlasLoot"
 			mpDT["BuiMiddleDTPanel"][4] = "LDB_SavedClassicIcon"
 			mpDT["BuiMiddleDTPanel"][5] = "LDB_FindParty"
