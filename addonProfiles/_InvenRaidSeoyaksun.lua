@@ -52,7 +52,7 @@ Engine.SeoyaksunInvenRaidProfile = {
 ["petpy"] = 227.7413616943359,
 ["column"] = 5,
 ["grouporder"] = {
-5, 6, 7, 8, 1, 2, 3, 4,
+1, 2, 3, 4, 5, 6, 7, 8,
 },
 ["colors"] = {
 ["ENERGY"] = {
