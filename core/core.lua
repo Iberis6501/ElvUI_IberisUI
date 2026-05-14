@@ -1,12 +1,105 @@
 local IUI, E, L = unpack((select(2, ...)))
 
-function IUI:SetupIberisUI()
+function IUI:SetupIberisUI(input)
+	-- 서브커맨드 분기 (인자 없으면 인스톨 마법사)
+	local arg, rest
+	if type(input) == "string" then
+		arg, rest = input:match("^%s*(%S+)%s*(.*)$")
+	end
+	if arg == "testbars" then
+		IUI:TestAuraBars(tonumber(rest))
+		return
+	end
+
 	local pi = E:GetModule("PluginInstaller", true)
 	if pi then
 		pi:Queue(IUI.installTable)
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r PluginInstaller 모듈 없음")
 	end
+end
+
+-- 정렬 테스트용 가짜 aurabar 표시 (player + target).
+-- /iui testbars N → N개 가짜 바 표시. /iui testbars 0 → 제거.
+-- 실제 aurabar 위에 그냥 같은 부모 frame에 얹어서 시각만 흉내. 실 버프 안 걸어도 정렬 확인 가능.
+function IUI:TestAuraBars(count)
+	count = tonumber(count) or 5
+
+	-- 기존 테스트 바 정리
+	if IUI._testBars then
+		for _, list in pairs(IUI._testBars) do
+			for _, bar in ipairs(list) do
+				bar:Hide(); bar:ClearAllPoints(); bar:SetParent(nil)
+			end
+		end
+		IUI._testBars = nil
+	end
+
+	if count <= 0 then
+		DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00IberisUI|r 테스트 바 제거")
+		return
+	end
+
+	local UF = E:GetModule("UnitFrames", true)
+	if not UF then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r UnitFrames 모듈 없음")
+		return
+	end
+
+	IUI._testBars = {}
+	for _, unitName in ipairs({ "player", "target" }) do
+		local frame = UF.units and UF.units[unitName]
+		local bars  = frame and frame.AuraBars
+		local db    = E.db.unitframe.units[unitName] and E.db.unitframe.units[unitName].aurabar
+		if bars and db then
+			local below     = db.anchorPoint == "BELOW"
+			local barWidth  = bars.width or (frame.UNIT_WIDTH and (frame.UNIT_WIDTH - 30)) or 200
+			local cdFontSize = (E.db.cooldown and E.db.cooldown.aurabars and E.db.cooldown.aurabars.fontSize) or 12
+			local list = {}
+			for i = 1, count do
+				local bar = CreateFrame("Frame", nil, bars, "BackdropTemplate")
+				bar:SetSize(barWidth, db.height)
+				bar:SetBackdrop({ bgFile = E.media.blankTex })
+				local r = 0.20 + ((i-1) % 4) * 0.12
+				local g = 0.55 + ((i-1) % 3) * 0.10
+				local b = 0.20
+				bar:SetBackdropColor(r, g, b, 0.85)
+
+				local name = bar:CreateFontString(nil, "OVERLAY")
+				name:FontTemplate(E.media.normFont, E.db.unitframe.fontSize or 11, E.db.unitframe.fontOutline or "OUTLINE")
+				name:SetPoint("LEFT", bar, "LEFT", 4, 0)
+				name:SetJustifyH("LEFT")
+				name:SetText(unitName .. " test " .. i)
+
+				local timeText = bar:CreateFontString(nil, "OVERLAY")
+				timeText:FontTemplate(E.media.normFont, cdFontSize, "OUTLINE")
+				timeText:SetPoint("RIGHT", bar, "RIGHT", -4, 0)
+				timeText:SetJustifyH("RIGHT")
+				timeText:SetText(string.format("%d:%02d", math.random(0, 9), math.random(0, 59)))
+
+				local prev = list[i-1]
+				local spacing = db.spacing or 0
+				if prev then
+					if below then
+						bar:SetPoint("TOP", prev, "BOTTOM", 0, -spacing)
+					else
+						bar:SetPoint("BOTTOM", prev, "TOP", 0, spacing)
+					end
+				else
+					if below then
+						bar:SetPoint("TOP", bars, "TOP", 0, 0)
+					else
+						bar:SetPoint("BOTTOM", bars, "BOTTOM", 0, 0)
+					end
+				end
+				bar:Show()
+				table.insert(list, bar)
+			end
+			IUI._testBars[unitName] = list
+		end
+	end
+
+	DEFAULT_CHAT_FRAME:AddMessage(string.format("|cff00ff00IberisUI|r 테스트 바 %d개 표시 (player+target). 제거: /iui testbars 0", count))
 end
 
 -- 클릭하면 URL 입력박스 다이얼로그를 띄움 (Ctrl+C로 복사 후 ESC/Enter로 닫기)
@@ -70,6 +163,7 @@ end
 
 function IUI:Initialize()
 	self:RegisterChatCommand("iberisui", "SetupIberisUI")
+	self:RegisterChatCommand("iui",      "SetupIberisUI")  -- 짧은 별칭
 
 	-- IberisUIDB는 SavedVariablesPerCharacter — 캐릭별 분리. charKey 매핑 불필요.
 	IberisUIDB = IberisUIDB or {}
