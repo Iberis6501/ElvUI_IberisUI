@@ -599,6 +599,9 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["player"]["aurabar"]["attachTo"] = "BUFFS"
 	E.db["unitframe"]["units"]["player"]["aurabar"]["friendlyAuraType"] = "HARMFUL"
 	E.db["unitframe"]["units"]["player"]["aurabar"]["priority"] = "Blacklist,blockNoDuration,Personal,NonPersonal"
+	E.db["unitframe"]["units"]["player"]["aurabar"]["maxBars"] = 40
+	E.db["unitframe"]["units"]["player"]["aurabar"]["height"] = 13
+	E.db["unitframe"]["units"]["player"]["aurabar"]["yOffset"] = 3
 	E.db["unitframe"]["units"]["player"]["buffs"]["attachTo"] = "FRAME"
 	E.db["unitframe"]["units"]["player"]["buffs"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["buffs"]["filter"] = "HELPFUL"
@@ -700,6 +703,13 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["target"]["aurabar"]["anchorPoint"] = "ABOVE"
 	E.db["unitframe"]["units"]["target"]["aurabar"]["attachTo"] = "BUFFS"
 	E.db["unitframe"]["units"]["target"]["aurabar"]["priority"] = "Blacklist,blockNoDuration,Personal,NonPersonal"
+	E.db["unitframe"]["units"]["target"]["aurabar"]["maxBars"] = 40
+	E.db["unitframe"]["units"]["target"]["aurabar"]["height"] = 13
+	E.db["unitframe"]["units"]["target"]["aurabar"]["yOffset"] = 3
+	-- 바 높이 줄인 만큼 지속시간 숫자도 살짝 축소 (기본 16 → 12)
+	E.db["cooldown"] = E.db["cooldown"] or {}
+	E.db["cooldown"]["aurabars"] = E.db["cooldown"]["aurabars"] or {}
+	E.db["cooldown"]["aurabars"]["fontSize"] = 12
 	E.db["unitframe"]["units"]["target"]["auras"]["enable"] = false
 	E.db["unitframe"]["units"]["target"]["buffs"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["buffs"]["filter"] = "HELPFUL"
@@ -832,11 +842,19 @@ local function ApplyIberisProfile()
 			-- → dtPanels에 안전하게 박을 수 있음
 			local mpDT = E.db["datatexts"]["panels"]
 			mpDT["BuiMiddleDTPanel"] = mpDT["BuiMiddleDTPanel"] or {}
-			mpDT["BuiMiddleDTPanel"][1] = "LDB_ItemRack"
-			mpDT["BuiMiddleDTPanel"][2] = "LDB_IberisRaidAuction"
-			mpDT["BuiMiddleDTPanel"][3] = "LDB_AtlasLoot"
-			mpDT["BuiMiddleDTPanel"][4] = "LDB_SavedClassicIcon"
-			mpDT["BuiMiddleDTPanel"][5] = "LDB_FindParty"
+			if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+				mpDT["BuiMiddleDTPanel"][1] = "LDB_BigWigs"
+				mpDT["BuiMiddleDTPanel"][2] = "LDB_IberisRaidAuction"
+				mpDT["BuiMiddleDTPanel"][3] = "LDB_InvenRaidFrames3"
+				mpDT["BuiMiddleDTPanel"][4] = "LDB_MRT"
+				mpDT["BuiMiddleDTPanel"][5] = "LDB_Leatrix_Plus"
+			else
+				mpDT["BuiMiddleDTPanel"][1] = "LDB_ItemRack"
+				mpDT["BuiMiddleDTPanel"][2] = "LDB_IberisRaidAuction"
+				mpDT["BuiMiddleDTPanel"][3] = "LDB_AtlasLoot"
+				mpDT["BuiMiddleDTPanel"][4] = "LDB_SavedClassicIcon"
+				mpDT["BuiMiddleDTPanel"][5] = "LDB_FindParty"
+			end
 			mpDT["BuiMiddleDTPanel"]["battleground"] = false
 			mpDT["BuiMiddleDTPanel"]["enable"]       = true
 			if Layout.LoadDataTexts then Layout:LoadDataTexts() end
