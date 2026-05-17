@@ -348,6 +348,19 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.12 (2026-05-17)
+- **InvenRaidFrames3 메인 공격대 위치 정밀화** (`core/resolutions.lua`):
+  - [이베링] 본섭 실측 anchor 좌표 반영 + 불성 기념일 클라이언트 px 추가 보정
+- **본섭(Retail) LDB 슬롯 분기 + aurabar 슬롯/높이/오프셋 조정** (`core/install.lua`) — 마법사 재실행 시 반영
+- **LDB/HidingBar 프로필 RaidBook → IberisRaidAuction 교체** (`core/install.lua`, `addonProfiles/HidingBar.lua`):
+  - GDKP 장부 애드온을 자체 fork ([IberisRaidAuction](https://github.com/Iberis6501/IberisRaidAuction)) 로 전환
+  - `BuiMiddleDTPanel[2]` LDB 슬롯 + HidingBar 미니맵 아이콘 자동 hide 목록 갱신
+  - 마법사 재실행 시 반영
+- **InvenRaidFrames3 [서약선] grouporder 기본 순서로 복귀** (`addonProfiles/_InvenRaidSeoyaksun.lua`) — 마법사 재실행 시 반영
+- **`/iui testbars N` 슬래시 명령 추가** (`core/core.lua`):
+  - `/iui` 를 `/iberisui` 별칭으로 등록 + aurabar 정렬 테스트용 가짜 바 N개 생성
+- **표현 통일 (docs)**: 'IberisUI 애드온' → '이베리스 UI' (`README.md`)
+
 ### v2.11 (2026-05-13)
 - **ChatFrame5("커뮤니티") 흰 배경 + region oldAlpha nil 에러 차단** (`core/chat.lua`, `core/core.lua`):
   - `FCF_FadeOutChatFrame`이 ChatFrame 본체의 oldAlpha뿐 아니라 region 객체(`Background`/`TopLeftTexture` 등 9개)의 oldAlpha도 순회 → 이전 v2.08 fix는 본체만 처리해서 region nil 에러 재발
