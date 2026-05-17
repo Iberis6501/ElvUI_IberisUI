@@ -194,6 +194,27 @@ function IUI:Initialize()
 		IUI._dtUpdateWrapped = true
 	end
 
+	-- AdditionalPower(드루이드 변신 마나바) 가시성 fix.
+	-- ClassBars.lua:Construct_AdditionalPowerBar가 element.displayPairs를 세팅하지 않아
+	-- oUF additionalpower.lua:191의 Visibility 검사에서 항상 nil → ElementDisable → :Hide().
+	-- ClassPower bars에는 UF.ALT_POWER_INFO가 박히지만(line 431) AdditionalPower엔 누락됨.
+	-- Configure_ClassBar 호출 시마다 backfill + 이미 만들어진 player frame에도 즉시 주입.
+	local UF = E:GetModule("UnitFrames", true)
+	if UF and UF.Configure_ClassBar and UF.ALT_POWER_INFO and not IUI._additionalPowerHooked then
+		IUI._additionalPowerHooked = true
+		hooksecurefunc(UF, "Configure_ClassBar", function(_, frame)
+			if frame and frame.AdditionalPower and not frame.AdditionalPower.displayPairs then
+				frame.AdditionalPower.displayPairs = UF.ALT_POWER_INFO
+			end
+		end)
+		if _G.ElvUF_Player and _G.ElvUF_Player.AdditionalPower and not _G.ElvUF_Player.AdditionalPower.displayPairs then
+			_G.ElvUF_Player.AdditionalPower.displayPairs = UF.ALT_POWER_INFO
+			if _G.ElvUF_Player.AdditionalPower.ForceUpdate then
+				pcall(function() _G.ElvUF_Player.AdditionalPower:ForceUpdate() end)
+			end
+		end
+	end
+
 	-- ElvUI / BenikUI 설치 마법사 자동 스킵.
 	-- 우리 IUI:Init은 ElvUI E:Initialize() 후에 호출되므로 ElvUI 마법사가 이미 떠있을 수 있음.
 	-- (1) install_complete 플래그 설정, (2) ElvUI InstallFrame 직접 닫기, (3) PluginInstaller 큐에서
