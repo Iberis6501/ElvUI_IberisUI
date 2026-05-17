@@ -348,6 +348,16 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.13 (2026-05-18)
+- **드루이드 변신 시 추가 마나바 표시 fix** (`core/core.lua`):
+  - ElvUI Classic 계열에서 `AdditionalPower` element의 `displayPairs`가 비어 있어 곰형/표범형 변신 중 마나바가 oUF visibility 검사에서 자동으로 숨겨지던 현상 해소
+  - `UF:Configure_ClassBar` hook으로 매 호출마다 `UF.ALT_POWER_INFO`를 backfill + 이미 만들어진 player frame에 즉시 주입 + `ForceUpdate`
+  - 매 로그인마다 자동 적용 (마법사 재실행 불필요)
+- **Guidelime 창 크기 갱신** (`addonProfiles/Guidelime.lua`) — 마법사 재실행 시 반영:
+  - mainFrameWidth: 350 → 359.65
+  - mainFrameHeight: 400 → 311.62
+  - ([연약선] 실측값)
+
 ### v2.12 (2026-05-17)
 - **InvenRaidFrames3 메인 공격대 위치 정밀화** (`core/resolutions.lua`):
   - [이베링] 본섭 실측 anchor 좌표 반영 + 불성 기념일 클라이언트 px 추가 보정

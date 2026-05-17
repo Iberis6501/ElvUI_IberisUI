@@ -1,6 +1,6 @@
 ## Interface: 20505
 ## Author: Iberis
-## Version: 2.12
+## Version: 2.13
 ## Title: |cff1784d1ElvUI|r |cffff9900IberisUI|r
 ## Notes: Iberis personal profile addon (Seoyaksun) for ElvUI Classic
 ## Notes-koKR: 신규 유저용 [서약선] 캐릭터 ElvUI/외부 애드온 배치 배포 애드온
