@@ -22,8 +22,8 @@ function IUI:LoadGuidelimeProfile()
 	GuidelimeDataChar["mainFrameRelative"] = "TOPLEFT"
 	GuidelimeDataChar["mainFrameX"]        = 3
 	GuidelimeDataChar["mainFrameY"]        = -121
-	GuidelimeDataChar["mainFrameWidth"]    = 350
-	GuidelimeDataChar["mainFrameHeight"]   = 400
+	GuidelimeDataChar["mainFrameWidth"]    = 359.6507873535156
+	GuidelimeDataChar["mainFrameHeight"]   = 311.619140625
 
 	-- 화살표(커서) — TOP 기준 화면 상단 중앙
 	GuidelimeDataChar["showArrow"]         = true
