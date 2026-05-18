@@ -10,7 +10,7 @@ local IUI, E, L = unpack((select(2, ...)))
 local PROFILE = {
 	-- ElvUI movers (모두 절대 좌표)
 	movers = {
-		["AdditionalPowerMover"]            = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,491,288",
+		["AdditionalPowerMover"]            = "BOTTOM,ElvUIParent,BOTTOM,-222,333",
 		["AlertFrameMover"]                 = "TOP,UIParent,TOP,0,-208",
 		["ArenaHeaderMover"]                = "TOPRIGHT,UIParent,TOPRIGHT,-243,-381",
 		["BNETMover"]                       = "TOPLEFT,UIParent,TOPLEFT,368,-284",

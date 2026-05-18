@@ -616,7 +616,11 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["player"]["castbar"]["insideInfoPanel"] = false
 	E.db["unitframe"]["units"]["player"]["castbar"]["overlayOnFrame"] = "InfoPanel"
 	E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 255
-	E.db["unitframe"]["units"]["player"]["classAdditional"]["width"] = 255
+	E.db["unitframe"]["units"]["player"]["classAdditional"]["enable"] = true
+	E.db["unitframe"]["units"]["player"]["classAdditional"]["frameLevel"] = 2
+	E.db["unitframe"]["units"]["player"]["classAdditional"]["height"] = 78
+	E.db["unitframe"]["units"]["player"]["classAdditional"]["orientation"] = "VERTICAL"
+	E.db["unitframe"]["units"]["player"]["classAdditional"]["width"] = 15
 	E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 140
 	E.db["unitframe"]["units"]["player"]["classbar"]["smoothbars"] = true
 	if not E.db["unitframe"]["units"]["player"]["customTexts"] then E.db["unitframe"]["units"]["player"]["customTexts"] = {} end
