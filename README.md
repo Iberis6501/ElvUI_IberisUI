@@ -348,6 +348,12 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.14 (2026-05-19)
+- **AdditionalPower(드루이드 변신 마나바) 위치/크기 갱신** (`core/install.lua`, `core/resolutions.lua`) — 마법사 재실행 시 반영:
+  - AdditionalPowerMover anchor: `BOTTOMLEFT,491,288` → `BOTTOM,-222,333`
+  - classAdditional 모양: 가로 `width 255` → 세로 `VERTICAL 15x78` (`enable`/`frameLevel=2` 명시)
+  - ([연약선] 드루이드 실측. Default 프로필 공유라 서약선/연약선 등 모든 [-약선] 캐릭터에 동일 적용)
+
 ### v2.13 (2026-05-18)
 - **드루이드 변신 시 추가 마나바 표시 fix** (`core/core.lua`):
   - ElvUI Classic 계열에서 `AdditionalPower` element의 `displayPairs`가 비어 있어 곰형/표범형 변신 중 마나바가 oUF visibility 검사에서 자동으로 숨겨지던 현상 해소
