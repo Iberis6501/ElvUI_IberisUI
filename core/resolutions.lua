@@ -108,9 +108,11 @@ local PROFILE = {
 	},
 
 	-- 채팅창 (chat.lua 사용) — ChatFrame1/4 고정 크기
+	-- extra: 좌측 패널 바로 위 보조 패널 (chatPanelCount==3일 때만 사용, IberisExtraChatPanel에 도킹)
 	chatFrames = {
 		left  = { width = 338, height = 133 },
 		right = { width = 338, height = 133 },
+		extra = { width = 338, height = 133 },
 	},
 
 	-- BigWigs InfoBox (BOTTOMRIGHT 기준 x/y)

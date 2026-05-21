@@ -1021,21 +1021,32 @@ IUI.installTable = {
 			PluginInstallFrame.Option1:SetText("애드온 배치 적용")
 		end,
 		-- ------------------------------------------------------------
-		-- Step 3: 채팅창 설정
+		-- Step 3: 채팅창 설정 (2개 / 3개 선택)
+		--   2개: 좌(일반 + 커뮤니티 탭) + 우(전리품)
+		--   3개: 좌(일반) + 보조(커뮤니티 단독) + 우(전리품). 보조 = LeftChatPanel 위 3px.
 		-- ------------------------------------------------------------
 		[3] = function()
-			HideOption2(); HideOption3(); ShowIberisLogo()
+			HideOption3(); ShowIberisLogo()
 			PluginInstallFrame.SubTitle:SetText("채팅창 설정")
 			PluginInstallFrame.Desc1:SetText("ElvUI 채팅창을 좌·우 채팅 패널에 임베드합니다.")
-			PluginInstallFrame.Desc2:SetText("일반/길드/파티 → 좌측, 전리품 → 우측 패널.")
+			PluginInstallFrame.Desc2:SetText("3개 선택 시 좌측 패널 위 3px 간격에 보조 패널 추가 — 커뮤니티 탭이 좌측에서 빠져 보조 패널에 단독 도킹됩니다.")
 			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
 
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function()
-				local ok, err = pcall(function() IUI:SetupChatWindows() end)
+				local ok, err = pcall(function() IUI:SetupChatWindows(2) end)
 				if not ok then DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 오류: "..tostring(err)) end
 			end)
-			PluginInstallFrame.Option1:SetText("채팅창 설치")
+			PluginInstallFrame.Option1:SetText("채팅창 2개 설치")
+
+			if PluginInstallFrame.Option2 then
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", function()
+					local ok, err = pcall(function() IUI:SetupChatWindows(3) end)
+					if not ok then DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 채팅 오류: "..tostring(err)) end
+				end)
+				PluginInstallFrame.Option2:SetText("채팅창 3개 설치")
+			end
 		end,
 		-- ------------------------------------------------------------
 		-- Step 4: 완료/리로드

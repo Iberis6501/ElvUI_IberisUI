@@ -289,6 +289,34 @@ function IUI:Initialize()
 					if FCF_SetLocked then FCF_SetLocked(ChatFrame4, true) end
 				end
 			end
+
+			-- 보조 패널/ChatFrame (chatPanelCount==3일 때만)
+			if IberisUIDB.chatPanelCount == 3 then
+				local panel = _G.IberisExtraChatPanel
+				local extra = IUI._extraChatFrame
+
+				-- 패널 위치 강제 — LeftChatPanel 바로 위 6px 간격
+				if panel and _G.LeftChatPanel then
+					local p, parent, _, x, y = panel:GetPoint(1)
+					if forceAll or p ~= "BOTTOMLEFT" or parent ~= _G.LeftChatPanel
+						or math.abs((x or 0) - 0) > 0.5 or math.abs((y or 0) - 6) > 0.5 then
+						panel:ClearAllPoints()
+						panel:SetPoint("BOTTOMLEFT", _G.LeftChatPanel, "TOPLEFT", 0, 6)
+						panel:SetSize(pw, ph)
+					end
+				end
+
+				-- 보조 ChatFrame 도킹 강제
+				if extra and panel then
+					if forceAll or not IsCorrectlyDocked(extra, panel, expW, expH) then
+						extra:ClearAllPoints()
+						extra:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 5, 5)
+						extra:SetSize(expW, expH)
+						extra:SetUserPlaced(true)
+						if FCF_SetLocked then FCF_SetLocked(extra, true) end
+					end
+				end
+			end
 		end)
 		-- panelSnap 항상 보존
 		if E.db and E.db.chat then
@@ -300,32 +328,43 @@ function IUI:Initialize()
 	IUI._ForceDockChats = ForceDockChats
 
 	-- 즉시 정상화 + lock flag로 무한 루프 방지.
-	-- 외부 코드(ElvUI/BenikUI/Blizzard)가 ChatFrame1.SetPoint 또는 ClearAllPoints 호출하면
-	-- 우리 hook이 즉시 "BOTTOMLEFT, LeftChatPanel, BOTTOMLEFT, 5, 5"로 강제. 시각적 깜빡임 없음.
-	-- 우리 SetPoint도 hook trigger되지만 lock flag로 무한 루프 차단.
+	-- 외부 코드(ElvUI/BenikUI/Blizzard)가 ChatFrame.SetPoint 또는 ClearAllPoints 호출하면
+	-- 우리 hook이 즉시 정상 위치로 복원. 시각적 깜빡임 없음.
+	--
+	-- panel은 frame.__iuiHardLockPanel에 박아 동적 참조 — chatPanelCount 토글 시
+	-- ChatFrame5의 lock 대상을 LeftChatPanel ↔ IberisExtraChatPanel 전환 가능.
+	-- panel == nil 이면 hook 무동작 (lock 해제 효과).
 	local function HardLockChat(frame, panel)
-		if not frame or not panel or frame.__iuiHardLocked then return end
+		if not frame then return end
+		frame.__iuiHardLockPanel = panel  -- nil 허용 (lock 해제)
+		if frame.__iuiHardLocked then return end
 		frame.__iuiHardLocked = true
 
 		hooksecurefunc(frame, "SetPoint", function(self, point, parent)
 			if self.__iuiInternalCall then return end
+			local p = self.__iuiHardLockPanel
+			if not p then return end
 			-- 우리 의도 위치가 아니면 즉시 정상화
-			if point ~= "BOTTOMLEFT" or parent ~= panel then
+			if point ~= "BOTTOMLEFT" or parent ~= p then
 				self.__iuiInternalCall = true
 				self:ClearAllPoints()
-				self:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 5, 5)
+				self:SetPoint("BOTTOMLEFT", p, "BOTTOMLEFT", 5, 5)
 				self.__iuiInternalCall = false
 			end
 		end)
 
 		hooksecurefunc(frame, "ClearAllPoints", function(self)
 			if self.__iuiInternalCall then return end
+			local p = self.__iuiHardLockPanel
+			if not p then return end
 			-- ClearAllPoints 직후 위치가 풀려있음 → 즉시 우리 위치로
 			self.__iuiInternalCall = true
-			self:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 5, 5)
+			self:SetPoint("BOTTOMLEFT", p, "BOTTOMLEFT", 5, 5)
 			self.__iuiInternalCall = false
 		end)
 	end
+	-- chat.lua에서도 호출 가능하게 노출 (HardLockChat 호출 / panel = nil로 lock 해제)
+	IUI._HardLockChat = HardLockChat
 
 	if CH and not IUI._chatHookInstalled then
 		-- PositionChats(복수) — 전체 갱신 시 우리 위치 + size 강제
@@ -351,7 +390,16 @@ function IUI:Initialize()
 
 		-- 초기 강제 적용만 — repeating timer는 위치 변경 race를 일으켜 화면이 왔다갔다 함
 		if IberisUIDB and IberisUIDB.install_complete then
-			E:Delay(1, function() ForceDockChats(true) end)
+			E:Delay(1, function()
+				-- chatPanelCount==3이면 보조 패널/ChatFrame 복구 후 hard-lock
+				if IberisUIDB.chatPanelCount == 3 and IUI.SetupExtraChat then
+					pcall(function() IUI:SetupExtraChat() end)
+					if IUI._extraChatFrame and _G.IberisExtraChatPanel then
+						HardLockChat(IUI._extraChatFrame, _G.IberisExtraChatPanel)
+					end
+				end
+				ForceDockChats(true)
+			end)
 		end
 	end
 
