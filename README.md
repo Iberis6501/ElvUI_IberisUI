@@ -348,6 +348,9 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.18 (2026-05-23)
+- MRT 공격대 마크 바(MarksBar) 기본 비활성화 (`enabled=false`)
+
 ### v2.17 (2026-05-23)
 - 유닛프레임 player/target aurabar(클래스타이머 막대) 비활성화 — 아이콘 buff/debuff 표시로 통일
 - player/target debuffs 표시 + 정렬 갱신 (`perrow=10, numrows=5`)
