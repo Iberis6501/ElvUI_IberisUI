@@ -40,7 +40,7 @@ Engine.SeoyaksunInvenRaidProfile = {
 ["borderEdgeValue"] = 1,
 ["px"] = 2.285762310028076,
 ["enableSpellTimer"] = true,
-["petcolumn"] = 20,
+["petcolumn"] = 13,
 ["partyTagParty"] = {
 0,
 0,

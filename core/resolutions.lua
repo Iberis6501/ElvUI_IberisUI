@@ -172,12 +172,12 @@ local PROFILE = {
 		                    x = -357.0796813964844, y =  206.8249359130859 },
 	},
 
-	-- InvenRaidFrames3 (절대 픽셀 좌표) — [나약선] 실측 (account profile 갱신값)
+	-- InvenRaidFrames3 (절대 픽셀 좌표) — [콩약선] 실측 (account profile 갱신값)
 	invenRaid = {
 		px         =    2.031800031661987,
 		py         = -299.2842407226563,
-		petpx      =  352.9941345214843,
-		petpy      = -299.3477355957032,
+		petpx      =  352.4866394042969,
+		petpy      = -299.8980725097657,
 		tankpx     =  -99.9998779296875,
 		tankpy     =  -12,
 	},

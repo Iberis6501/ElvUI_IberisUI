@@ -594,7 +594,7 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["pet"]["power"]["xOffset"] = 0
 	E.db["unitframe"]["units"]["pet"]["width"] = 125
 	E.db["unitframe"]["units"]["pettarget"]["health"]["smoothbars"] = true
-	E.db["unitframe"]["units"]["player"]["aurabar"]["enable"] = true
+	E.db["unitframe"]["units"]["player"]["aurabar"]["enable"] = false  -- 클래스타이머(막대) → 아이콘 buff만 표시 (화면 가림 의견)
 	E.db["unitframe"]["units"]["player"]["aurabar"]["anchorPoint"] = "ABOVE"
 	E.db["unitframe"]["units"]["player"]["aurabar"]["attachTo"] = "BUFFS"
 	E.db["unitframe"]["units"]["player"]["aurabar"]["friendlyAuraType"] = "HARMFUL"
@@ -655,7 +655,8 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"]["xOffset"] = 8
 	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"]["yOffset"] = 0
 	E.db["unitframe"]["units"]["player"]["debuffs"]["attachTo"] = "BUFFS"
-	E.db["unitframe"]["units"]["player"]["debuffs"]["enable"] = false
+	E.db["unitframe"]["units"]["player"]["debuffs"]["perrow"] = 10
+	E.db["unitframe"]["units"]["player"]["debuffs"]["numrows"] = 5
 	E.db["unitframe"]["units"]["player"]["disableMouseoverGlow"] = true
 	E.db["unitframe"]["units"]["player"]["healPrediction"]["absorbStyle"] = "NORMAL"
 	E.db["unitframe"]["units"]["player"]["health"]["attachTextTo"] = "InfoPanel"
@@ -703,7 +704,7 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["raidpet"]["numGroups"] = 5
 	E.db["unitframe"]["units"]["raidpet"]["width"] = 70
 	E.db["unitframe"]["units"]["tank"]["middleClickFocus"] = true
-	E.db["unitframe"]["units"]["target"]["aurabar"]["enable"] = true
+	E.db["unitframe"]["units"]["target"]["aurabar"]["enable"] = false  -- 클래스타이머(막대) → 아이콘 buff만 표시
 	E.db["unitframe"]["units"]["target"]["aurabar"]["anchorPoint"] = "ABOVE"
 	E.db["unitframe"]["units"]["target"]["aurabar"]["attachTo"] = "BUFFS"
 	E.db["unitframe"]["units"]["target"]["aurabar"]["priority"] = "Blacklist,blockNoDuration,Personal,NonPersonal"
@@ -715,6 +716,7 @@ local function ApplyIberisProfile()
 	E.db["cooldown"]["aurabars"] = E.db["cooldown"]["aurabars"] or {}
 	E.db["cooldown"]["aurabars"]["fontSize"] = 12
 	E.db["unitframe"]["units"]["target"]["auras"]["enable"] = false
+	E.db["unitframe"]["units"]["target"]["buffs"]["clickThrough"] = true
 	E.db["unitframe"]["units"]["target"]["buffs"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["buffs"]["filter"] = "HELPFUL"
 	E.db["unitframe"]["units"]["target"]["buffs"]["height"] = 24
@@ -723,7 +725,9 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["target"]["buffs"]["perrow"] = 10
 	E.db["unitframe"]["units"]["target"]["buffs"]["priority"] = "Blacklist,Whitelist,Personal,NonPersonal"
 	E.db["unitframe"]["units"]["target"]["buffs"]["spacing"] = 1
-	E.db["unitframe"]["units"]["target"]["debuffs"]["enable"] = false
+	E.db["unitframe"]["units"]["target"]["debuffs"]["clickThrough"] = true
+	E.db["unitframe"]["units"]["target"]["debuffs"]["perrow"] = 10
+	E.db["unitframe"]["units"]["target"]["debuffs"]["numrows"] = 5
 	E.db["unitframe"]["units"]["target"]["castbar"]["height"] = 40
 	E.db["unitframe"]["units"]["target"]["castbar"]["icon"] = false
 	E.db["unitframe"]["units"]["target"]["castbar"]["iconPosition"] = "RIGHT"
