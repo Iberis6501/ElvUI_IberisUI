@@ -348,6 +348,11 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.19 (2026-05-24)
+- ElvUI player/target buffs/debuffs `priority` 필터 비활성화 (`""`) — 모든 버프/디버프 표시
+- MRT 공격대 생존기(ExCD2) 프로필 추가: 활성화 + 수동 등록 스킬 3종(33206/1044/12043) + 즐겨찾기/색상 매핑/컬럼 설정
+- InvenRaidFrames3 `enableClassBuff=false` (`_InvenRaidSeoyaksun.lua`)
+
 ### v2.18 (2026-05-23)
 - MRT 공격대 마크 바(MarksBar) 기본 비활성화 (`enabled=false`)
 
