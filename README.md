@@ -348,6 +348,12 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.17 (2026-05-23)
+- 유닛프레임 player/target aurabar(클래스타이머 막대) 비활성화 — 아이콘 buff/debuff 표시로 통일
+- player/target debuffs 표시 + 정렬 갱신 (`perrow=10, numrows=5`)
+- target buffs/debuffs `clickThrough=true`
+- InvenRaidFrames3 소환수 프레임 위치 미세 조정 + 가로 칸 수 `20 → 13`
+
 ### v2.14 (2026-05-19)
 - **AdditionalPower(드루이드 변신 마나바) 위치/크기 갱신** (`core/install.lua`, `core/resolutions.lua`) — 마법사 재실행 시 반영:
   - AdditionalPowerMover anchor: `BOTTOMLEFT,491,288` → `BOTTOM,-222,333`
