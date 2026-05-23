@@ -21,7 +21,7 @@ function IUI:LoadMRTProfile()
 	-- MarksBar (공격대 마크 바)
 	-- ============================================================
 	VMRT["MarksBar"] = VMRT["MarksBar"] or {}
-	VMRT["MarksBar"]["enabled"] = true
+	VMRT["MarksBar"]["enabled"] = false
 	VMRT["MarksBar"]["Strata"] = "HIGH"
 	VMRT["MarksBar"]["Scale"] = 101
 	VMRT["MarksBar"]["Left"] = res.mrt.marksBarLeft
