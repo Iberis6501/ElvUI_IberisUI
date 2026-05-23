@@ -108,4 +108,92 @@ function IUI:LoadMRTProfile()
 	VMRT["RaidGroups"]["upd4550"] = true
 	VMRT["RaidGroups"]["SplitGroups"] = { true, true, true, true }
 	VMRT["RaidGroups"]["KeepPosInGroup"] = true
+
+	-- ============================================================
+	-- ExCD2 (공격대 생존기 표시)
+	-- [서약선] 실측: 수동 추가 스킬 3개(PRIEST 33206 / PALADIN 1044 / MAGE 12043) + 활성/즐겨찾기/색상 매핑.
+	-- gnGUIDs / Save / Profiles 는 사용자별 데이터라 박지 않음.
+	-- ============================================================
+	VMRT["ExCD2"] = VMRT["ExCD2"] or {}
+	VMRT["ExCD2"]["enabled"]   = true
+	VMRT["ExCD2"]["lock"]      = true
+	VMRT["ExCD2"]["NoRaid"]    = true
+	VMRT["ExCD2"]["upd4380"]   = true
+	VMRT["ExCD2"]["upd4525"]   = true
+	VMRT["ExCD2"]["Left"]      = 156.4917449951172
+	VMRT["ExCD2"]["Top"]       = 1093.206298828125
+	VMRT["ExCD2"]["Priority"]  = {}
+	-- 수동 추가 스킬 (사용자가 in-game에서 직접 등록한 항목)
+	VMRT["ExCD2"]["userDB"] = {
+		{ 33206, "PRIEST,USER",  1, { 33206, 120,  8 } },
+		{  1044, "PALADIN,USER", 1, {  1044,  25, 10 } },
+		{ 12043, "MAGE,USER",    1, { 12043, 180, 10 } },
+	}
+	-- 활성 스킬 (CDs 창에 표시 ON)
+	VMRT["ExCD2"]["CDE"] = {
+		[20748] = true, [1020] = true,  [12043] = true, [16190] = true,
+		[871]   = true, [12975] = true, [33206] = true, [32182] = true,
+		[10310] = true, [1161]  = true, [34477] = true, [1044]  = true,
+		[5209]  = true, [19752] = true, [10060] = true, [20608] = true,
+		[31884] = true,
+	}
+	-- 즐겨찾기
+	VMRT["ExCD2"]["OptFav"] = {
+		[12975] = true, [34477] = true, [19752] = true, [10060] = true,
+		[1161]  = true, [31884] = true, [20608] = true, [10310] = true,
+		[1020]  = true, [2825]  = false,[16190] = true, [32182] = true,
+		[871]   = true,
+	}
+	-- 색상 슬롯 매핑 ("spellID;1" = 슬롯 번호)
+	VMRT["ExCD2"]["CDECol"] = {
+		["31884;1"] = 2, ["10310;1"] = 2, ["5209;1"]  = 3, ["16190;1"] = 2,
+		["1020;1"]  = 2, ["10060;1"] = 2, ["34477;1"] = 3, ["19752;1"] = 2,
+		["20608;1"] = 2, ["12472;1"] = 3, ["20748;1"] = 3, ["12043;1"] = 3,
+		["32182;1"] = 2, ["1044;1"]  = 2,
+	}
+	-- 컬럼 설정 (11개 슬롯 — colSet[1..10]은 동일, [11]은 textureFile 포함 상세 설정)
+	local excd2DefaultCol = {
+		enabled              = true,
+		frameGeneral         = true,
+		iconGray             = true,
+		textGeneral          = true,
+		methodsGeneral       = true,
+		blacklistGeneral     = true,
+		fontShadow           = false,
+		iconGeneral          = true,
+		fontOutline          = true,
+		visibilityGeneral    = true,
+		fontGeneral          = true,
+		textureAnimation     = true,
+		textureGeneral       = true,
+	}
+	local function copyTbl(t) local r = {} for k,v in pairs(t) do r[k]=v end return r end
+	VMRT["ExCD2"]["colSet"] = {
+		copyTbl(excd2DefaultCol), copyTbl(excd2DefaultCol), copyTbl(excd2DefaultCol),
+		-- [4..10]: enabled 키 없음 (활성 컬럼은 1~3만)
+		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
+		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
+		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
+		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
+		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
+		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
+		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
+		-- [11]: textureFile 포함 상세 설정
+		{
+			textureSmoothAnimation  = true,
+			fontOutline             = true,
+			frameLines              = 4,
+			textureFile             = "Interface\\AddOns\\MRT\\media\\bar16.tga",
+			blacklistGeneral        = true,
+			frameWidth              = 125,
+			iconGray                = true,
+			visibilityGeneral       = true,
+			fontShadow              = false,
+			iconCooldownShowSwipe   = true,
+			textureAnimation        = true,
+			textureClassTimeLine    = true,
+			frameColumns            = 1,
+			iconHideBlizzardEdges   = true,
+		},
+	}
 end
