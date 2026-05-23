@@ -47,7 +47,7 @@ Engine.SeoyaksunInvenRaidProfile = {
 0,
 },
 ["useManager"] = false,
-["petanchor"] = "BOTTOMLEFT",
+["petanchor"] = "TOPLEFT",
 ["width"] = 69,
 ["petpy"] = 227.7413616943359,
 ["column"] = 5,
