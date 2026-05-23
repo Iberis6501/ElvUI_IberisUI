@@ -3,7 +3,7 @@
 local _, Engine = ...
 Engine.SeoyaksunInvenRaidProfile = {
 ["lockAlt"] = true,
-["enableClassBuff"] = true,
+["enableClassBuff"] = false,
 ["font"] = {
 ["shadow"] = false,
 ["attribute"] = "OUTLINE",

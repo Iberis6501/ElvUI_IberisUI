@@ -609,7 +609,7 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["player"]["buffs"]["keepSizeRatio"] = true
 	E.db["unitframe"]["units"]["player"]["buffs"]["numrows"] = 2
 	E.db["unitframe"]["units"]["player"]["buffs"]["perrow"] = 10
-	E.db["unitframe"]["units"]["player"]["buffs"]["priority"] = "Blacklist,Whitelist,Personal,NonPersonal"
+	E.db["unitframe"]["units"]["player"]["buffs"]["priority"] = ""
 	E.db["unitframe"]["units"]["player"]["buffs"]["spacing"] = 1
 	E.db["unitframe"]["units"]["player"]["castbar"]["height"] = 28
 	E.db["unitframe"]["units"]["player"]["castbar"]["icon"] = false
@@ -657,6 +657,7 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["player"]["debuffs"]["attachTo"] = "BUFFS"
 	E.db["unitframe"]["units"]["player"]["debuffs"]["perrow"] = 10
 	E.db["unitframe"]["units"]["player"]["debuffs"]["numrows"] = 5
+	E.db["unitframe"]["units"]["player"]["debuffs"]["priority"] = ""
 	E.db["unitframe"]["units"]["player"]["disableMouseoverGlow"] = true
 	E.db["unitframe"]["units"]["player"]["healPrediction"]["absorbStyle"] = "NORMAL"
 	E.db["unitframe"]["units"]["player"]["health"]["attachTextTo"] = "InfoPanel"
@@ -723,11 +724,12 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["target"]["buffs"]["keepSizeRatio"] = true
 	E.db["unitframe"]["units"]["target"]["buffs"]["numrows"] = 2
 	E.db["unitframe"]["units"]["target"]["buffs"]["perrow"] = 10
-	E.db["unitframe"]["units"]["target"]["buffs"]["priority"] = "Blacklist,Whitelist,Personal,NonPersonal"
+	E.db["unitframe"]["units"]["target"]["buffs"]["priority"] = ""
 	E.db["unitframe"]["units"]["target"]["buffs"]["spacing"] = 1
 	E.db["unitframe"]["units"]["target"]["debuffs"]["clickThrough"] = true
 	E.db["unitframe"]["units"]["target"]["debuffs"]["perrow"] = 10
 	E.db["unitframe"]["units"]["target"]["debuffs"]["numrows"] = 5
+	E.db["unitframe"]["units"]["target"]["debuffs"]["priority"] = ""
 	E.db["unitframe"]["units"]["target"]["castbar"]["height"] = 40
 	E.db["unitframe"]["units"]["target"]["castbar"]["icon"] = false
 	E.db["unitframe"]["units"]["target"]["castbar"]["iconPosition"] = "RIGHT"
