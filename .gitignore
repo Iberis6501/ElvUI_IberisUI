@@ -7,3 +7,6 @@ CHANGELOG.md
 
 # assets는 별도 private repo에서 관리
 assets/
+
+# VS Code workspace 설정 (개인용)
+.vscode/
