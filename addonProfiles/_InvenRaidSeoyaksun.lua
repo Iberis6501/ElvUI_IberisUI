@@ -1,7 +1,7 @@
--- [서약선] InvenRaidFrames3 프로필 (WTF SV 자동 추출)
--- 출처: InvenRaidFrames3DB.profiles["기본값"] ([서약선] 캐릭이 실사용한 프로필)
+-- InvenRaidFrames3 프로필 (WTF SV 자동 추출, 서약선 실측 데이터)
+-- 박는 키 이름은 "이베리스" — 캐릭터명 충돌 회피 (서약선 캐릭이 자기 이름 프로필을 만나면 default로 리셋되는 InvenRaidFrames3 빌드 동작 우회)
 local _, Engine = ...
-Engine.SeoyaksunInvenRaidProfile = {
+Engine.IberisInvenRaidProfile = {
 ["lockAlt"] = true,
 ["enableClassBuff"] = false,
 ["font"] = {
