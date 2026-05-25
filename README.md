@@ -348,6 +348,12 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.20 (2026-05-26)
+- 네임플레이트: 신형 엔진(앤니버서리 등)에서 ElvUI가 못 숨긴 블리자드 기본 네임플레이트가 흰 박스로 비치던 문제 수정 (`NAME_PLATE_UNIT_ADDED`에서 블리자드 `UnitFrame` 숨김, 자동 적용)
+- MRT 공격대 생존기(ExCD2) 외형 견본 갱신 (`bar19`, 폭 130, 폰트/색상)
+- ElvUI 중앙 데이터텍스트 패널 첫 칸에 MRT(`LDB_MRT`) 등록
+- MRT 징표바(MarksBar) 활성화 + 위치 갱신
+
 ### v2.19 (2026-05-24)
 - ElvUI player/target buffs/debuffs `priority` 필터 비활성화 (`""`) — 모든 버프/디버프 표시
 - MRT 공격대 생존기(ExCD2) 프로필 추가: 활성화 + 수동 등록 스킬 3종(33206/1044/12043) + 즐겨찾기/색상 매핑/컬럼 설정
