@@ -154,8 +154,8 @@ local PROFILE = {
 
 	-- MRT MarksBar
 	mrt = {
-		marksBarLeft = 0.714597225189209,
-		marksBarTop  = 224.5321044921875,
+		marksBarLeft = 1583.6611328125,
+		marksBarTop  = 224.5307159423828,
 	},
 
 	-- ShamanPower (주술사 전용 위치)
