@@ -4,5 +4,6 @@
 	<Script file="install.lua"/>
 	<Script file="chat.lua"/>
 	<Script file="core.lua"/>
+	<Script file="nameplate_blizzfix.lua"/>
 	<Script file="options.lua"/>
 </Ui>
