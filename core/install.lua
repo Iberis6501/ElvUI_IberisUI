@@ -615,6 +615,8 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["player"]["castbar"]["icon"] = false
 	E.db["unitframe"]["units"]["player"]["castbar"]["insideInfoPanel"] = false
 	E.db["unitframe"]["units"]["player"]["castbar"]["overlayOnFrame"] = "InfoPanel"
+	E.db["unitframe"]["units"]["player"]["castbar"]["strataAndLevel"]["useCustomStrata"] = true
+	E.db["unitframe"]["units"]["player"]["castbar"]["strataAndLevel"]["frameStrata"] = "MEDIUM"
 	E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 255
 	E.db["unitframe"]["units"]["player"]["classAdditional"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["classAdditional"]["frameLevel"] = 2
@@ -736,6 +738,8 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["target"]["castbar"]["iconXOffset"] = 10
 	E.db["unitframe"]["units"]["target"]["castbar"]["insideInfoPanel"] = false
 	E.db["unitframe"]["units"]["target"]["castbar"]["overlayOnFrame"] = "InfoPanel"
+	E.db["unitframe"]["units"]["target"]["castbar"]["strataAndLevel"]["useCustomStrata"] = true
+	E.db["unitframe"]["units"]["target"]["castbar"]["strataAndLevel"]["frameStrata"] = "MEDIUM"
 	E.db["unitframe"]["units"]["target"]["castbar"]["width"] = 255
 	if not E.db["unitframe"]["units"]["target"]["customTexts"] then E.db["unitframe"]["units"]["target"]["customTexts"] = {} end
 	if not E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"] then E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"] = {} end
