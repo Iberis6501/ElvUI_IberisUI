@@ -111,7 +111,7 @@ function IUI:LoadMRTProfile()
 
 	-- ============================================================
 	-- ExCD2 (공격대 생존기 표시)
-	-- [서약선] 실측: 수동 추가 스킬 3개(PRIEST 33206 / PALADIN 1044 / MAGE 12043) + 활성/즐겨찾기/색상 매핑.
+	-- [술약선] 실측: 수동 추가 스킬 3개(PRIEST 33206 / PALADIN 1044 / MAGE 12043) + 활성/즐겨찾기/색상 매핑.
 	-- gnGUIDs / Save / Profiles 는 사용자별 데이터라 박지 않음.
 	-- ============================================================
 	VMRT["ExCD2"] = VMRT["ExCD2"] or {}
@@ -129,12 +129,11 @@ function IUI:LoadMRTProfile()
 		{  1044, "PALADIN,USER", 1, {  1044,  25, 10 } },
 		{ 12043, "MAGE,USER",    1, { 12043, 180, 10 } },
 	}
-	-- 활성 스킬 (CDs 창에 표시 ON) — [서약선] 실측 13종
+	-- 활성 스킬 (CDs 창에 표시 ON) — [술약선] 실측 12종 (주술사 본인 영웅심 32182 제외)
 	VMRT["ExCD2"]["CDE"] = {
 		[12975] = true, [1044]  = true, [871]   = true, [10060] = true,
 		[20765] = true, [20608] = true, [33206] = true, [29166] = true,
 		[1020]  = true, [16190] = true, [20748] = true, [12043] = true,
-		[32182] = true,
 	}
 	-- 즐겨찾기
 	VMRT["ExCD2"]["OptFav"] = {
@@ -143,7 +142,7 @@ function IUI:LoadMRTProfile()
 		[1020]  = true, [2825]  = false,[16190] = true, [32182] = true,
 		[871]   = true,
 	}
-	-- 색상 슬롯 매핑 ("spellID;1" = 슬롯 번호) — [서약선] 실측 16종
+	-- 색상 슬롯 매핑 ("spellID;1" = 슬롯 번호) — [술약선] 실측 16종
 	VMRT["ExCD2"]["CDECol"] = {
 		["31884;1"] = 2, ["1044;1"]  = 2, ["32182;1"] = 1, ["10310;1"] = 2,
 		["1020;1"]  = 2, ["16190;1"] = 2, ["5209;1"]  = 3, ["10060;1"] = 1,
@@ -177,7 +176,7 @@ function IUI:LoadMRTProfile()
 		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
 		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
 		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
-		-- [11]: textureFile 포함 상세 설정 ([서약선] 실측 — bar16 견본 외형, frameLines 50)
+		-- [11]: textureFile 포함 상세 설정 ([술약선] 실측 — bar16 견본 외형, frameLines 50)
 		{
 			textureFile              = "Interface\\AddOns\\MRT\\media\\bar16.tga",
 			frameWidth               = 130,
