@@ -129,13 +129,12 @@ function IUI:LoadMRTProfile()
 		{  1044, "PALADIN,USER", 1, {  1044,  25, 10 } },
 		{ 12043, "MAGE,USER",    1, { 12043, 180, 10 } },
 	}
-	-- 활성 스킬 (CDs 창에 표시 ON)
+	-- 활성 스킬 (CDs 창에 표시 ON) — [서약선] 실측 13종
 	VMRT["ExCD2"]["CDE"] = {
-		[20748] = true, [1020] = true,  [12043] = true, [16190] = true,
-		[871]   = true, [12975] = true, [33206] = true, [32182] = true,
-		[10310] = true, [1161]  = true, [34477] = true, [1044]  = true,
-		[5209]  = true, [19752] = true, [10060] = true, [20608] = true,
-		[31884] = true,
+		[12975] = true, [1044]  = true, [871]   = true, [10060] = true,
+		[20765] = true, [20608] = true, [33206] = true, [29166] = true,
+		[1020]  = true, [16190] = true, [20748] = true, [12043] = true,
+		[32182] = true,
 	}
 	-- 즐겨찾기
 	VMRT["ExCD2"]["OptFav"] = {
@@ -144,12 +143,12 @@ function IUI:LoadMRTProfile()
 		[1020]  = true, [2825]  = false,[16190] = true, [32182] = true,
 		[871]   = true,
 	}
-	-- 색상 슬롯 매핑 ("spellID;1" = 슬롯 번호)
+	-- 색상 슬롯 매핑 ("spellID;1" = 슬롯 번호) — [서약선] 실측 16종
 	VMRT["ExCD2"]["CDECol"] = {
-		["31884;1"] = 2, ["10310;1"] = 2, ["5209;1"]  = 3, ["16190;1"] = 2,
-		["1020;1"]  = 2, ["10060;1"] = 2, ["34477;1"] = 3, ["19752;1"] = 2,
-		["20608;1"] = 2, ["12472;1"] = 3, ["20748;1"] = 3, ["12043;1"] = 3,
-		["32182;1"] = 2, ["1044;1"]  = 2,
+		["31884;1"] = 2, ["1044;1"]  = 2, ["32182;1"] = 1, ["10310;1"] = 2,
+		["1020;1"]  = 2, ["16190;1"] = 2, ["5209;1"]  = 3, ["10060;1"] = 1,
+		["34477;1"] = 3, ["19752;1"] = 2, ["20608;1"] = 2, ["12472;1"] = 1,
+		["20748;1"] = 3, ["12043;1"] = 3, ["29166;1"] = 3, ["20765;1"] = 3,
 	}
 	-- 컬럼 설정 (11개 슬롯 — colSet[1..10]은 동일, [11]은 textureFile 포함 상세 설정)
 	local excd2DefaultCol = {
@@ -178,11 +177,11 @@ function IUI:LoadMRTProfile()
 		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
 		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
 		(function() local t = copyTbl(excd2DefaultCol); t.enabled = nil; return t end)(),
-		-- [11]: textureFile 포함 상세 설정 ([서약선] 실측 — bar19 견본 외형)
+		-- [11]: textureFile 포함 상세 설정 ([서약선] 실측 — bar16 견본 외형, frameLines 50)
 		{
-			textureFile              = "Interface\\AddOns\\MRT\\media\\bar19.tga",
+			textureFile              = "Interface\\AddOns\\MRT\\media\\bar16.tga",
 			frameWidth               = 130,
-			frameLines               = 4,
+			frameLines               = 50,
 			frameBetweenLines        = 1,
 			fontName                 = "Fonts\\2002.ttf",
 			fontSize                 = 12,
