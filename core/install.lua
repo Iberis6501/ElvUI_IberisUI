@@ -885,6 +885,11 @@ local function ApplyIberisProfile()
 	-- Anniversary Classic의 Blizzard_EditMode와 ElvUI Minimap mover 사이에 알려진
 	-- "Cannot anchor protected frames" 경고와 충돌 우려 → 코드 제거.
 
+	-- CVar — 설치 시 1회 적용, config-cache.wtf에 저장되어 유지됨.
+	-- 이후 유저가 직접 켜면 덮어쓰지 않음(설치 시점만).
+	-- Sound_EnableErrorSpeech: "아직 사용할 수 없습니다" 류 음성 에러 끄기.
+	pcall(SetCVar, "Sound_EnableErrorSpeech", 0)
+
 	E:StaggeredUpdateAll(nil, true)
 
 	-- ActionBars 모듈 갱신 — buttons/buttonsPerRow 변경 반영
