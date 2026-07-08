@@ -5,7 +5,5 @@
 	<Script file="chat.lua"/>
 	<Script file="core.lua"/>
 	<Script file="nameplate_blizzfix.lua"/>
-	<Script file="nameplate_scale_fix.lua"/>
-	<Script file="fontslug_fix.lua"/>
 	<Script file="options.lua"/>
 </Ui>

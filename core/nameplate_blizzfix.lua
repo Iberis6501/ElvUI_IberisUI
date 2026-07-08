@@ -26,3 +26,29 @@ fixer:SetScript('OnEvent', function(_, _, unit)
 	if not C_NamePlate then return end
 	HideBlizzPlate(C_NamePlate.GetNamePlateForUnit(unit))
 end)
+
+-- ElvUI 15.18이 TBC 네임플레이트 SetScale 로직에 E.TBC를 추가하면서(Nameplates.lua의
+-- StylePlate/StyleTargetPlate/ScalePlate: `(E.Retail or E.Mists or E.TBC) and 1 or E.uiscale`)
+-- UIScale<1 환경에서 이름표가 1/uiscale 배 커졌다. 15.17까지는 TBC도 E.uiscale로 스케일했다.
+-- TBC에서 이 세 함수 뒤에 hook을 걸어 스케일을 E.uiscale로 되돌려 15.17 크기를 복원한다.
+-- (별도 파일이 아니라 nameplate_blizzfix에 통합 — 신규 파일+xml 등록 의존을 피해
+--  CF App 부분 업데이트로 load_core.xml이 옛 버전이어도 로드가 보장된다.)
+if E and E.TBC then
+	local NP = E:GetModule('NamePlates', true)
+	if NP then
+		local function restoreScale(_, nameplate)
+			if nameplate and nameplate.SetScale then
+				nameplate:SetScale(E.uiscale)
+			end
+		end
+		if NP.StylePlate       then hooksecurefunc(NP, 'StylePlate', restoreScale) end
+		if NP.StyleTargetPlate then hooksecurefunc(NP, 'StyleTargetPlate', restoreScale) end
+		if NP.ScalePlate then
+			hooksecurefunc(NP, 'ScalePlate', function(_, nameplate, scale)
+				if nameplate and nameplate.SetScale then
+					nameplate:SetScale((scale or 1) * E.uiscale)
+				end
+			end)
+		end
+	end
+end

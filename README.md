@@ -348,6 +348,12 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.23 (2026-07-09)
+- ElvUI 15.18 SLUG 폰트 시스템(TBC/Mists 미지원)으로 인한 폰트·체력바(피통) 에러 근본 수정 — `fontSlug`를 SV에서 자동 비활성(ElvDB 직접)
+- 폰트(SLUG)/이름표 스케일 우회를 코어 파일(compat/nameplate_blizzfix)로 통합 — CF 부분 업데이트 시에도 로드 보장
+- 타겟(선택) 이름표 확대 기본 적용 (`nameplateSelectedScale` 1.25)
+- 대상 버프/디버프 마우스오버 툴팁 표시 (`clickThrough` off)
+
 ### v2.22 (2026-07-08)
 - ElvUI 15.18의 TBC 네임플레이트 스케일 변경으로 UIScale<1 환경에서 이름표가 커지던 문제 복원
 

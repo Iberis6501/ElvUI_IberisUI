@@ -1,3 +1,34 @@
+local _, E = unpack((select(2, ...)))
+
+-- ElvUI 15.18 SLUG 폰트 시스템은 TBC/Mists 클라에서 CreateFontFamily가 지원되지 않아
+-- SetFont(#3)·CreateFontFamily(#4) 에러를 낸다(폰트 생성 중단 → 유닛프레임 체력바 등 로드 실패).
+-- E:OnInitialize()(Initialize.lua:523, ElvUI ADDON_LOADED 시 AceAddon이 호출)의 UpdateMedia가
+-- IberisUI보다 먼저 실행되므로(ElvUI가 RequiredDeps로 먼저 로드), CanFlagSlug 오버라이드로는
+-- 이 최초 에러를 막을 수 없다. 대신 근본값 E.global.general.fontSlug를 끈다:
+--   • ElvDB(SV)에 저장 → 다음 로드부터 OnInitialize가 처음부터 SLUG를 안 써서 에러 0.
+--   • 이번 세션은 이미 폰트가 생성됐으므로 StaggeredUpdateAll로 재구성(피통 복구).
+-- fontSlug=false면 E:CanFlagSlug도 자동으로 nil을 반환하므로 SLUG 경로 전체가 차단된다.
+-- Retail은 SLUG가 정상이라 개입하지 않는다.
+if E and (E.TBC or E.Mists) then
+	-- 런타임 값(이번 세션 즉시 반영)
+	if E.global and E.global.general then
+		E.global.general.fontSlug = false
+	end
+	-- ★ SV 원본(ElvDB.global)을 직접 끈다. E.global은 OnInitialize에서 ElvDB.global을
+	--   CopyTable한 "복사본"이라, E.global만 바꾸면 SV에 저장이 보장되지 않는다(다음 로드 시
+	--   ElvDB의 true를 다시 읽어 에러 재발). OnInitialize가 실제로 읽는 ElvDB를 직접 false로 둔다.
+	local db = _G.ElvDB
+	if db then
+		db.global = db.global or {}
+		db.global.general = db.global.general or {}
+		db.global.general.fontSlug = false
+	end
+	-- 이번 세션은 이미 SLUG로 폰트가 생성됐으므로 재갱신으로 정상화(피통 복구)
+	if E.Delay and E.StaggeredUpdateAll then
+		E:Delay(1, function() pcall(function() E:StaggeredUpdateAll() end) end)
+	end
+end
+
 -- Restore container API globals removed in BfA (now C_Container.*).
 -- Some legacy addons (Postal 등) still call the removed globals directly;
 -- aliasing only when the global is missing keeps this safe on every client.

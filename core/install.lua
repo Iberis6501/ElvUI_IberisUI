@@ -719,7 +719,7 @@ local function ApplyIberisProfile()
 	E.db["cooldown"]["aurabars"] = E.db["cooldown"]["aurabars"] or {}
 	E.db["cooldown"]["aurabars"]["fontSize"] = 12
 	E.db["unitframe"]["units"]["target"]["auras"]["enable"] = false
-	E.db["unitframe"]["units"]["target"]["buffs"]["clickThrough"] = true
+	E.db["unitframe"]["units"]["target"]["buffs"]["clickThrough"] = false
 	E.db["unitframe"]["units"]["target"]["buffs"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["buffs"]["filter"] = "HELPFUL"
 	E.db["unitframe"]["units"]["target"]["buffs"]["height"] = 24
@@ -728,7 +728,7 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["units"]["target"]["buffs"]["perrow"] = 10
 	E.db["unitframe"]["units"]["target"]["buffs"]["priority"] = ""
 	E.db["unitframe"]["units"]["target"]["buffs"]["spacing"] = 1
-	E.db["unitframe"]["units"]["target"]["debuffs"]["clickThrough"] = true
+	E.db["unitframe"]["units"]["target"]["debuffs"]["clickThrough"] = false
 	E.db["unitframe"]["units"]["target"]["debuffs"]["perrow"] = 10
 	E.db["unitframe"]["units"]["target"]["debuffs"]["numrows"] = 5
 	E.db["unitframe"]["units"]["target"]["debuffs"]["priority"] = ""
@@ -889,6 +889,8 @@ local function ApplyIberisProfile()
 	-- 이후 유저가 직접 켜면 덮어쓰지 않음(설치 시점만).
 	-- Sound_EnableErrorSpeech: "아직 사용할 수 없습니다" 류 음성 에러 끄기.
 	pcall(SetCVar, "Sound_EnableErrorSpeech", 0)
+	-- nameplateSelectedScale: 타겟(선택)한 이름표만 확대. ElvUI 기본은 TBC에서 1.0(확대 없음).
+	pcall(SetCVar, "nameplateSelectedScale", 1.25)
 
 	E:StaggeredUpdateAll(nil, true)
 
