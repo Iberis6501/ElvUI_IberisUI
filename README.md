@@ -348,6 +348,9 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.22 (2026-07-08)
+- ElvUI 15.18의 TBC 네임플레이트 스케일 변경으로 UIScale<1 환경에서 이름표가 커지던 문제 복원
+
 ### v2.21 (2026-07-08)
 - ElvUI 15.18 SLUG 폰트 시스템(TBC/Mists 미지원)으로 인한 폰트 에러(SetFont/CreateFontFamily) 차단
 - Postal 거래차단(TradeBlock) 모듈 기본 비활성화 프로필 추가
