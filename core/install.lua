@@ -930,6 +930,7 @@ local function SetupAddons()
 	tryLoad("ShamanPower",      function() IUI:LoadShamanPowerProfile() end)
 	tryLoad("TacoTip",          function() IUI:LoadTacoTipProfile() end)
 	tryLoad("Guidelime",        function() IUI:LoadGuidelimeProfile() end)
+	tryLoad("Postal",           function() IUI:LoadPostalProfile() end)
 	local msg = #addonNames > 0
 		and format("|cfffff400저장:|r %s (재로드 후 반영)", table.concat(addonNames, ", "))
 		or "|cffff8000실패|r — 채팅창 오류 확인"

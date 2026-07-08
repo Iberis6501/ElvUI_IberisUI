@@ -10,4 +10,5 @@
 	<Script file="ShamanPower.lua"/>
 	<Script file="TacoTip.lua"/>
 	<Script file="Guidelime.lua"/>
+	<Script file="Postal.lua"/>
 </Ui>

@@ -20,7 +20,7 @@ It's been a while since the last update! I currently play only on the **20th Ann
 
 The previously cumbersome installation has been **simplified**. It now installs just like ElvUI.
 
-> 💡 Current build is based on **ElvUI 15.13**.
+> 💡 Current build is based on **ElvUI 15.18**.
 >
 > ⚠️ Always **back up** your settings before applying any addon. ^^
 
@@ -65,7 +65,7 @@ UIScale multiplies every pixel, so the layout is designed to work at other resol
 
 ## Requirements
 
-- **[ElvUI](https://tukui.org/elvui)** v15.13+
+- **[ElvUI](https://tukui.org/elvui)** v15.18+
 - **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** v2.41+
 
 > ⚠️ IberisUI **does not include** ElvUI or BenikUI. They must be installed separately.
@@ -184,7 +184,7 @@ ElvUI and ElvUI_BenikUI are governed by their own licenses.
 
 그리고 그 동안 좀 번거롭던 설치 과정을 아주 **심플하게 변경**했습니다. ElvUI 설치하듯이 작업하시면 됩니다.
 
-> 💡 현재 버전은 **ElvUI 15.13** 기준입니다.
+> 💡 현재 버전은 **ElvUI 15.18** 기준입니다.
 >
 > ⚠️ 애드온 적용 전에는 **반드시 백업**하는 습관을 가지세요. ^^
 
@@ -229,7 +229,7 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 
 ## 요구사항
 
-- **[ElvUI](https://tukui.org/elvui)** v15.13+
+- **[ElvUI](https://tukui.org/elvui)** v15.18+
 - **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** v2.41+
 
 > ⚠️ IberisUI는 ElvUI와 BenikUI를 **포함하지 않습니다**. 별도로 먼저 설치하세요.
@@ -347,6 +347,10 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 ---
 
 ## 작업 내역 / Changelog
+
+### v2.21 (2026-07-08)
+- ElvUI 15.18 SLUG 폰트 시스템(TBC/Mists 미지원)으로 인한 폰트 에러(SetFont/CreateFontFamily) 차단
+- Postal 거래차단(TradeBlock) 모듈 기본 비활성화 프로필 추가
 
 ### v2.20 (2026-05-26)
 - 네임플레이트: 신형 엔진(앤니버서리 등)에서 ElvUI가 못 숨긴 블리자드 기본 네임플레이트가 흰 박스로 비치던 문제 수정 (`NAME_PLATE_UNIT_ADDED`에서 블리자드 `UnitFrame` 숨김, 자동 적용)
