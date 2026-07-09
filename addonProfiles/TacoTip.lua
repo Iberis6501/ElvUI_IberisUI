@@ -47,7 +47,7 @@ function IUI:LoadTacoTipProfile()
 	c["show_pvp_icon"]            = false
 	c["inspect_gs_offset_y"]      = 0
 	c["show_avg_ilvl"]            = true
-	c["conf_version"]             = "0.4.7"
+	c["conf_version"]             = "0.4.9"
 	c["character_ilvl_offset_y"]  = 0
 	c["character_ilvl_offset_x"]  = 0
 	c["unlock_info_position"]     = false

@@ -412,8 +412,8 @@ function IUI:Initialize()
 
 	-- TacoTip patch (마법사 미실행 캐릭이라도 ReloadUI마다 자동 적용)
 	-- - InterfaceOptionsFrame_OpenToCategory wrapper (Anniversary deprecated 대응)
-	-- - 마우스오버 NotifyInspect (특성 캐시 갱신)
-	-- - 길드명 UTF-8 truncate
+	-- ※ 특성(dual spec) 표시·이름표 unitToken은 TacoTip 0.4.9(2026-07-08)가 공식 해결 —
+	--   과거 별도 배포하던 커스텀 패치본(v0.4.7)은 폐기됨.
 	if IUI.ApplyTacoTipPatches then
 		pcall(function() IUI:ApplyTacoTipPatches() end)
 	end
