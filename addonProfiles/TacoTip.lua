@@ -51,7 +51,7 @@ function IUI:LoadTacoTipProfile()
 	c["character_ilvl_offset_y"]  = 0
 	c["character_ilvl_offset_x"]  = 0
 	c["unlock_info_position"]     = false
-	c["tip_style"]                = 1  -- FULL 고정 (0.4.9부터 FULL이 2중 특성 + 활성 특성 표시 — 구 커스텀 패치 대체)
+	-- tip_style은 강제하지 않음 (취향 영역 — 0.4.9부터 FULL 스타일이 2중 특성 표시 지원, 유저가 직접 선택)
 	c["hide_in_combat"]           = false
 	c["inspect_ilvl_offset_x"]    = 0
 	c["inspect_gs_offset_x"]      = 0
