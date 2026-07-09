@@ -348,6 +348,11 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.25 (2026-07-10)
+- 채팅 줄간격 자동 적용 안정화 — ElvUI `SetupChat` 재구성 직후에도 재적용해 로그인 시 간격이 리셋되던 문제 해결
+- 타겟(선택) 이름표 확대(`nameplateSelectedScale` 1.25) 제거 — 몹이 많을 때 다른 이름표를 가려 폐기
+- (임시) 탱크 유닛프레임 기본 비활성 — ElvUI 15.18 + 신클라 2.5.6.68575에서 전투 중 `SecureGroupHeader` CreateFrame/SetSize가 차단되는 에러 스팸 방지. ElvUI 순정 기본값도 tank 켜짐이라 15.18 공통 이슈. ElvUI가 신클라 대응하면 복구 예정 (필요 시 `/ec`에서 켜기)
+
 ### v2.24 (2026-07-09)
 - KR 클라이언트 2.5.6.68575(2026-07-09) 패치 대응 묶음
 - `DebuffTypeColor`/`DebuffTypeSymbol` 전역 삭제 → FrameXML 원본 값 조건부 복원 shim (인벤레이드프레임3·LibRealDispel 등 구형 애드온 로드 에러 구제)
