@@ -479,6 +479,11 @@ local function ApplyIberisProfile()
 	-- unitframe.targetSound 제거 — 대상 변경 효과음은 개인 호불호
 	E.db["unitframe"]["units"]["arena"]["width"] = 225
 	E.db["unitframe"]["units"]["assist"]["enable"] = false
+	-- (임시 2026-07-10) 탱크 프레임도 끔. ElvUI 15.18 + 신클라 2.5.6.68575에서 전투 중
+	-- Update_TankFrames의 SecureGroupHeader CreateFrame/SetSize가 RestrictedAddOnEnvironment에
+	-- blocked되는 에러 스팸 방지. ElvUI 순정 기본값이 tank.enable=true라 15.18 유저 공통 이슈.
+	-- ElvUI가 신클라 대응하면 이 줄 제거 예정. 공대장 시 필요하면 /ec에서 임시로 켜면 됨.
+	E.db["unitframe"]["units"]["tank"]["enable"] = false
 	E.db["unitframe"]["units"]["boss"]["buffs"]["anchorPoint"] = "RIGHT"
 	E.db["unitframe"]["units"]["boss"]["buffs"]["maxDuration"] = 300
 	E.db["unitframe"]["units"]["boss"]["buffs"]["sizeOverride"] = 15
@@ -889,8 +894,8 @@ local function ApplyIberisProfile()
 	-- 이후 유저가 직접 켜면 덮어쓰지 않음(설치 시점만).
 	-- Sound_EnableErrorSpeech: "아직 사용할 수 없습니다" 류 음성 에러 끄기.
 	pcall(SetCVar, "Sound_EnableErrorSpeech", 0)
-	-- nameplateSelectedScale: 타겟(선택)한 이름표만 확대. ElvUI 기본은 TBC에서 1.0(확대 없음).
-	pcall(SetCVar, "nameplateSelectedScale", 1.25)
+	-- (제거됨) nameplateSelectedScale 타겟 이름표 확대 — 몹 밀집 시 다른 타겟을 가려 폐기.
+	-- 블리자드 기본값(TBC 1.0)을 그대로 두어 확대하지 않음.
 	-- 아군 이름표 끄기. 클라 2.5.6.68575(2026-07-09)에서 통합 CVar(nameplateShowFriends)가
 	-- 삭제되고 리테일식 6분할로 개편됨 — 특히 FriendlyNpcs가 기본 켜짐이라 NPC 기본 초록
 	-- 플로팅 이름+<칭호>가 하늘색 이름표(이름만)로 대체되는 부작용. 전부 명시적으로 0 저장.
