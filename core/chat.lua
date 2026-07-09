@@ -112,6 +112,17 @@ spacingFrame:SetScript("OnEvent", function()
 	end
 end)
 
+-- 근본 수정: ElvUI CH:SetupChat()이 chat 프레임을 재구성할 때마다 SetSpacing이 기본값으로
+-- 돌아간다(ElvUI는 SetSpacing을 직접 호출하지 않지만 프레임 재구성 과정에서 리셋됨).
+-- 로그인 자동적용이 위 2/5초 지연만으로 뚫리던 건 SetupChat이 그 이후에도 돌기 때문.
+-- SetupChat 직후에 재적용을 걸어 어떤 경로(로그인/리로드/프로필 변경)든 마지막에 우리가 이긴다.
+local CH = E:GetModule("Chat", true)
+if CH and CH.SetupChat then
+	hooksecurefunc(CH, "SetupChat", function()
+		pcall(function() IUI:ApplyChatLineSpacing() end)
+	end)
+end
+
 local function applyMsgGroups(frame, groups)
 	if not frame then return end
 	-- 기존 그룹 전부 제거 후 재설정
