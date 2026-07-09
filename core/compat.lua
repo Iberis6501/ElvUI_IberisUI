@@ -60,6 +60,30 @@ if C_Container then
 	end
 end
 
+-- DebuffTypeColor / DebuffTypeSymbol 전역이 KR Classic 2.5.6.68575(2026-07-09) 빌드에서 제거됨.
+-- InvenRaidFrames3(Profile.lua 디버프 색상표)와 LibRealDispel-1.0(DebuffTypeSymbol 순회)이
+-- 전역을 직접 읽다 nil 에러로 로드 실패. FrameXML 원본 값 그대로 조건부 복원 —
+-- 전역이 살아있는 클라이언트에서는 덮어쓰지 않으며, 애드온 측이 공식 대응하면 자연 무해화.
+if _G.DebuffTypeColor == nil then
+	local colors = {
+		none = { r = 0.80, g = 0, b = 0 },
+		Magic = { r = 0.20, g = 0.60, b = 1.00 },
+		Curse = { r = 0.60, g = 0.00, b = 1.00 },
+		Disease = { r = 0.60, g = 0.40, b = 0 },
+		Poison = { r = 0.00, g = 0.60, b = 0 },
+	}
+	colors[""] = colors.none
+	_G.DebuffTypeColor = colors
+end
+if _G.DebuffTypeSymbol == nil then
+	_G.DebuffTypeSymbol = {
+		Magic = _G.DEBUFF_SYMBOL_MAGIC or "M",
+		Curse = _G.DEBUFF_SYMBOL_CURSE or "C",
+		Disease = _G.DEBUFF_SYMBOL_DISEASE or "D",
+		Poison = _G.DEBUFF_SYMBOL_POISON or "P",
+	}
+end
+
 -- Stub legacy Interface Options globals removed when Settings API replaced them.
 -- Guidelime's options-panel toggle still calls InterfaceAddOnsList_Update() guarded
 -- only by the presence of InterfaceOptionsFrame_OpenToCategory; that guard misses
