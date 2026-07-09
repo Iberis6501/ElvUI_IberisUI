@@ -179,6 +179,13 @@ function IUI:Initialize()
 		E:Delay(1, function() pcall(function() IUI:ApplyChatFadeFix() end) end)
 	end
 
+	-- 채팅 줄간격 복원 (2.5.6.68575+ 클라 텍스트 렌더링 변경 대응). chat-cache 복원 후에도
+	-- 확실히 적용되도록 FadeFix와 같은 즉시+지연 이중 호출 패턴.
+	if self.ApplyChatLineSpacing then
+		pcall(function() self:ApplyChatLineSpacing() end)
+		E:Delay(1, function() pcall(function() IUI:ApplyChatLineSpacing() end) end)
+	end
+
 	-- DataTexts.lua:551 (panel nil 인덱스) 에러 방지
 	-- ElvUI DT:UpdatePanelInfo가 등록되지 않은 panelName으로 호출되면 panel.db nil 인덱스 에러.
 	-- panel을 우리가 dtPanels에 박을 때마다 발생 가능 (BUI custom panel 등록 시점 차이).

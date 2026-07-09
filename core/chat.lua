@@ -83,6 +83,35 @@ function IUI:ApplyChatFadeFix()
 	end
 end
 
+-- 클라 2.5.6.68575(2026-07-09)부터 채팅 줄간격 렌더링이 좁아짐 (폰트 파일·설정은 15.17 때와
+-- 동일한데 줄이 붙어 보임 — 클라이언트 텍스트 엔진 변경). SetSpacing으로 줄간격을 벌려
+-- 이전 밀도를 복원한다. 구빌드/타 클라는 기존 렌더링이 정상이므로 TBC 신빌드에서만 적용.
+local CHAT_LINE_SPACING = 3
+function IUI:ApplyChatLineSpacing()
+	if not (E and E.TBC) then return end
+	local build = tonumber((select(2, GetBuildInfo()))) or 0
+	if build < 68575 then return end
+	for i = 1, NUM_CHAT_WINDOWS do
+		local cf = _G["ChatFrame"..i]
+		if cf and cf.SetSpacing then
+			pcall(cf.SetSpacing, cf, CHAT_LINE_SPACING)
+		end
+	end
+end
+
+-- Initialize 시점(+1초)보다 늦게 도는 chat-cache 복원/ElvUI SetupChat이 spacing을 리셋함
+-- (수동 /run으론 유지되는데 로그인 자동 적용만 풀리는 증상). PLAYER_ENTERING_WORLD에서
+-- 즉시 + 2초/5초 지연으로 재적용해 어떤 타이밍에 리셋돼도 마지막에 우리가 이긴다.
+local spacingFrame = CreateFrame("Frame")
+spacingFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+spacingFrame:SetScript("OnEvent", function()
+	pcall(function() IUI:ApplyChatLineSpacing() end)
+	if E and E.Delay then
+		E:Delay(2, function() pcall(function() IUI:ApplyChatLineSpacing() end) end)
+		E:Delay(5, function() pcall(function() IUI:ApplyChatLineSpacing() end) end)
+	end
+end)
+
 local function applyMsgGroups(frame, groups)
 	if not frame then return end
 	-- 기존 그룹 전부 제거 후 재설정
@@ -367,6 +396,7 @@ function IUI:SetupChatWindows(numPanels)
 
 	-- 10. ChatFrame oldAlpha nil 에러 + ChatFrame5 흰 배경 차단
 	IUI:ApplyChatFadeFix()
+	IUI:ApplyChatLineSpacing()
 
 	-- 11. 보조 패널/ChatFrame 처리 (numPanels 분기)
 	if numPanels == 3 then
