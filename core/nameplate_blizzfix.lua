@@ -33,7 +33,45 @@ end)
 -- TBC에서 이 세 함수 뒤에 hook을 걸어 스케일을 E.uiscale로 되돌려 15.17 크기를 복원한다.
 -- (별도 파일이 아니라 nameplate_blizzfix에 통합 — 신규 파일+xml 등록 의존을 피해
 --  CF App 부분 업데이트로 load_core.xml이 옛 버전이어도 로드가 보장된다.)
-if E and E.TBC then
+-- ★ 클라 2.5.6.68575(2026-07-09)부터 클라이언트가 이름표에 UIParent 스케일을 자체 적용
+--   (ElvUI가 scale 1을 둔 이유가 이것). 이 빌드 이상에서 훅까지 돌면 uiscale이 이중으로
+--   곱해져(0.7²≈0.49) 이름표가 너무 작아지므로, 구빌드에서만 훅을 건다.
+local clientBuild = tonumber((select(2, GetBuildInfo()))) or 0
+
+-- 아군 이름표 강제 끔 (68575+): 통합 CVar(nameplateShowFriends)가 삭제되고 리테일식
+-- 6분할(FriendlyPlayers/Npcs/Pets/Guardians/Minions/Totems)로 개편 — 기본값이 켜짐이라
+-- 로그인마다 되살아나고, NPC 기본 초록 이름+<칭호>가 하늘색 이름표로 대체되는 부작용까지.
+-- 매 로그인 전부 0으로 되박는다.
+-- 아군 이름표를 쓰려는 유저는 `/run IberisUIDB.keepFriendlyPlates = true` 로 옵트아웃.
+if E and E.TBC and clientBuild >= 68575 then
+	local FRIENDLY_CVARS = {
+		"nameplateShowFriendlyPlayers",
+		"nameplateShowFriendlyNpcs",
+		"nameplateShowFriendlyPets",
+		"nameplateShowFriendlyGuardians",
+		"nameplateShowFriendlyMinions",
+		"nameplateShowFriendlyTotems",
+	}
+	local function enforceFriendlyOff()
+		if IberisUIDB and IberisUIDB.keepFriendlyPlates then return end
+		for _, cv in ipairs(FRIENDLY_CVARS) do
+			if GetCVar(cv) ~= "0" then
+				pcall(SetCVar, cv, 0)
+			end
+		end
+	end
+	local npf = CreateFrame("Frame")
+	npf:RegisterEvent("PLAYER_ENTERING_WORLD")
+	npf:SetScript("OnEvent", function()
+		enforceFriendlyOff()
+		if E.Delay then
+			E:Delay(2, enforceFriendlyOff)
+			E:Delay(5, enforceFriendlyOff)
+		end
+	end)
+end
+
+if E and E.TBC and clientBuild < 68575 then
 	local NP = E:GetModule('NamePlates', true)
 	if NP then
 		local function restoreScale(_, nameplate)
