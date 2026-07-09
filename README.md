@@ -348,6 +348,13 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.24 (2026-07-09)
+- KR 클라이언트 2.5.6.68575(2026-07-09) 패치 대응 묶음
+- `DebuffTypeColor`/`DebuffTypeSymbol` 전역 삭제 → FrameXML 원본 값 조건부 복원 shim (인벤레이드프레임3·LibRealDispel 등 구형 애드온 로드 에러 구제)
+- 이름표 스케일 복원 훅을 구빌드(<68575)로 한정 — 신빌드는 클라가 uiscale 자체 적용, 이중 축소로 이름표가 작아지던 문제 방지
+- 채팅 줄간격 복원 — 신빌드 텍스트 렌더링 변경으로 줄이 붙던 문제 (`SetSpacing` 3)
+- 아군 이름표 기본 끔 — 통합 CVar 삭제·6분할 개편으로 로그인마다 켜지고 NPC 초록 이름+<칭호>가 하늘색 이름표로 대체되던 문제 (원하면 `/run IberisUIDB.keepFriendlyPlates = true`로 옵트아웃)
+
 ### v2.23 (2026-07-09)
 - ElvUI 15.18 SLUG 폰트 시스템(TBC/Mists 미지원)으로 인한 폰트·체력바(피통) 에러 근본 수정 — `fontSlug`를 SV에서 자동 비활성(ElvDB 직접)
 - 폰트(SLUG)/이름표 스케일 우회를 코어 파일(compat/nameplate_blizzfix)로 통합 — CF 부분 업데이트 시에도 로드 보장
