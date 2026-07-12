@@ -38,39 +38,6 @@ end)
 --   곱해져(0.7²≈0.49) 이름표가 너무 작아지므로, 구빌드에서만 훅을 건다.
 local clientBuild = tonumber((select(2, GetBuildInfo()))) or 0
 
--- 아군 이름표 강제 끔 (68575+): 통합 CVar(nameplateShowFriends)가 삭제되고 리테일식
--- 6분할(FriendlyPlayers/Npcs/Pets/Guardians/Minions/Totems)로 개편 — 기본값이 켜짐이라
--- 로그인마다 되살아나고, NPC 기본 초록 이름+<칭호>가 하늘색 이름표로 대체되는 부작용까지.
--- 매 로그인 전부 0으로 되박는다.
--- 아군 이름표를 쓰려는 유저는 `/run IberisUIDB.keepFriendlyPlates = true` 로 옵트아웃.
-if E and E.TBC and clientBuild >= 68575 then
-	local FRIENDLY_CVARS = {
-		"nameplateShowFriendlyPlayers",
-		"nameplateShowFriendlyNpcs",
-		"nameplateShowFriendlyPets",
-		"nameplateShowFriendlyGuardians",
-		"nameplateShowFriendlyMinions",
-		"nameplateShowFriendlyTotems",
-	}
-	local function enforceFriendlyOff()
-		if IberisUIDB and IberisUIDB.keepFriendlyPlates then return end
-		for _, cv in ipairs(FRIENDLY_CVARS) do
-			if GetCVar(cv) ~= "0" then
-				pcall(SetCVar, cv, 0)
-			end
-		end
-	end
-	local npf = CreateFrame("Frame")
-	npf:RegisterEvent("PLAYER_ENTERING_WORLD")
-	npf:SetScript("OnEvent", function()
-		enforceFriendlyOff()
-		if E.Delay then
-			E:Delay(2, enforceFriendlyOff)
-			E:Delay(5, enforceFriendlyOff)
-		end
-	end)
-end
-
 if E and E.TBC and clientBuild < 68575 then
 	local NP = E:GetModule('NamePlates', true)
 	if NP then

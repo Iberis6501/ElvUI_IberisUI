@@ -896,22 +896,8 @@ local function ApplyIberisProfile()
 	pcall(SetCVar, "Sound_EnableErrorSpeech", 0)
 	-- (제거됨) nameplateSelectedScale 타겟 이름표 확대 — 몹 밀집 시 다른 타겟을 가려 폐기.
 	-- 블리자드 기본값(TBC 1.0)을 그대로 두어 확대하지 않음.
-	-- 아군 이름표 끄기. 클라 2.5.6.68575(2026-07-09)에서 통합 CVar(nameplateShowFriends)가
-	-- 삭제되고 리테일식 6분할로 개편됨 — 특히 FriendlyNpcs가 기본 켜짐이라 NPC 기본 초록
-	-- 플로팅 이름+<칭호>가 하늘색 이름표(이름만)로 대체되는 부작용. 전부 명시적으로 0 저장.
-	-- 공대 환경에서 아군 이름표는 거의 안 쓰므로 기본 끔 — 원하는 유저는 이후 직접 켜면 유지됨.
-	-- (구빌드용 nameplateShowFriends 포함 — 없는 CVar는 pcall이 무해하게 삼킴)
-	for _, cv in ipairs({
-		"nameplateShowFriends",           -- ~68571 통합 스위치
-		"nameplateShowFriendlyPlayers",   -- 68575+ 분할 스위치들
-		"nameplateShowFriendlyNpcs",
-		"nameplateShowFriendlyPets",
-		"nameplateShowFriendlyGuardians",
-		"nameplateShowFriendlyMinions",
-		"nameplateShowFriendlyTotems",
-	}) do
-		pcall(SetCVar, cv, 0)
-	end
+	-- (제거됨) 아군 이름표 강제 끔 — 배포판이 유저 아군 이름표 CVar을 건드리지 않는다.
+	-- 아군 이름표 표시 여부는 각자 블리자드 이름표 설정에서 정하도록 그대로 둔다.
 
 	E:StaggeredUpdateAll(nil, true)
 
