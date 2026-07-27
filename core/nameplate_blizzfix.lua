@@ -56,7 +56,42 @@ if E and E.TBC and clientBuild < 68575 then
 			end)
 		end
 	end
-elseif E and E.Classic and clientBuild >= 68808 then
+end
+
+-- ============================================================
+-- 본섭 ESC 게임메뉴 종료 차단(taint) 회피
+-- ElvUI 15.18이 신형 게임메뉴에 버튼을 꽂고(Layout 훅) 버튼 스킨을
+-- 입히는 과정에서 메뉴가 오염되어, 보호 함수인 종료/로그아웃
+-- callback()이 ADDON_ACTION_FORBIDDEN으로 차단됨(종료 불가).
+-- → 본섭에서는 ElvUI가 게임메뉴를 아예 건드리지 않게 한다.
+-- 대가: ESC 메뉴의 ElvUI 버튼 제거(설정은 /ec로), 게임메뉴 스킨 제외.
+-- ElvUI가 15.19+에서 대응하면 게이트로 자동 은퇴.
+-- ============================================================
+if E and E.Retail and (tonumber(E.version) or 99) < 15.19 then
+	E.SetupGameMenu = function() end
+
+	-- Mainline Misc 스킨의 게임메뉴 구간은 E.OtherAddons.ConsolePort 가드로
+	-- 감싸여 있음 → 스킨 실행 동안만 플래그를 세워 그 블록만 스킵시킨다.
+	local S = E:GetModule('Skins', true)
+	local target = S and S.BlizzardMiscFrames
+	if S and S.nonAddonsToLoad and target then
+		for index, func in next, S.nonAddonsToLoad do
+			if func == target then
+				S.nonAddonsToLoad[index] = function(...)
+					E.OtherAddons = E.OtherAddons or {}
+					local saved = E.OtherAddons.ConsolePort
+					E.OtherAddons.ConsolePort = true
+					local ok, err = pcall(target, ...)
+					E.OtherAddons.ConsolePort = saved
+					if not ok then geterrorhandler()(err) end
+				end
+				break
+			end
+		end
+	end
+end
+
+if E and E.Classic and clientBuild >= 68808 then
 	-- ★ Classic Era 1.15.9(68808)부터 위와 반대 문제: 클라가 이름표에 UIParent
 	--   스케일을 자체 적용하는데, ElvUI 15.18은 Classic을 구엔진으로 보고
 	--   uiscale을 또 곱한다 → 이중 축소(0.7²≈0.49)로 이름표가 작아짐.
