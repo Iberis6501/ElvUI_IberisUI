@@ -1,0 +1,8 @@
+## Interface: 11509
+## Title: |cffff9900!IberisFix|r
+## Notes: IberisUI companion shim — restores globals removed by the 1.15.9 client so ElvUI 15.18 can load
+## Author: Iberis
+## Version: 2.29
+## X-Part-Of: ElvUI_IberisUI
+
+shim.lua
