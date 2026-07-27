@@ -73,10 +73,17 @@ end
 
 -- ------------------------------------------------------------
 -- 2. 신엔진에서 삭제된 전역 프레임의 런타임(_G 조회) 사용처 더미
+--    주의: 반드시 진짜 Frame이어야 한다 — ElvUI 숨김 루프가
+--    SetParent/UnregisterAllEvents를 호출한다 (일반 테이블이면 크래시)
 -- ------------------------------------------------------------
-if not _G.StanceBarFrame then _G.StanceBarFrame = {} end -- StyleShapeShift의 lastSelected 대입용
+if not _G.StanceBarFrame then _G.StanceBarFrame = CreateFrame('Frame') end
 if not _G.VerticalMultiBarsContainer then _G.VerticalMultiBarsContainer = CreateFrame('Frame') end
 if not _G.TemporaryEnchantFrame then _G.TemporaryEnchantFrame = CreateFrame('Frame') end
+
+-- 구 게임메뉴 헤더 텍스처 더미: Classic 스킨(Misc.lua)이 무조건 참조
+if not _G.GameMenuFrameHeader and _G.GameMenuFrame then
+	_G.GameMenuFrameHeader = _G.GameMenuFrame:CreateTexture(nil, 'ARTWORK')
+end
 
 -- ------------------------------------------------------------
 -- 3. 게임 메뉴 (구 GameMenuButtonLogout 경로 → 신 buttonPool 경로)

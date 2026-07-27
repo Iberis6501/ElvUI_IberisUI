@@ -24,3 +24,48 @@ if not AutoCastShine_AutoCastStop then AutoCastShine_AutoCastStop = noop end
 if not PetActionBar_ShowGrid then PetActionBar_ShowGrid = noop end
 if not PetActionBar_HideGrid then PetActionBar_HideGrid = noop end
 if not PetActionBar_UpdateCooldowns then PetActionBar_UpdateCooldowns = noop end
+
+-- ------------------------------------------------------------
+-- RegisterEvent 가드: 신엔진에서 삭제된 이벤트(LEARNED_SPELL_IN_TAB 등)
+-- 등록 시도를 pcall로 무해화. ElvUI 유닛프레임은 자기 ADDON_LOADED
+-- 시점(OnInitialize, IberisUI 로드 전)에 등록하므로, ElvUI_Libraries가
+-- 로드되는 즉시(=ElvUI 파일 로드 전) 여기서 가드를 설치해야 한다.
+-- ------------------------------------------------------------
+local function GuardRegisterEvent(frame)
+	if not frame or frame.IberisREGuard then return end
+	frame.IberisREGuard = true
+	local orig = frame.RegisterEvent
+	frame.RegisterEvent = function(f, event, ...)
+		local ok = pcall(orig, f, event, ...)
+		return ok
+	end
+end
+
+local function TryInstallGuards()
+	GuardRegisterEvent(_G.AceEvent30Frame)
+
+	local LibStub = _G.LibStub
+	if LibStub then
+		local LAB = LibStub('LibActionButton-1.0-ElvUI', true)
+		if LAB then
+			LAB.eventFrame = LAB.eventFrame or CreateFrame('Frame')
+			GuardRegisterEvent(LAB.eventFrame)
+		end
+
+		local LD = LibStub('LibDispel-1.0', true)
+		if LD then
+			LD.frame = LD.frame or CreateFrame('Frame') -- 선생성해 가드 (lib는 있으면 재사용)
+			GuardRegisterEvent(LD.frame)
+		end
+	end
+end
+
+local watcher = CreateFrame('Frame')
+watcher:RegisterEvent('ADDON_LOADED')
+watcher:RegisterEvent('PLAYER_LOGIN')
+watcher:SetScript('OnEvent', function(self, event)
+	TryInstallGuards()
+	if event == 'PLAYER_LOGIN' then
+		self:UnregisterAllEvents()
+	end
+end)
