@@ -895,6 +895,12 @@ local function ApplyIberisProfile()
 	-- 이후 유저가 직접 켜면 덮어쓰지 않음(설치 시점만).
 	-- Sound_EnableErrorSpeech: "아직 사용할 수 없습니다" 류 음성 에러 끄기.
 	pcall(SetCVar, "Sound_EnableErrorSpeech", 0)
+	-- 이름표 상하 겹침 해소 (클래식 계열 전용): 쌓기 모드 + 세로 간격.
+	-- 설치 시 1회만 적용 — 이후 유저가 바꾸면 덮어쓰지 않음.
+	if E.Classic or E.TBC then
+		pcall(SetCVar, "nameplateMotion", 1)
+		pcall(SetCVar, "nameplateOverlapV", 1.6)
+	end
 	-- (제거됨) nameplateSelectedScale 타겟 이름표 확대 — 몹 밀집 시 다른 타겟을 가려 폐기.
 	-- 블리자드 기본값(TBC 1.0)을 그대로 두어 확대하지 않음.
 	-- (제거됨) 아군 이름표 강제 끔 — 배포판이 유저 아군 이름표 CVar을 건드리지 않는다.
