@@ -30,8 +30,8 @@ function IUI:LoadMRTProfile()
 	VMRT["MarksBar"]["Fix"] = true
 	VMRT["MarksBar"]["pulltimer"] = 10
 	VMRT["MarksBar"]["Show"] = { true, true, true, true, true }
-	-- Show[3] = 징표 기둥 표시. Retail에서만 끔 (Anniversary는 그대로 켜둠).
-	if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+	-- Show[3] = 징표 기둥 표시. Retail/Mists에서 끔 (Anniversary는 그대로 켜둠).
+	if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC then
 		VMRT["MarksBar"]["Show"][3] = false
 	end
 
