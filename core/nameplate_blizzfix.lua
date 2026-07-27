@@ -56,4 +56,26 @@ if E and E.TBC and clientBuild < 68575 then
 			end)
 		end
 	end
+elseif E and E.Classic and clientBuild >= 68808 then
+	-- ★ Classic Era 1.15.9(68808)부터 위와 반대 문제: 클라가 이름표에 UIParent
+	--   스케일을 자체 적용하는데, ElvUI 15.18은 Classic을 구엔진으로 보고
+	--   uiscale을 또 곱한다 → 이중 축소(0.7²≈0.49)로 이름표가 작아짐.
+	--   스케일을 1로 되돌려 클라 자체 스케일만 남긴다 (1.15.9 이전 크기 복원).
+	local NP = E:GetModule('NamePlates', true)
+	if NP then
+		local function restoreScale(_, nameplate)
+			if nameplate and nameplate.SetScale then
+				nameplate:SetScale(1)
+			end
+		end
+		if NP.StylePlate       then hooksecurefunc(NP, 'StylePlate', restoreScale) end
+		if NP.StyleTargetPlate then hooksecurefunc(NP, 'StyleTargetPlate', restoreScale) end
+		if NP.ScalePlate then
+			hooksecurefunc(NP, 'ScalePlate', function(_, nameplate, scale)
+				if nameplate and nameplate.SetScale then
+					nameplate:SetScale(scale or 1)
+				end
+			end)
+		end
+	end
 end
