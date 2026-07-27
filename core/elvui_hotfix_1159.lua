@@ -347,15 +347,22 @@ end
 --    죽어도 나머지 스킨은 계속 입혀진다. 에러는 BugSack에 보고됨.
 -- ------------------------------------------------------------
 if S then
-	local function WrapReported(fn)
-		return function(...)
-			xpcall(fn, geterrorhandler(), ...)
+	-- 구 프레임을 무조건 참조해 신엔진에서 반드시 죽는 스킨 2종은 조용히 스킵
+	-- (애드온 목록 스크롤바 / 구 LFG 드롭다운 — 해당 창 스킨 일부만 빠지는 코스메틱)
+	local knownNoise = {}
+	if S.AddonList then knownNoise[S.AddonList] = true end
+	if S.Blizzard_GroupFinder_VanillaStyle then knownNoise[S.Blizzard_GroupFinder_VanillaStyle] = true end
+
+	local function Wrap(fn)
+		if knownNoise[fn] then
+			return function(...) pcall(fn, ...) end
 		end
+		return function(...) xpcall(fn, geterrorhandler(), ...) end
 	end
 
 	for index, func in next, S.nonAddonsToLoad do
 		if type(func) == 'function' then
-			S.nonAddonsToLoad[index] = WrapReported(func)
+			S.nonAddonsToLoad[index] = Wrap(func)
 		end
 	end
 
@@ -363,7 +370,7 @@ if S then
 		if type(object) == 'table' then
 			for k, fn in pairs(object) do
 				if type(fn) == 'function' then
-					object[k] = WrapReported(fn)
+					object[k] = Wrap(fn)
 				end
 			end
 		end

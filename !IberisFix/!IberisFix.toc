@@ -5,4 +5,5 @@
 ## Version: 2.29
 ## X-Part-Of: ElvUI_IberisUI
 
+LibStub.lua
 shim.lua
