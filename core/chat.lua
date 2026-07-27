@@ -90,8 +90,8 @@ local CHAT_LINE_SPACING = 3
 function IUI:ApplyChatLineSpacing()
 	if not E then return end
 	local build = tonumber((select(2, GetBuildInfo()))) or 0
-	-- 에라도 1.15.9(68808)부터 신 텍스트 엔진 — TBC 68575와 동일 증상. 애니버서리(68575)는 구렌더링이라 미포함.
-	if not ((E.TBC and build >= 68575) or (E.Classic and build >= 68808)) then return end
+	-- 신 텍스트 렌더링 클라 전부 적용: 본섭/판다(항상 신엔진), TBC 68575+, Classic Era 68808+
+	if not (E.Retail or E.Mists or (E.TBC and build >= 68575) or (E.Classic and build >= 68808)) then return end
 	for i = 1, NUM_CHAT_WINDOWS do
 		local cf = _G["ChatFrame"..i]
 		if cf and cf.SetSpacing then

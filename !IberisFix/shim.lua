@@ -14,6 +14,13 @@
 -- 본체 로직은 ElvUI_IberisUI/core/elvui_hotfix_1159.lua 참조.
 -- ============================================================
 
+-- 이 shim은 Classic Era 신엔진(1.15.9, 빌드 68808+) 전용.
+-- TOC는 Era 대상이지만 '구버전 애드온 불러오기'가 켜져 있으면 다른
+-- 클라에서도 로드될 수 있으므로 여기서 한 번 더 잠근다 —
+-- 본섭/판다 등에는 어떤 흔적(전역/라이브러리 선점)도 남기지 않는다.
+local build = tonumber((select(2, GetBuildInfo()))) or 0
+if not (WOW_PROJECT_ID == (WOW_PROJECT_CLASSIC or 2) and build >= 68808) then return end
+
 local noop = function() end
 
 -- ------------------------------------------------------------
