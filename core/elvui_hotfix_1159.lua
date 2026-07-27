@@ -485,14 +485,38 @@ end)
 do
 	if not IUI._watchdogFilter then
 		IUI._watchdogFilter = true
-		local orig = geterrorhandler()
-		if type(orig) == 'function' then
-			seterrorhandler(function(err)
-				if type(err) == 'string' and err:find('script ran too long', 1, true) then
-					return
+
+		local function IsWatchdogNoise(msg)
+			return type(msg) == 'string' and msg:find('script ran too long', 1, true) ~= nil
+		end
+
+		-- 경로 1: BugGrabber 사용 시 — BugGrabber는 seterrorhandler를 무력화하므로
+		-- 정식 콜백(BugGrabber.BugGrabbed)에서 방금 저장된 소음을 DB에서 걷어낸다
+		local BG = _G.BugGrabber
+		local ER = _G.EventRegistry
+		if BG and BG.GetDB and ER and ER.RegisterCallback then
+			ER:RegisterCallback('BugGrabber.BugGrabbed', function()
+				local db = BG:GetDB()
+				local n = db and #db or 0
+				local err = n > 0 and db[n]
+				if err and IsWatchdogNoise(err.message) then
+					table.remove(db, n)
+
+					local sack = _G.BugSack
+					if sack and sack.UpdateDisplay then
+						pcall(sack.UpdateDisplay, sack)
+					end
 				end
-				return orig(err)
-			end)
+			end, IUI)
+		else
+			-- 경로 2: BugGrabber가 없으면 기본 에러 핸들러를 감싼다
+			local orig = geterrorhandler()
+			if type(orig) == 'function' then
+				pcall(seterrorhandler, function(err)
+					if IsWatchdogNoise(err) then return end
+					return orig(err)
+				end)
+			end
 		end
 	end
 end
