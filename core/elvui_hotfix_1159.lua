@@ -474,3 +474,25 @@ sweeper:SetScript('OnEvent', function(self)
 	self:UnregisterAllEvents()
 	E:Delay(3, function() pcall(KillBlizzardLeftovers) end)
 end)
+
+-- ------------------------------------------------------------
+-- 10. 워치독 소음 필터
+--     신엔진 스크립트 시간 제한("script ran too long")은 부하 총량의
+--     문제라 애드온이 없앨 수 없고, 위의 격벽들이 실제 피해를 이미
+--     차단한다. 남는 것은 "보고"뿐이므로 에러 핸들러를 감싸 이
+--     메시지만 걸러낸다. 다른 모든 오류는 그대로 통과(BugSack 정상).
+-- ------------------------------------------------------------
+do
+	if not IUI._watchdogFilter then
+		IUI._watchdogFilter = true
+		local orig = geterrorhandler()
+		if type(orig) == 'function' then
+			seterrorhandler(function(err)
+				if type(err) == 'string' and err:find('script ran too long', 1, true) then
+					return
+				end
+				return orig(err)
+			end)
+		end
+	end
+end
