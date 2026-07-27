@@ -88,9 +88,10 @@ end
 -- 이전 밀도를 복원한다. 구빌드/타 클라는 기존 렌더링이 정상이므로 TBC 신빌드에서만 적용.
 local CHAT_LINE_SPACING = 3
 function IUI:ApplyChatLineSpacing()
-	if not (E and E.TBC) then return end
+	if not E then return end
 	local build = tonumber((select(2, GetBuildInfo()))) or 0
-	if build < 68575 then return end
+	-- 에라도 1.15.9(68808)부터 신 텍스트 엔진 — TBC 68575와 동일 증상. 애니버서리(68575)는 구렌더링이라 미포함.
+	if not ((E.TBC and build >= 68575) or (E.Classic and build >= 68808)) then return end
 	for i = 1, NUM_CHAT_WINDOWS do
 		local cf = _G["ChatFrame"..i]
 		if cf and cf.SetSpacing then
