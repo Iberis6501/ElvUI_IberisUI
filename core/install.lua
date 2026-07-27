@@ -390,6 +390,7 @@ local function ApplyIberisProfile()
 	E.db["nameplates"]["font"] = "Bui Visitor1"
 	E.db["nameplates"]["fontOutline"] = "MONOCHROMEOUTLINE"
 	E.db["nameplates"]["fontSize"] = 10
+	E.db["nameplates"]["overlapV"] = 1.6
 	E.db["nameplates"]["statusbar"] = "BuiFlat"
 	E.db["nameplates"]["units"]["ENEMY_NPC"]["auras"]["enable"] = false
 	E.db["nameplates"]["units"]["ENEMY_NPC"]["raidTargetIndicator"]["position"] = "RIGHT"
@@ -899,7 +900,12 @@ local function ApplyIberisProfile()
 	-- (제거됨) 아군 이름표 강제 끔 — 배포판이 유저 아군 이름표 CVar을 건드리지 않는다.
 	-- 아군 이름표 표시 여부는 각자 블리자드 이름표 설정에서 정하도록 그대로 둔다.
 
-	E:StaggeredUpdateAll(nil, true)
+	-- 1.15.9 신클라 워치독("script ran too long")이 전체 화면 갱신을 중간에 끊을 수 있음.
+	-- 값 저장(위)은 이미 끝났으므로 갱신이 잘려도 치명적이지 않음 — 마법사 완료 리로드에서 반영됨.
+	local okUpdate = pcall(E.StaggeredUpdateAll, E, nil, true)
+	if not okUpdate then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r 화면 갱신이 중간에 끊겼지만 설정값은 저장됐어요. 마법사 마지막 단계의 리로드에서 정상 반영됩니다.")
+	end
 
 	-- ActionBars 모듈 갱신 — buttons/buttonsPerRow 변경 반영
 	-- 참고: AB:Initialize() 호출은 모듈 충돌 가능 → 사용하지 않음.
