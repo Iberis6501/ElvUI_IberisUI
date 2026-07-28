@@ -13,6 +13,22 @@
 -- 게이트: Classic 계열 + 빌드 68808+ + ElvUI 15.19 미만.
 -- ElvUI가 신엔진 대응 버전을 내면 자동으로 전부 비활성된다.
 -- 외부 파일 패치(Apply-ElvUIHotfix.ps1)가 적용된 클라와도 공존 가능.
+--
+-- ------------------------------------------------------------
+-- Copyright notice (ElvUI license §3)
+--
+-- 이 파일의 일부 함수(InitializeInitialModules / InitializeModules /
+-- LoadUnits / PostBagMove / PositionGameMenuButton / SetupGameMenu)는
+-- ElvUI 소스에서 파생한 수정본이다. 해당 부분의 저작권은 ElvUI
+-- 저작자들에게 있다:
+--
+--   ElvUI — Copyright ©2009-2026 The contents of this addon,
+--   excluding third-party resources, are copyrighted to their
+--   authors with all rights reserved.
+--   https://github.com/tukui-org/ElvUI/blob/main/ElvUI/LICENSE.txt
+--
+-- 파생 목적은 ElvUI 15.18을 1.15.9 신엔진 클라에서 동작시키는 임시
+-- 호환뿐이며, ElvUI가 15.19+로 대응하면 이 파일은 스스로 비활성된다.
 -- ============================================================
 
 local IUI, E = unpack((select(2, ...)))
