@@ -7,7 +7,7 @@
 ## RequiredDeps: ElvUI, ElvUI_BenikUI
 ## SavedVariablesPerCharacter: IberisUIDB
 ## DefaultState: Enabled
-## X-ElvuiVersion: 15.19
+## X-ElvuiVersion: 15.20
 ## X-Curse-Project-ID: 1538314
 
 locales\load_locales.xml
