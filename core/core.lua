@@ -186,21 +186,6 @@ function IUI:Initialize()
 		E:Delay(1, function() pcall(function() IUI:ApplyChatLineSpacing() end) end)
 	end
 
-	-- (임시 2026-07-10) 탱크 유닛프레임 1회 비활성 마이그레이션.
-	-- ElvUI 15.18 + 신클라 2.5.6.68575에서 전투 중 tank 프레임의 Update_TankFrames →
-	-- SecureGroupHeader CreateFrame/SetSize가 RestrictedAddOnEnvironment에 blocked되어 에러 스팸.
-	-- install.lua는 마법사 시점만 실행이라 기존 유저에 미반영 → 여기서 로그인 시 1회만 끄고 플래그 저장.
-	-- 이후엔 안 건드리므로 공대장 등 필요 시 /ec에서 켜면 그대로 유지됨. ElvUI 순정 기본값도
-	-- tank.enable=true라 15.18 유저 공통 이슈. ElvUI가 신클라 대응하면 이 블록 제거.
-	if not IberisUIDB.tankDisableMigrated and E.db and E.db.unitframe
-		and E.db.unitframe.units and E.db.unitframe.units.tank then
-		IberisUIDB.tankDisableMigrated = true
-		if E.db.unitframe.units.tank.enable then
-			E.db.unitframe.units.tank.enable = false
-			if E.StaggeredUpdateAll then E:StaggeredUpdateAll(nil, true) end
-		end
-	end
-
 	-- DataTexts.lua:551 (panel nil 인덱스) 에러 방지
 	-- ElvUI DT:UpdatePanelInfo가 등록되지 않은 panelName으로 호출되면 panel.db nil 인덱스 에러.
 	-- panel을 우리가 dtPanels에 박을 때마다 발생 가능 (BUI custom panel 등록 시점 차이).

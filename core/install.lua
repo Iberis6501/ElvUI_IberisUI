@@ -480,11 +480,6 @@ local function ApplyIberisProfile()
 	-- unitframe.targetSound 제거 — 대상 변경 효과음은 개인 호불호
 	E.db["unitframe"]["units"]["arena"]["width"] = 225
 	E.db["unitframe"]["units"]["assist"]["enable"] = false
-	-- (임시 2026-07-10) 탱크 프레임도 끔. ElvUI 15.18 + 신클라 2.5.6.68575에서 전투 중
-	-- Update_TankFrames의 SecureGroupHeader CreateFrame/SetSize가 RestrictedAddOnEnvironment에
-	-- blocked되는 에러 스팸 방지. ElvUI 순정 기본값이 tank.enable=true라 15.18 유저 공통 이슈.
-	-- ElvUI가 신클라 대응하면 이 줄 제거 예정. 공대장 시 필요하면 /ec에서 임시로 켜면 됨.
-	E.db["unitframe"]["units"]["tank"]["enable"] = false
 	E.db["unitframe"]["units"]["boss"]["buffs"]["anchorPoint"] = "RIGHT"
 	E.db["unitframe"]["units"]["boss"]["buffs"]["maxDuration"] = 300
 	E.db["unitframe"]["units"]["boss"]["buffs"]["sizeOverride"] = 15
