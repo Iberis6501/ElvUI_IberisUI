@@ -196,6 +196,7 @@ local function ApplyIberisProfile()
 		colors.abAlpha = 0.7
 		colors.styleAlpha = 0.7
 		ensure(E.db.benikui, "dashboards", "tokens").enableTokens = false
+		ensure(E.db.benikui, "dashboards", "professions").enableProfessions = false
 		ensure(E.db.benikui, "misc", "flightMode").enable = false
 		if not E.db["benikui"]["general"] then E.db["benikui"]["general"] = {} end
 		E.db["benikui"]["general"]["auras"] = false
