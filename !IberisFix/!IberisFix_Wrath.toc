@@ -1,0 +1,9 @@
+## Interface: 38002
+## Title: |cffff9900!IberisFix|r
+## Notes: IberisUI companion shim — guards the oUF UnitSelectionType call that errors on Classic with ElvUI 15.19
+## Notes-koKR: IberisUI 동봉 shim — ElvUI 15.19의 oUF가 Classic에서 내는 UnitSelectionType 에러 차단
+## Author: Iberis
+## Version: 2.30
+## X-Part-Of: ElvUI_IberisUI
+
+shim.lua

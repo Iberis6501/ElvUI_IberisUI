@@ -1,97 +1,39 @@
 -- ============================================================
--- !IberisFix — IberisUI 동봉 선행 shim
+-- !IberisFix — IberisUI 동봉 선행 shim (ElvUI보다 먼저 로드)
 --
--- ElvUI 15.18은 파일 로드 시점에 일부 전역 함수를 local로 캡처한다.
--- 1.15.9 신엔진에서 그 전역들이 삭제되어 nil이 캡처되면, 이후 호출에서
--- ElvUI 초기화가 크래시한다. 이 애드온은 '!' 접두사로 ElvUI보다 먼저
--- 로드되어, 없는 전역만 무해한 대체물로 채운다.
+-- [대상] ElvUI 15.19 × Classic 계열(Vanilla/TBC/Wrath/Mists)
 --
--- 또한 신엔진에서 삭제된 이벤트(LEARNED_SPELL_IN_TAB 등)를 등록하는
--- ElvUI 라이브러리들의 프레임을 선점 생성해 RegisterEvent를 가드한다.
+-- ElvUI 15.19의 oUF는 파일 로드 시점에 전역 UnitSelectionType을
+-- local로 캡처한 뒤(ElvUI_Libraries/.../oUF/private.lua),
+-- Private.unitSelectionType에서 클라 구분 없이 호출한다.
+-- 이 함수는 oUF health.lua의 UpdateColor가 체력 갱신마다 부르므로,
+-- 해당 전역이 없는 Classic 계열에서는 유닛프레임마다 에러가 난다.
+-- (ElvUI 자체 E:UnitSelectionType은 E.Retail 가드가 있어 무관)
 --
--- 전부 "없을 때만" 정의하므로 구엔진/타 클라이언트에서는 아무 일도
--- 하지 않으며, ElvUI가 신엔진 대응 버전을 내도 그대로 무해하다.
--- 본체 로직은 ElvUI_IberisUI/core/elvui_hotfix_1159.lua 참조.
+-- ElvUI 15.20이 oUF에 isRetail 가드를 넣어 이미 수정했다. 15.20이
+-- 배포되면 호출 자체가 사라지므로 이 shim은 저절로 무의미해진다.
+--
+-- [조치] 캡처가 일어나는 동안에만 전역에 무해한 스텁을 얹고,
+-- ElvUI 로드가 끝나면 전역을 즉시 회수한다. 스텁은 nil을 반환해
+-- 15.20의 동작(Classic에서 selection 색상 미사용)과 결과가 같다.
+-- 전역을 회수하는 이유는, 이 전역의 존재 여부로 리테일 분기를
+-- 판정하는 다른 애드온이 오판하지 않게 하기 위함이다.
 -- ============================================================
 
--- 이 shim은 Classic Era 신엔진(1.15.9, 빌드 68808+) 전용.
--- TOC는 Era 대상이지만 '구버전 애드온 불러오기'가 켜져 있으면 다른
--- 클라에서도 로드될 수 있으므로 여기서 한 번 더 잠근다 —
--- 본섭/판다 등에는 어떤 흔적(전역/라이브러리 선점)도 남기지 않는다.
-local build = tonumber((select(2, GetBuildInfo()))) or 0
-if not (WOW_PROJECT_ID == (WOW_PROJECT_CLASSIC or 2) and build >= 68808) then return end
+-- 리테일에는 관여하지 않는다 (TOC에도 Mainline 항목 없음)
+if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then return end
 
-local noop = function() end
+-- 클라가 이 API를 제공하기 시작하면 손대지 않는다
+if UnitSelectionType ~= nil then return end
 
--- ------------------------------------------------------------
--- 1. 삭제된 전역 함수 대체 (ElvUI가 local로 캡처하기 전에)
--- ------------------------------------------------------------
-
--- 캐스트바: 신엔진은 PlayerCastingBarFrame 믹스인 체계 (구 전역 함수 삭제됨)
-if not CastingBarFrame_SetUnit then CastingBarFrame_SetUnit = noop end
-if not CastingBarFrame_OnLoad then CastingBarFrame_OnLoad = noop end
-if not PetCastingBarFrame_OnLoad then PetCastingBarFrame_OnLoad = noop end
-
--- 펫바/자동시전 반짝임: 신엔진은 AutoCastOverlay 체계
-if not AutoCastShine_AutoCastStart then AutoCastShine_AutoCastStart = noop end
-if not AutoCastShine_AutoCastStop then AutoCastShine_AutoCastStop = noop end
-if not PetActionBar_ShowGrid then PetActionBar_ShowGrid = noop end
-if not PetActionBar_HideGrid then PetActionBar_HideGrid = noop end
-if not PetActionBar_UpdateCooldowns then PetActionBar_UpdateCooldowns = noop end
-
--- ------------------------------------------------------------
--- 2. RegisterEvent 가드
---    신엔진에서 삭제된 이벤트 등록 시도를 pcall로 무해화한다.
---    ElvUI 라이브러리들은 자기 파일 로드/OnInitialize 시점(전부
---    IberisUI 로드 전)에 등록하므로 여기서 선점해야 한다.
--- ------------------------------------------------------------
-local function GuardRegisterEvent(frame)
-	if not frame or frame.IberisREGuard then return end
-	frame.IberisREGuard = true
-	local orig = frame.RegisterEvent
-	frame.RegisterEvent = function(f, event, ...)
-		local ok = pcall(orig, f, event, ...)
-		return ok
-	end
-end
-
--- 라이브러리 테이블 선점: 동봉 LibStub으로 minor 0 스텁을 만들어
--- 가드된 프레임을 미리 심는다. 진짜 라이브러리는 같은 테이블 위로
--- 업그레이드되며 기존 프레임을 재사용한다(or-패턴).
-do
-	local LAB = LibStub:NewLibrary('LibActionButton-1.0-ElvUI', 0)
-	if LAB then
-		LAB.eventFrame = CreateFrame('Frame')
-		GuardRegisterEvent(LAB.eventFrame)
-	end
-
-	local LD = LibStub:NewLibrary('LibDispel-1.0', 0)
-	if LD then
-		LD.frame = CreateFrame('Frame')
-		GuardRegisterEvent(LD.frame)
-	end
-end
-
--- AceEvent 공용 프레임은 Ace3가 로드된 뒤에야 생기므로 ADDON_LOADED마다
--- 시도한다 (ElvUI의 유닛프레임이 OnInitialize에서 AceEvent로 등록하기 전에
--- 반드시 가드가 설치되도록). PLAYER_LOGIN에서 감시 종료.
-local function TryInstallGuards()
-	GuardRegisterEvent(_G.AceEvent30Frame)
-
-	-- 백업: 어떤 이유로든 선점이 무산됐을 때 실제 라이브러리 프레임에 재시도
-	local LAB = LibStub('LibActionButton-1.0-ElvUI', true)
-	if LAB and LAB.eventFrame then GuardRegisterEvent(LAB.eventFrame) end
-
-	local LD = LibStub('LibDispel-1.0', true)
-	if LD and LD.frame then GuardRegisterEvent(LD.frame) end
-end
+UnitSelectionType = function() end -- nil 반환 → oUF의 테이블 조회가 nil로 떨어짐(무해)
 
 local watcher = CreateFrame('Frame')
 watcher:RegisterEvent('ADDON_LOADED')
 watcher:RegisterEvent('PLAYER_LOGIN')
-watcher:SetScript('OnEvent', function(self, event)
-	TryInstallGuards()
-	if event == 'PLAYER_LOGIN' then
-		self:UnregisterAllEvents()
-	end
+watcher:SetScript('OnEvent', function(self, event, addon)
+	if event == 'ADDON_LOADED' and addon ~= 'ElvUI' then return end
+
+	UnitSelectionType = nil -- 캡처 완료 → 전역 회수
+	self:UnregisterAllEvents()
 end)
