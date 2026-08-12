@@ -1,13 +1,13 @@
-## Interface: 50503
+## Interface: 50504
 ## Author: Iberis
-## Version: 2.30
+## Version: 2.31
 ## Title: |cff1784d1ElvUI|r |cffff9900IberisUI|r
 ## Notes: Iberis personal profile addon (Seoyaksun) for ElvUI Classic
 ## Notes-koKR: 신규 유저용 [서약선] 캐릭터 ElvUI/외부 애드온 배치 배포 애드온
 ## RequiredDeps: ElvUI, ElvUI_BenikUI
 ## SavedVariablesPerCharacter: IberisUIDB
 ## DefaultState: Enabled
-## X-ElvuiVersion: 15.18
+## X-ElvuiVersion: 15.20
 ## X-Curse-Project-ID: 1538314
 
 locales\load_locales.xml

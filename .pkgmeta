@@ -2,9 +2,6 @@ package-as: ElvUI_IberisUI
 
 enable-nolib-creation: no
 
-move-folders:
-  ElvUI_IberisUI/!IberisFix: !IberisFix
-
 license-output: LICENSE
 
 ignore:
