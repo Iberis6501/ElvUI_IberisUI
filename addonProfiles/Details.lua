@@ -13,6 +13,15 @@ local function deepCopy(t)
 	return r
 end
 
+-- verbatim 프로필의 "Expressway"를 로케일 안전 폰트(IUI.Font, init.lua)로 치환 — 데이터 파일은 원본 유지
+local function replaceFont(t)
+	for k, v in pairs(t) do
+		if type(v) == "table" then replaceFont(v)
+		elseif v == "Expressway" then t[k] = IUI.Font end
+	end
+	return t
+end
+
 local function applyInstancePosition(i, cfg)
 	if not _detalhes or not cfg then return end
 	local inst
@@ -36,7 +45,7 @@ function IUI:LoadDetailsProfile()
 	-- 1. [서약선] 프로필을 _detalhes_global.__profiles["서약선"]에 통째로 박기
 	if Engine.SeoyaksunDetailsProfile then
 		_detalhes_global.__profiles = _detalhes_global.__profiles or {}
-		_detalhes_global.__profiles["서약선"] = deepCopy(Engine.SeoyaksunDetailsProfile)
+		_detalhes_global.__profiles["서약선"] = replaceFont(deepCopy(Engine.SeoyaksunDetailsProfile))
 	end
 
 	-- 2. 메모리 + SV 모두에 local_instances_config 박기

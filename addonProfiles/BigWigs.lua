@@ -5,7 +5,7 @@ local IUI, E, L = unpack((select(2, ...)))
 function IUI:LoadBigWigsProfile()
 	local res = IUI:GetProfileData()
 	local key = "서약선"
-	local font, fontsize = "Expressway", 11
+	local font, fontsize = IUI.Font, 11
 
 	pcall(function() LoadAddOn("BigWigs_Options") end)
 	pcall(function() LoadAddOn("BigWigs") end)

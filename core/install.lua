@@ -6,6 +6,22 @@ local format = string.format
 -- 중첩 테이블 경로 보장 — 본섭/타 클라/fresh install에서 외부 애드온 DB
 -- 서브테이블이 없을 때 nil 인덱싱 에러 방지. 마지막 키 직전까지 테이블 생성 후 마지막 테이블 반환.
 -- 사용: ensure(E.db.benikui, "Databars", "experience").notifiers = {...}
+-- 한/중 클라 전용: ElvUI/BenikUI 기본값(P/V/G)이 라틴 전용 폰트인 키 중 현재 값도 라틴 전용이면
+-- 로케일 폰트(IUI.LocaleFont)로 채움. 위에서 명시적으로 넣지 않은 키(툴팁 헤더, 가방 텍스트 등)까지 커버.
+-- 블리자드 폰트(데미지 글꼴 등)나 사용자가 고른 한글 가능 폰트는 라틴 목록에 없으므로 유지된다.
+local function fillLocaleFonts(defaults, db)
+	for k, v in pairs(defaults) do
+		if k ~= "*" and k ~= "**" then
+			if type(v) == "table" then
+				local sub = db[k]
+				if type(sub) == "table" then fillLocaleFonts(v, sub) end
+			elseif IUI.LatinFonts[v] and IUI.LatinFonts[db[k]] then
+				db[k] = IUI.LocaleFont
+			end
+		end
+	end
+end
+
 local function ensure(root, ...)
 	local n = select("#", ...)
 	for i = 1, n do
@@ -138,7 +154,7 @@ local function ApplyIberisProfile()
 	E.db["actionbar"]["barPet"]["point"] = "TOPLEFT"
 	E.db["actionbar"]["desaturateOnCooldown"] = true
 	E.db["actionbar"]["extraActionButton"]["hotkeyFontOutline"] = "THICKOUTLINE"
-	E.db["actionbar"]["font"] = "Expressway"
+	E.db["actionbar"]["font"] = IUI.Font
 	E.db["actionbar"]["fontOutline"] = "THICKOUTLINE"
 	E.db["actionbar"]["rightClickSelfCast"] = true
 	E.db["actionbar"]["stanceBar"]["buttonSize"] = 30
@@ -158,10 +174,10 @@ local function ApplyIberisProfile()
 	E.db["bags"]["bankSize"] = 32
 	E.db["bags"]["bankWidth"] = res.panels.bankWidth
 	E.db["bags"]["clearSearchOnClose"] = true
-	E.db["bags"]["countFont"] = "Expressway"
+	E.db["bags"]["countFont"] = IUI.Font
 	E.db["bags"]["countFontOutline"] = "OUTLINE"
 	E.db["bags"]["itemInfoFontOutline"] = "NONE"
-	E.db["bags"]["itemLevelFont"] = "Expressway"
+	E.db["bags"]["itemLevelFont"] = IUI.Font
 	E.db["bags"]["itemLevelFontOutline"] = "OUTLINE"
 	E.db["bags"]["junkDesaturate"] = true
 	E.db["bags"]["junkIcon"] = true
@@ -220,7 +236,7 @@ local function ApplyIberisProfile()
 			abPanel["stylePosition"] = "TOP"
 			if not abPanel["title"] then abPanel["title"] = {} end
 			abPanel["title"]["enable"] = false
-			abPanel["title"]["font"] = "Expressway"
+			abPanel["title"]["font"] = IUI.Font
 			if not abPanel["title"]["fontColor"] then abPanel["title"]["fontColor"] = {} end
 			abPanel["title"]["fontColor"]["b"] = 0.9
 			abPanel["title"]["fontColor"]["g"] = 0.9
@@ -247,7 +263,7 @@ local function ApplyIberisProfile()
 		end
 		ensure(E.db.benikui, "unitframes", "target").getPlayerPortraitSize = false
 	end
-	E.db["chat"]["font"] = "Expressway"
+	E.db["chat"]["font"] = IUI.Font
 	-- chat.keywordSound / chat.keywords 제거 — 개인 알림 키워드는 신규 유저가 직접 설정
 	E.db["chat"]["panelColor"]["a"] = 0.75
 	E.db["chat"]["panelColor"]["b"] = 0.054
@@ -258,7 +274,7 @@ local function ApplyIberisProfile()
 	E.db["chat"]["panelSnapLeftID"]  = 1
 	E.db["chat"]["panelSnapRightID"] = 4
 	E.db["chat"]["panelBackdrop"] = "SHOWBOTH"
-	E.db["chat"]["tabFont"] = "Expressway"
+	E.db["chat"]["tabFont"] = IUI.Font
 	E.db["chat"]["tabFontOutline"] = "OUTLINE"
 	E.db["chat"]["tabFontSize"] = 11
 	E.db["chat"]["tabSelectorColor"]["r"] = 0
@@ -273,7 +289,7 @@ local function ApplyIberisProfile()
 	-- honor 바: 본섭/불성/오리지널 모두 비활성 (사용자 요청, 별도 배치 없음)
 	-- 본섭 외 클라이언트엔 honor 키가 없을 수 있어 ensure로 방어
 	ensure(E.db.databars, "honor").enable = false
-	E.db["databars"]["experience"]["font"] = "Expressway"
+	E.db["databars"]["experience"]["font"] = IUI.Font
 	E.db["databars"]["experience"]["fontSize"] = 10
 	E.db["databars"]["experience"]["height"] = res.panels.expBarHeight
 	E.db["databars"]["experience"]["hideAtMaxLevel"] = false
@@ -291,7 +307,7 @@ local function ApplyIberisProfile()
 	E.db["databars"]["threat"]["enable"] = false
 	E.db["databars"]["threat"]["height"] = res.panels.threatBarHeight
 	E.db["databars"]["threat"]["width"]  = res.panels.threatBarWidth
-	E.db["datatexts"]["font"] = "Expressway"
+	E.db["datatexts"]["font"] = IUI.Font
 	E.db["datatexts"]["fontOutline"] = "OUTLINE"
 	E.db["datatexts"]["fontSize"] = 11
 	local dtPanels = E.db["datatexts"]["panels"]
@@ -334,7 +350,7 @@ local function ApplyIberisProfile()
 	E.db["general"]["bonusObjectivePosition"] = "AUTO"
 	E.db["general"]["bottomPanel"] = false
 	E.db["general"]["decimalLength"] = 2
-	E.db["general"]["font"] = "Expressway"
+	E.db["general"]["font"] = IUI.Font
 	E.db["general"]["fontSize"] = 11
 	-- general.interruptAnnounce 제거 — 방해 알림 채널은 개인 영역
 	E.db["general"]["itemLevel"]["displayCharacterInfo"] = false
@@ -388,7 +404,7 @@ local function ApplyIberisProfile()
 	E.db["nameplates"]["colors"]["threat"]["goodTransition"]["b"] = 0.36
 	E.db["nameplates"]["colors"]["threat"]["goodTransition"]["g"] = 0.76
 	E.db["nameplates"]["colors"]["threat"]["goodTransition"]["r"] = 0.85
-	E.db["nameplates"]["font"] = "Bui Visitor1"
+	E.db["nameplates"]["font"] = IUI.PixelFont
 	E.db["nameplates"]["fontOutline"] = "MONOCHROMEOUTLINE"
 	E.db["nameplates"]["fontSize"] = 10
 	E.db["nameplates"]["overlapV"] = 1.6
@@ -396,59 +412,59 @@ local function ApplyIberisProfile()
 	E.db["nameplates"]["units"]["ENEMY_NPC"]["auras"]["enable"] = false
 	E.db["nameplates"]["units"]["ENEMY_NPC"]["raidTargetIndicator"]["position"] = "RIGHT"
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["auras"]["enable"] = false
-	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["buffs"]["countFont"] = "Expressway"
-	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["buffs"]["font"] = "Expressway"
+	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["buffs"]["countFont"] = IUI.Font
+	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["buffs"]["font"] = IUI.Font
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["buffs"]["numAuras"] = 7
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["buffs"]["numRows"] = 2
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["buffs"]["size"] = 22
-	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["castbar"]["font"] = "Expressway"
+	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["castbar"]["font"] = IUI.Font
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["anchorPoint"] = "TOPLEFT"
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["attachTo"] = "BUFFS"
-	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["countFont"] = "Expressway"
-	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["font"] = "Expressway"
+	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["countFont"] = IUI.Font
+	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["font"] = IUI.Font
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["growthX"] = "RIGHT"
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["numAuras"] = 7
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["numRows"] = 3
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["size"] = 22
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["yOffset"] = 1
-	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["health"]["text"]["font"] = "Expressway"
+	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["health"]["text"]["font"] = IUI.Font
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["health"]["text"]["format"] = ""
-	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["level"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["name"]["font"] = "Expressway"
+	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["level"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["name"]["font"] = IUI.Font
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["portrait"]["classicon"] = false
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["portrait"]["enable"] = true
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["portrait"]["position"] = "LEFT"
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["portrait"]["xOffset"] = 0
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["portrait"]["yOffset"] = 0
-	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["power"]["text"]["font"] = "Expressway"
+	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["power"]["text"]["font"] = IUI.Font
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["raidTargetIndicator"]["position"] = "RIGHT"
-	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["buffs"]["countFont"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["buffs"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["castbar"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["debuffs"]["countFont"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["debuffs"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["health"]["text"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["level"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["name"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["power"]["text"]["font"] = "Expressway"
+	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["buffs"]["countFont"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["buffs"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["castbar"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["debuffs"]["countFont"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["debuffs"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["health"]["text"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["level"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["name"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_NPC"]["power"]["text"]["font"] = IUI.Font
 	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["auras"]["enable"] = false
-	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["buffs"]["countFont"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["buffs"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["castbar"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["debuffs"]["countFont"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["debuffs"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["health"]["text"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["level"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["name"]["font"] = "Expressway"
-	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["power"]["text"]["font"] = "Expressway"
+	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["buffs"]["countFont"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["buffs"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["castbar"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["debuffs"]["countFont"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["debuffs"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["health"]["text"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["level"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["name"]["font"] = IUI.Font
+	E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["power"]["text"]["font"] = IUI.Font
 	E.db["tooltip"]["alwaysShowRealm"] = true
 	E.db["tooltip"]["cursorAnchor"] = true
 	E.db["tooltip"]["cursorAnchorType"] = "ANCHOR_CURSOR_RIGHT"
 	E.db["tooltip"]["cursorAnchorX"] = 50
 	E.db["tooltip"]["cursorAnchorY"] = -25
-	E.db["tooltip"]["font"] = "Expressway"
+	E.db["tooltip"]["font"] = IUI.Font
 	E.db["tooltip"]["headerFontSize"] = 11
-	E.db["tooltip"]["healthBar"]["font"] = "Expressway"
+	E.db["tooltip"]["healthBar"]["font"] = IUI.Font
 	E.db["tooltip"]["healthBar"]["fontSize"] = 9
 	E.db["tooltip"]["healthBar"]["height"] = 6
 	E.db["tooltip"]["itemQuality"] = true
@@ -475,7 +491,7 @@ local function ApplyIberisProfile()
 	E.db["unitframe"]["colors"]["power"]["MANA"]["r"] = 0.30980392156863
 	E.db["unitframe"]["colors"]["transparentAurabars"] = true
 	E.db["unitframe"]["colors"]["useDeadBackdrop"] = true
-	E.db["unitframe"]["font"] = "Expressway"
+	E.db["unitframe"]["font"] = IUI.Font
 	E.db["unitframe"]["fontOutline"] = "OUTLINE"
 	E.db["unitframe"]["fontSize"] = 11
 	-- unitframe.targetSound 제거 — 대상 변경 효과음은 개인 호불호
@@ -526,7 +542,7 @@ local function ApplyIberisProfile()
 	if not E.db["unitframe"]["units"]["party"]["customTexts"]["BenikuiPartyHealth"] then E.db["unitframe"]["units"]["party"]["customTexts"]["BenikuiPartyHealth"] = {} end
 	E.db["unitframe"]["units"]["party"]["customTexts"]["BenikuiPartyHealth"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["BenikuiPartyHealth"]["enable"] = false
-	E.db["unitframe"]["units"]["party"]["customTexts"]["BenikuiPartyHealth"]["font"] = "Expressway"
+	E.db["unitframe"]["units"]["party"]["customTexts"]["BenikuiPartyHealth"]["font"] = IUI.Font
 	E.db["unitframe"]["units"]["party"]["customTexts"]["BenikuiPartyHealth"]["fontOutline"] = "OUTLINE"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["BenikuiPartyHealth"]["justifyH"] = "RIGHT"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["BenikuiPartyHealth"]["size"] = 12
@@ -573,7 +589,7 @@ local function ApplyIberisProfile()
 	if not E.db["unitframe"]["units"]["pet"]["customTexts"]["만족도"] then E.db["unitframe"]["units"]["pet"]["customTexts"]["만족도"] = {} end
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["만족도"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["만족도"]["enable"] = true
-	E.db["unitframe"]["units"]["pet"]["customTexts"]["만족도"]["font"] = "Expressway"
+	E.db["unitframe"]["units"]["pet"]["customTexts"]["만족도"]["font"] = IUI.Font
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["만족도"]["fontOutline"] = "OUTLINE"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["만족도"]["justifyH"] = "LEFT"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["만족도"]["size"] = 11
@@ -631,7 +647,7 @@ local function ApplyIberisProfile()
 	if not E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"] then E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"] = {} end
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"]["font"] = "Expressway"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"]["font"] = IUI.Font
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"]["fontOutline"] = "NONE"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"]["justifyH"] = "RIGHT"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerHealth"]["size"] = 22
@@ -641,7 +657,7 @@ local function ApplyIberisProfile()
 	if not E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"] then E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"] = {} end
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"]["attachTextTo"] = "InfoPanel"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"]["font"] = "Expressway"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"]["font"] = IUI.Font
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"]["fontOutline"] = "NONE"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"]["justifyH"] = "RIGHT"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["BenikuiPlayerName"]["size"] = 11
@@ -651,7 +667,7 @@ local function ApplyIberisProfile()
 	if not E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"] then E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"] = {} end
 	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"]["attachTextTo"] = "InfoPanel"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"]["font"] = "Expressway"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"]["font"] = IUI.Font
 	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"]["fontOutline"] = "OUTLINE"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"]["justifyH"] = "LEFT"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["lvl"]["size"] = 11
@@ -747,7 +763,7 @@ local function ApplyIberisProfile()
 	if not E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"] then E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"] = {} end
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"]["enable"] = true
-	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"]["font"] = "Expressway"
+	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"]["font"] = IUI.Font
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"]["fontOutline"] = "NONE"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"]["justifyH"] = "LEFT"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetHealth"]["size"] = 22
@@ -757,7 +773,7 @@ local function ApplyIberisProfile()
 	if not E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"] then E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"] = {} end
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"]["attachTextTo"] = "InfoPanel"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"]["enable"] = true
-	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"]["font"] = "Expressway"
+	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"]["font"] = IUI.Font
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"]["fontOutline"] = "NONE"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"]["justifyH"] = "LEFT"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["BenikuiTargetName"]["size"] = 11
@@ -811,7 +827,7 @@ local function ApplyIberisProfile()
 		E.private["benikui"]["expressway"] = true
 	end
 	if E.private["general"] then
-		E.private["general"]["chatBubbleFont"] = "Expressway"
+		E.private["general"]["chatBubbleFont"] = IUI.Font
 		E.private["general"]["chatBubbleFontSize"] = 10
 		E.private["general"]["dmgfont"] = "데미지 글꼴"
 		E.private["general"]["glossTex"] = "BuiFlat"
@@ -843,6 +859,14 @@ local function ApplyIberisProfile()
 		end
 		E.global["general"]["fadeMapWhenMoving"] = false
 		E.global["general"]["smallerWorldMap"]   = false
+	end
+
+	-- 남은 ElvUI/BenikUI 기본 폰트(PT Sans Narrow 등)를 로케일 폰트로 (한/중 클라만)
+	if IUI.LocaleFont then
+		local _, _, V, P, G = unpack(ElvUI)
+		fillLocaleFonts(P, E.db)
+		fillLocaleFonts(V, E.private)
+		fillLocaleFonts(G, E.global)
 	end
 
 	-- BenikUI 패널 갱신
