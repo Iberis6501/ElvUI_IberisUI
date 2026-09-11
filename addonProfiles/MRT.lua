@@ -39,7 +39,7 @@ function IUI:LoadMRTProfile()
 	-- InviteTool
 	-- ============================================================
 	VMRT["InviteTool"] = VMRT["InviteTool"] or {}
-	VMRT["InviteTool"]["Words"] = "11"
+	VMRT["InviteTool"]["Words"] = "инв inv byd штм 123"
 	VMRT["InviteTool"]["InvByChat"] = true
 	VMRT["InviteTool"]["RaidDiff"] = 16
 	VMRT["InviteTool"]["PromoteRank"] = 2
@@ -48,7 +48,7 @@ function IUI:LoadMRTProfile()
 	VMRT["InviteTool"]["MasterLooters"] = ""
 	VMRT["InviteTool"]["LootMethod"] = "group"
 	VMRT["InviteTool"]["PromoteNames"] = ""
-	VMRT["InviteTool"]["OnlyGuild"] = nil  -- MRT는 해제 상태를 nil로 저장
+	VMRT["InviteTool"]["OnlyGuild"] = true
 	VMRT["InviteTool"]["Rank"] = 1
 
 	-- ============================================================

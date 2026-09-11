@@ -353,8 +353,8 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 - IberisUI가 직접 지정하지 않던 ElvUI·BenikUI 폰트(툴팁 머리글, 가방 텍스트, 이름표 등)도 한/중 클라에서 함께 교체. 데미지 글꼴 등 블리자드 기본 폰트는 그대로 유지
 - Details(툴팁·메뉴·창 제목·바)와 BigWigs 폰트도 동일하게 적용
 - **아군 NPC 이름표 끔** — 접속할 때마다 NPC 이름이 직함 없는 이름표로 뜨던 것을, 블리자드 기본 이름 표시(직함 포함)로. 그동안은 Shift+V로 아군 이름표를 켰다 꺼야 이 상태가 됐음
-- [서약선] 실측 반영 — BigWigs 타이머 바 위치·근접 창 위치 이동 + 근접 경고음 켬 / MRT 초대 도구: 귓속말 `11`로 자동 초대, 길드원 한정 해제. 쓰이지 않는 BigWigs 옛 설정 키(`BigWigsAnchor_width`) 정리
-- ※ 설치 마법사 재실행 시 반영 (1단계: ElvUI / 외부 애드온 단계: Details·BigWigs·MRT)
+- [서약선] 실측 반영 — BigWigs 타이머 바 위치·근접 창 위치 이동 + 근접 경고음 켬. 쓰이지 않는 BigWigs 옛 설정 키(`BigWigsAnchor_width`) 정리
+- ※ 설치 마법사 재실행 시 반영 (1단계: ElvUI / 외부 애드온 단계: Details·BigWigs)
 
 ### v2.31 (2026-08-12)
 - **ElvUI 15.20 대응 — v2.30의 임시 보정 일괄 제거.** ElvUI가 Classic Era 1.15.9(신엔진)를 정식 대응하면서 IberisUI 쪽 런타임 핫픽스가 전부 불필요해짐. 동봉 애드온 `!IberisFix`와 핫픽스 모듈 삭제
