@@ -13,7 +13,7 @@
 ## 의존성 정책
 
 - **`RequiredDeps`는 `ElvUI, ElvUI_BenikUI` 둘만**. 5개 TOC 전부 동일.
-- 다른 외부 애드온 (BigWigs/Details/MRT/HidingBar/InvenRaidFrames3/Questie/ShamanPower/TacoTip/Guidelime) 은 **선택적** — 설치 안 돼있어도 IberisUI 자체는 무해하게 로드되어야 함.
+- 다른 외부 애드온 (BigWigs/Details/MRT/HidingBar/InvenRaidFrames3/Questie/ShamanPower/TacoTip/Guidelime/Postal) 은 **선택적** — 설치 안 돼있어도 IberisUI 자체는 무해하게 로드되어야 함.
 - 외부 애드온 통합 패턴: **SV 테이블에 프로필 미리 박기** (함수 호출 X, nil 가드 + pcall). 외부 애드온이 나중에 설치되면 자기 SV 읽으면서 자연스럽게 적용.
 - 함수 호출이 필요한 곳 (BigWigs `:SetProfile`, Details `:ApplyProfile`) 은 `if _G.X` 가드 + `pcall` 이중 보호.
 
@@ -41,6 +41,8 @@ ElvUI_IberisUI/
 - 현재 처리된 케이스:
   - 컨테이너 API 17개 (`GetContainerItemID` 등) → `C_Container.*`로 alias
   - `InterfaceAddOnsList_Update` → no-op 스텁 (Guidelime 옵션창 토글)
+  - `DebuffTypeColor` / `DebuffTypeSymbol` → FrameXML 원본 값으로 복원 (KR Classic 2.5.6에서 제거, InvenRaidFrames3·LibRealDispel-1.0 로드 실패 대응)
+  - `VMRT.ExCD2.gnGUIDs` → Retail 한정 빈 테이블 선초기화 (MRT Inspect 핸들러 nil 에러 대응)
 - 로드 순서: `core/load_core.xml`에서 **가장 먼저** 로드되어야 함.
 
 ## 커밋 / 릴리스 규칙
@@ -52,7 +54,7 @@ ElvUI_IberisUI/
 
 ## 개발 환경 (이 PC / 집 PC 공통)
 
-- 레포 클론 위치: `D:\개인\게임\와우\ElvUI_IberisUI\` (집 PC는 `D:\GoogleDrive\개인\게임\와우\ElvUI_IberisUI\`)
+- 레포 클론 위치: `D:\GoogleDrive\개인\게임\와우\ElvUI_IberisUI\` (양 PC 동일 — 구글드라이브 미러 안)
 - 각 클라이언트 `_<client>_\Interface\AddOns\ElvUI_IberisUI` 는 위 클론 폴더로 **mklink /J 정션** 연결. 코드 수정 즉시 `/reload`로 반영.
 - VS Code에서 직접 작업.
 - 인증: `gh auth login` (HTTPS + Git Credential Manager). Iberis6501 계정.
