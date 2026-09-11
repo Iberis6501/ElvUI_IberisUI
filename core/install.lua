@@ -409,6 +409,9 @@ local function ApplyIberisProfile()
 	E.db["nameplates"]["fontSize"] = 10
 	E.db["nameplates"]["overlapV"] = 1.6
 	E.db["nameplates"]["statusbar"] = "BuiFlat"
+	-- 아군 NPC 이름표 끔 → nameplateShowFriendlyNPCs 0: NPC는 블리자드 월드 이름(직함 포함)으로 표시.
+	-- ElvUI 기본값(켬)이면 접속마다 CVar를 1로 되돌려 직함 없는 이름표가 뜸 (Shift+V 켰다 끄면 0이 되던 상태를 기본으로)
+	E.db["nameplates"]["visibility"]["friendly"]["npcs"] = false
 	E.db["nameplates"]["units"]["ENEMY_NPC"]["auras"]["enable"] = false
 	E.db["nameplates"]["units"]["ENEMY_NPC"]["raidTargetIndicator"]["position"] = "RIGHT"
 	E.db["nameplates"]["units"]["ENEMY_PLAYER"]["auras"]["enable"] = false
