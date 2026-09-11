@@ -17,6 +17,13 @@
 - 외부 애드온 통합 패턴: **SV 테이블에 프로필 미리 박기** (함수 호출 X, nil 가드 + pcall). 외부 애드온이 나중에 설치되면 자기 SV 읽으면서 자연스럽게 적용.
 - 함수 호출이 필요한 곳 (BigWigs `:SetProfile`, Details `:ApplyProfile`) 은 `if _G.X` 가드 + `pcall` 이중 보호.
 
+## 폰트 정책 (v2.32~)
+
+- 폰트 이름은 리터럴 대신 `IUI.Font` / `IUI.PixelFont` (init.lua) 사용. 한/중 클라는 LSM 내장 로케일 기본 폰트(`기본 글꼴` 등), 서양/러시아 클라는 `Expressway` / `Bui Visitor1`.
+- 이유: ElvUI·BenikUI·Details 폰트는 한/중 클라에서 LSM 등록이 거부돼 이름이 비어 있음 → 다른 애드온이 같은 이름으로 라틴 전용 폰트를 선등록하면(LSM은 선등록 우선) 한글이 □로 깨짐. LSM 내장 이름은 라이브러리 로드 시 선등록되므로 선점 불가.
+- 대상은 **ElvUI/BenikUI가 지정하는 폰트만** (`IUI.LatinFonts` 목록, 마법사 1단계 `fillLocaleFonts`가 P/V/G 기본값까지 커버). 블리자드 기본 폰트(`데미지 글꼴`, `Friz Quadrata TT`, `Fonts\2002.ttf` 경로)와 Details 자체 폰트(`FORCED SQUARE`)는 건드리지 않음.
+- Details verbatim 프로필(`_DetailsSeoyaksun.lua`)은 원본 유지, 적용 시 `replaceFont`로 `"Expressway"`만 치환.
+
 ## 디렉토리 구조
 
 ```
