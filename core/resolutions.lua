@@ -115,9 +115,11 @@ local PROFILE = {
 		extra = { width = 338, height = 133 },
 	},
 
-	-- BigWigs InfoBox (BOTTOMRIGHT 기준 x/y)
+	-- BigWigs InfoBox (BOTTOMRIGHT 기준 x/y) / 타이머 바 앵커 / 근접 창 (BOTTOMLEFT 기준 px)
 	bigwigs = {
-		infoBoxPosition = { nil, nil, -402, 142 },
+		infoBoxPosition   = { nil, nil, -402, 142 },
+		barsPosition      = { "RIGHT", "RIGHT", -376, 189 },
+		proximityPosition = { x = 1026.489228124461, y = 317.4667212781442 },
 	},
 
 	-- Details — 4개 창 위치 + 모드

@@ -25,18 +25,22 @@ function IUI:LoadBigWigsProfile()
 		BigWigs3DB.namespaces[name] = ns
 	end
 	setNs("BigWigs_Plugins_Alt Power",       { fontName = font, fontOutline = "", fontsize = fontsize })
+	-- BigWigsAnchor_width는 현행 BigWigs에 없는 키(normalWidth로 대체)라 제거
+	local bp = res.bigwigs.barsPosition
 	setNs("BigWigs_Plugins_Bars", {
-		fontName            = font,
-		BigWigsAnchor_width = 200,
-		texture             = "BuiFlat",
-		barStyle            = "MonoUI",
+		fontName       = font,
+		texture        = "BuiFlat",
+		barStyle       = "MonoUI",
+		normalPosition = { bp[1], bp[2], bp[3], bp[4] },
 	})
 	setNs("BigWigs_Plugins_Super Emphasize", { fontName = font })
 	setNs("BigWigs_Plugins_Messages",        { fontSize = 20, fontName = font })
+	local pp = res.bigwigs.proximityPosition
 	setNs("BigWigs_Plugins_Proximity", {
 		fontSize = 20, fontName = font,
 		width = 140, height = 120,
-		posy = 454, posx = 976,
+		posx = pp.x, posy = pp.y,
+		sound = true,
 	})
 
 	-- BossBlock 글로벌 (모든 유저 공유)
