@@ -113,7 +113,7 @@ The IberisUI setup wizard runs automatically on first login. You can re-run it l
 ## Applied Profiles
 
 ### ElvUI
-- Fonts: Expressway / Bui Visitor1
+- Fonts: Expressway / Bui Visitor1 (Korean/Chinese clients: the locale default font, to prevent broken glyphs)
 - Unit frames: Player/Target 255×55, InfoPanel 22px, custom text
 - Databars: 9px vertical bars, BuiFlat texture
 - Chat: 348×166 panels
@@ -277,7 +277,7 @@ ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvu
 ## 적용 프로필
 
 ### ElvUI
-- 폰트: Expressway / Bui Visitor1
+- 폰트: 한글 클라는 `기본 글꼴` (다른 애드온 폰트 충돌로 인한 한글 깨짐 방지) / 영문 클라는 Expressway · Bui Visitor1
 - 유닛프레임: Player/Target 255×55, InfoPanel 22px, 커스텀 텍스트
 - 데이터바: 9px 세로 바, BuiFlat 텍스처
 - 채팅: 348×166 패널
@@ -347,6 +347,12 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 ---
 
 ## 작업 내역 / Changelog
+
+### v2.32 (2026-09-11)
+- **한글 깨짐(□□□) 방지 — 한글 클라는 폰트를 `기본 글꼴`로 지정.** BenikUI 기본값에서 온 Expressway·Bui Visitor1과 ElvUI 기본 PT Sans Narrow는 한글 클라에 등록되지 않는 영문 전용 폰트라, 다른 애드온(데미지 폰트 교체 애드온 등)이 같은 이름으로 영문 폰트를 먼저 등록하면 ElvUI·Details·BigWigs의 한글이 한꺼번에 깨졌음. 한/중 클라는 WoW 내장 로케일 폰트 이름을 써서 이런 충돌이 원천적으로 생기지 않게 함. 원래도 이 폰트로 대체 표시되고 있었으므로 **외형 변화 없음**. 영문 클라는 기존 폰트 유지
+- IberisUI가 직접 지정하지 않던 ElvUI·BenikUI 폰트(툴팁 머리글, 가방 텍스트, 이름표 등)도 한/중 클라에서 함께 교체. 데미지 글꼴 등 블리자드 기본 폰트는 그대로 유지
+- Details(툴팁·메뉴·창 제목·바)와 BigWigs 폰트도 동일하게 적용
+- ※ 설치 마법사 재실행 시 반영 (1단계: ElvUI / 외부 애드온 단계: Details·BigWigs)
 
 ### v2.31 (2026-08-12)
 - **ElvUI 15.20 대응 — v2.30의 임시 보정 일괄 제거.** ElvUI가 Classic Era 1.15.9(신엔진)를 정식 대응하면서 IberisUI 쪽 런타임 핫픽스가 전부 불필요해짐. 동봉 애드온 `!IberisFix`와 핫픽스 모듈 삭제
