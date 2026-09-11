@@ -113,7 +113,7 @@ The IberisUI setup wizard runs automatically on first login. You can re-run it l
 ## Applied Profiles
 
 ### ElvUI
-- Fonts: Expressway / Bui Visitor1 (Korean/Chinese clients: the locale default font, to prevent broken glyphs)
+- Fonts: Expressway / Bui Visitor1 (Korean/Chinese clients: the built-in locale font, to prevent broken glyphs from font-name conflicts with other addons)
 - Unit frames: Player/Target 255×55, InfoPanel 22px, custom text
 - Databars: 9px vertical bars, BuiFlat texture
 - Chat: 348×166 panels
