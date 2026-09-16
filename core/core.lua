@@ -127,15 +127,21 @@ function IUI:InstallURLHandler()
 		timeout = 0, whileDead = 1, hideOnEscape = 1, preferredIndex = 3,
 	}
 
-	-- SetItemRef를 hook해서 "url:..." hyperlink 클릭 시 우리 다이얼로그 표시
-	local origSetItemRef = _G.SetItemRef
-	_G.SetItemRef = function(link, text, button, chatFrame)
+	-- "url:..." hyperlink 클릭 시 우리 다이얼로그 표시.
+	--
+	-- 전역 SetItemRef 를 덮어쓰면 안 된다 (2026-09-16).  덮어쓰면 채팅 링크를 누르는 순간
+	-- Blizzard_ChatFrameBase/Shared/ChatFrame.lua 가 그 전역을 읽으면서 실행 흐름이
+	-- 오염(taint)되고, 그 흐름에서 열린 캐릭터 이름 우클릭 메뉴가 통째로 오염돼
+	-- "애드온 'ElvUI_IberisUI'이 보호된 함수 'CopyToClipboard()' 호출을 시도했습니다"로
+	-- 이름 복사가 막힌다 (taint.log 로 확인).
+	--
+	-- secure hook 은 오염을 남기지 않는다.  "url:" 은 블리자드가 모르는 link 종류라
+	-- 원래 함수는 아무 일도 하지 않고 지나가고, 우리는 뒤에서 팝업만 띄운다.
+	hooksecurefunc("SetItemRef", function(link)
 		if link and link:sub(1, 4) == "url:" then
 			StaticPopup_Show("IBERISUI_URL", nil, nil, link:sub(5))
-			return
 		end
-		return origSetItemRef(link, text, button, chatFrame)
-	end
+	end)
 end
 
 function IUI:PrintLoadMessage()
@@ -302,36 +308,40 @@ function IUI:Initialize()
 	-- 외부 코드(ElvUI/BenikUI/Blizzard)가 ChatFrame.SetPoint 또는 ClearAllPoints 호출하면
 	-- 우리 hook이 즉시 정상 위치로 복원. 시각적 깜빡임 없음.
 	--
-	-- panel은 frame.__iuiHardLockPanel에 박아 동적 참조 — chatPanelCount 토글 시
-	-- ChatFrame5의 lock 대상을 LeftChatPanel ↔ IberisExtraChatPanel 전환 가능.
-	-- panel == nil 이면 hook 무동작 (lock 해제 효과).
+	-- lock 상태는 ChatFrame 자체가 아니라 아래 표에 둔다 (프레임을 key 로).
+	-- ChatFrame 테이블에 애드온 필드를 박으면 그 프레임이 오염(taint)돼서, 채팅에서 캐릭터
+	-- 이름을 우클릭했을 때 블리자드 보호 함수(CopyToClipboard 등) 호출이 막힌다
+	-- ("애드온 'ElvUI_IberisUI'이 보호된 함수 호출을 시도했습니다").
+	-- panel 은 lockPanel[frame] 로 동적 참조 — chatPanelCount 토글 시 ChatFrame5 의 lock
+	-- 대상을 LeftChatPanel ↔ IberisExtraChatPanel 로 전환 가능. nil 이면 hook 무동작(lock 해제).
+	local lockPanel, lockHooked, lockInCall = {}, {}, {}
 	local function HardLockChat(frame, panel)
 		if not frame then return end
-		frame.__iuiHardLockPanel = panel  -- nil 허용 (lock 해제)
-		if frame.__iuiHardLocked then return end
-		frame.__iuiHardLocked = true
+		lockPanel[frame] = panel  -- nil 허용 (lock 해제)
+		if lockHooked[frame] then return end
+		lockHooked[frame] = true
 
 		hooksecurefunc(frame, "SetPoint", function(self, point, parent)
-			if self.__iuiInternalCall then return end
-			local p = self.__iuiHardLockPanel
+			if lockInCall[self] then return end
+			local p = lockPanel[self]
 			if not p then return end
 			-- 우리 의도 위치가 아니면 즉시 정상화
 			if point ~= "BOTTOMLEFT" or parent ~= p then
-				self.__iuiInternalCall = true
+				lockInCall[self] = true
 				self:ClearAllPoints()
 				self:SetPoint("BOTTOMLEFT", p, "BOTTOMLEFT", 5, 5)
-				self.__iuiInternalCall = false
+				lockInCall[self] = nil
 			end
 		end)
 
 		hooksecurefunc(frame, "ClearAllPoints", function(self)
-			if self.__iuiInternalCall then return end
-			local p = self.__iuiHardLockPanel
+			if lockInCall[self] then return end
+			local p = lockPanel[self]
 			if not p then return end
 			-- ClearAllPoints 직후 위치가 풀려있음 → 즉시 우리 위치로
-			self.__iuiInternalCall = true
+			lockInCall[self] = true
 			self:SetPoint("BOTTOMLEFT", p, "BOTTOMLEFT", 5, 5)
-			self.__iuiInternalCall = false
+			lockInCall[self] = nil
 		end)
 	end
 	-- chat.lua에서도 호출 가능하게 노출 (HardLockChat 호출 / panel = nil로 lock 해제)
