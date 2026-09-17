@@ -180,13 +180,13 @@ ElvUI and ElvUI_BenikUI are governed by their own licenses.
 
 현재는 **20주년 불성기념서버** 에서만 플레이하고 있어서, 본섭과 클래식 서버 쪽은 오류 체크가 어렵습니다.
 
-근데 프레임 구조만 변경하는 애드온이라서 별다른 에러는 없을 거예요.
+근데 프레임 구조만 변경하는 애드온이라서 별다른 에러는 없을 것입니다.
 
 그리고 그 동안 좀 번거롭던 설치 과정을 아주 **심플하게 변경**했습니다. ElvUI 설치하듯이 작업하시면 됩니다.
 
 > 💡 현재 버전은 **ElvUI 15.18** 기준입니다.
 >
-> ⚠️ 애드온 적용 전에는 **반드시 백업**하는 습관을 가지세요. ^^
+> ⚠️ 애드온 적용 전에는 **반드시 백업**하는 습관을 권장합니다. ^^
 
 &nbsp;
 
@@ -204,7 +204,7 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 
 ## 주의사항
 
-1. 사소한 에러가 발생할 경우 채팅창에 `/console scriptErrors 0`을 입력해주세요.
+1. 사소한 에러가 발생할 경우 채팅창에 `/console scriptErrors 0`을 입력합니다.
 2. 액션바가 안 보이는 분들은 **CurseForge App**을 통해 업데이트 진행하시면 됩니다.
 3. **반드시 [ElvUI](https://tukui.org/elvui) 와 [ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui) 가 필요합니다.**
 4. 버그 리포트 시에는 **ElvUI / BenikUI / IberisUI만 켜고 재현**해주시면 원인 파악이 빠릅니다.
@@ -232,7 +232,7 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 - **[ElvUI](https://tukui.org/elvui)** v15.18+
 - **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** v2.41+
 
-> ⚠️ IberisUI는 ElvUI와 BenikUI를 **포함하지 않습니다**. 별도로 먼저 설치하세요.
+> ⚠️ IberisUI는 ElvUI와 BenikUI를 **포함하지 않습니다**. 별도로 먼저 설치해야 합니다.
 
 &nbsp;
 
@@ -240,10 +240,10 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 
 ## 설치
 
-필수 의존성을 먼저 설치하고, 그 다음 IberisUI를 설치하세요.
+필수 의존성을 먼저 설치하고, 그 다음 IberisUI를 설치합니다.
 
 ### 1단계: ElvUI 설치
-ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvui)에서 배포됩니다 (CurseForge에는 없음). 해당 사이트의 안내에 따라 설치해주세요.
+ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvui)에서 배포됩니다 (CurseForge에는 없음). 해당 사이트의 안내에 따라 설치하시기 바랍니다.
 
 ### 2단계: BenikUI + IberisUI 설치
 
@@ -301,8 +301,8 @@ ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvu
 
 ## 알려진 제약
 
-- 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 페이지 하단 링크의 버그 리포트로 알려주세요.
-- ElvUI 설치 마법사가 자동 스킵됩니다. **기존 ElvUI 프로필이 IberisUI 프로필로 덮어써집니다** — 기존 설정을 보존하려면 적용 전 백업하세요.
+- 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 페이지 하단 링크의 버그 리포트로 알려 주시기 바랍니다.
+- ElvUI 설치 마법사가 자동 스킵됩니다. **기존 ElvUI 프로필이 IberisUI 프로필로 덮어써집니다** — 기존 설정을 보존하려면 적용 전에 백업해 두시기 바랍니다.
 - 채팅창(ChatFrame1/4) 위치는 외부 코드의 변경을 즉시 차단(hard-lock)합니다. **의도된 동작**입니다.
 
 &nbsp;
