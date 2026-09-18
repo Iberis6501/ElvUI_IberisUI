@@ -900,7 +900,8 @@ local function ApplyIberisProfile()
 			end
 			mpDT["BuiMiddleDTPanel"]["battleground"] = false
 			mpDT["BuiMiddleDTPanel"]["enable"]       = true
-			if Layout.LoadDataTexts then Layout:LoadDataTexts() end
+			-- BenikUI 가 패널 등록에 실패하는 환경(포에버 + 본섭용 BenikUI)에서도 설치가 끝까지 가도록 감싼다
+			if Layout.LoadDataTexts then pcall(Layout.LoadDataTexts, Layout) end
 		end
 
 		-- BenikUI_액션바 등 커스텀 패널 생성+설정
@@ -1025,7 +1026,12 @@ local function ShowIberisLogo() CreateIberisLogo():Show() end
 local function ProfileApplyHandler()
 	return function()
 		print("|cff00ff00IberisUI|r 프로필 적용 시작")
-		local ok, err = pcall(ApplyIberisProfile)
+		-- 에러는 채팅 한 줄과 함께 오류 처리기(BugSack 등)로도 넘겨 호출 스택을 남긴다
+		local ok, err = xpcall(ApplyIberisProfile, function(e)
+			local handler = geterrorhandler and geterrorhandler()
+			if handler then pcall(handler, e) end
+			return e
+		end)
 		if ok then
 			print("|cff00ff00IberisUI|r 적용 성공")
 		else
