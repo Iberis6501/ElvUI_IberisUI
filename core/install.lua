@@ -887,13 +887,13 @@ local function ApplyIberisProfile()
 			mpDT["BuiMiddleDTPanel"] = mpDT["BuiMiddleDTPanel"] or {}
 			if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
 				mpDT["BuiMiddleDTPanel"][1] = "LDB_BigWigs"
-				mpDT["BuiMiddleDTPanel"][2] = "LDB_IberisRaidAuction"
+				mpDT["BuiMiddleDTPanel"][2] = ""
 				mpDT["BuiMiddleDTPanel"][3] = "LDB_InvenRaidFrames3"
 				mpDT["BuiMiddleDTPanel"][4] = "LDB_MRT"
 				mpDT["BuiMiddleDTPanel"][5] = "LDB_Leatrix_Plus"
 			else
 				mpDT["BuiMiddleDTPanel"][1] = "LDB_MRT"
-				mpDT["BuiMiddleDTPanel"][2] = "LDB_IberisRaidAuction"
+				mpDT["BuiMiddleDTPanel"][2] = ""
 				mpDT["BuiMiddleDTPanel"][3] = "LDB_AtlasLoot"
 				mpDT["BuiMiddleDTPanel"][4] = "LDB_SavedClassicIcon"
 				mpDT["BuiMiddleDTPanel"][5] = "LDB_FindParty"

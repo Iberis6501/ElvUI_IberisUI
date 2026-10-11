@@ -348,6 +348,11 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 
 ## 작업 내역 / Changelog
 
+### v2.34 (2026-10-12)
+- **설치가 중간에 끊기던 문제 수정** — 포에버 클라에서 본섭용 BenikUI를 쓰면 중앙 정보막대 등록이 실패하며 설치가 멈춰 뒤 단계(커스텀 패널·CVar)가 빠지던 것을, 실패해도 끝까지 진행되게 함
+- 설치 중 오류가 나면 채팅 한 줄과 함께 오류 처리기(BugSack 등)에도 넘겨 원인을 확인할 수 있게 함
+- 내부 소스 정리
+
 ### v2.33 (2026-09-17)
 - **채팅에서 캐릭터 이름 우클릭 → "이름 복사"가 막히던 문제 수정** — "애드온 'ElvUI_IberisUI'이 보호된 함수 'CopyToClipboard()' 호출을 시도했습니다" 오류. URL 링크 처리를 위해 전역 `SetItemRef`를 덮어쓰던 것을 `hooksecurefunc`로 바꿔 실행 흐름 오염(taint)을 없앰. 채팅창 고정(HardLockChat) 상태도 블리자드 프레임 대신 애드온 쪽 표에 둠
 - **이베리스 애드온 시리즈 CurseForge 공개** — 불성 기념서버에서 같이 쓰는 애드온 6종을 IberisUI와 같은 방식으로 배포. 한국어 기본 + 영문 클라 자동 영문 UI: [IberisGearSet](https://www.curseforge.com/wow/addons/iberisgearset) · [IberisSaved](https://www.curseforge.com/wow/addons/iberissaved) · [IberisBisTracker](https://www.curseforge.com/wow/addons/iberisbistracker) · [IberisRaidRoster](https://www.curseforge.com/wow/addons/iberisraidroster) · [IberisCraftCost](https://www.curseforge.com/wow/addons/iberiscraftcost) · [IberisBloodSound](https://www.curseforge.com/wow/addons/iberisbloodsound)
