@@ -61,7 +61,7 @@ ElvUI_IberisUI/
 
 ## 개발 환경 (이 PC / 집 PC 공통)
 
-- 레포 클론 위치: `D:\GoogleDrive\개인\게임\와우\ElvUI_IberisUI\` (양 PC 동일 — 구글드라이브 미러 안)
+- 레포 클론 위치: `D:\ClaudeRemote\게임\와우\ElvUI_IberisUI\` (양 PC 동일 — 구글드라이브 미러 안)
 - 각 클라이언트 `_<client>_\Interface\AddOns\ElvUI_IberisUI` 는 위 클론 폴더로 **mklink /J 정션** 연결. 코드 수정 즉시 `/reload`로 반영.
 - VS Code에서 직접 작업.
 - 인증: `gh auth login` (HTTPS + Git Credential Manager). Iberis6501 계정.
