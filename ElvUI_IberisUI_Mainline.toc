@@ -1,4 +1,4 @@
-## Interface: 120100
+## Interface: 120100, 120105
 ## Author: Iberis
 ## Version: 2.34
 ## Title: |cff1784d1ElvUI|r |cffff9900IberisUI|r
