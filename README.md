@@ -20,7 +20,7 @@ It's been a while since the last update! I currently play only on the **20th Ann
 
 The previously cumbersome installation has been **simplified**. It now installs just like ElvUI.
 
-> 💡 Current build is based on **ElvUI 15.18**.
+> 💡 Current build is based on **ElvUI 16.02**.
 >
 > ⚠️ Always **back up** your settings before applying any addon. ^^
 
@@ -65,7 +65,7 @@ UIScale multiplies every pixel, so the layout is designed to work at other resol
 
 ## Requirements
 
-- **[ElvUI](https://tukui.org/elvui)** v15.18+
+- **[ElvUI](https://tukui.org/elvui)** v16.00+
 - **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** v2.41+
 
 > ⚠️ IberisUI **does not include** ElvUI or BenikUI. They must be installed separately.
@@ -184,7 +184,7 @@ ElvUI and ElvUI_BenikUI are governed by their own licenses.
 
 그리고 그 동안 좀 번거롭던 설치 과정을 아주 **심플하게 변경**했습니다. ElvUI 설치하듯이 작업하시면 됩니다.
 
-> 💡 현재 버전은 **ElvUI 15.18** 기준입니다.
+> 💡 현재 버전은 **ElvUI 16.02** 기준입니다.
 >
 > ⚠️ 애드온 적용 전에는 **반드시 백업**하는 습관을 권장합니다. ^^
 
@@ -229,7 +229,7 @@ UIScale이 모든 픽셀에 곱해지므로 다른 해상도에서도 동일하�
 
 ## 요구사항
 
-- **[ElvUI](https://tukui.org/elvui)** v15.18+
+- **[ElvUI](https://tukui.org/elvui)** v16.00+
 - **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** v2.41+
 
 > ⚠️ IberisUI는 ElvUI와 BenikUI를 **포함하지 않습니다**. 별도로 먼저 설치해야 합니다.
@@ -347,6 +347,9 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 ---
 
 ## 작업 내역 / Changelog
+
+### v2.35 (2026-11-23)
+- 본섭 12.1.5·ElvUI 16.02 대응 — 본섭 TOC 에 12.1.5 추가(ElvUI 16.02 와 같은 목록). 기념일(TBC 2.5.6)·본섭에서 ElvUI 16.02 로 동작 확인
 
 ### v2.34 (2026-10-12)
 - **설치가 중간에 끊기던 문제 수정** — 포에버 클라에서 본섭용 BenikUI를 쓰면 중앙 정보막대 등록이 실패하며 설치가 멈춰 뒤 단계(커스텀 패널·CVar)가 빠지던 것을, 실패해도 끝까지 진행되게 함

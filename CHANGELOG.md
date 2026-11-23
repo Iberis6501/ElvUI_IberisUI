@@ -1,5 +1,10 @@
 # ElvUI_IberisUI
 
+## v2.35 (2026-11-23)
+
+- 본섭 12.1.5 와 ElvUI 16.02 에 맞췄습니다(본섭에서 구버전 애드온으로 뜨던 것).
+- Updated for Retail 12.1.5 and ElvUI 16.02 (no longer flagged out-of-date on Retail).
+
 ## v2.34 (2026-10-12)
 
 - 포에버 클라 + 본섭용 BenikUI 환경에서 중앙 정보막대 등록 실패로 설치가 중간에 멈추던 문제를 고쳤습니다.
