@@ -428,8 +428,8 @@ function IUI:SetupChatWindows(numPanels)
 	end
 
 	local msg = (numPanels == 3)
-		and "|cffff9900IberisUI|r 채팅 설정 완료 — 좌(일반) + 보조(커뮤니티) + 우(전리품) 3패널."
-		or  "|cffff9900IberisUI|r 채팅 설정 완료 — 좌우 패널 도킹 + chat-cache 저장."
+		and "|cffff9900IberisUI|r 채팅 설정 완료: 좌(일반) + 보조(커뮤니티) + 우(전리품) 3패널."
+		or  "|cffff9900IberisUI|r 채팅 설정 완료: 좌우 패널 도킹 + chat-cache 저장."
 	DEFAULT_CHAT_FRAME:AddMessage(msg)
 	-- PluginInstallStepComplete는 마법사 frame일 때만 존재. 자동 재적용 시점에는 nil 가능.
 	if PluginInstallStepComplete then

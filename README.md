@@ -4,7 +4,7 @@
   <img src="https://raw.githubusercontent.com/Iberis6501/ElvUI_IberisUI/main/media/logo_512.png" width="256" alt="IberisUI logo" />
 </p>
 
-> A one-click installer that replicates Iberis's complete ElvUI/BenikUI UI — including pre-configured profiles for BigWigs, Details, MRT, and more — across Retail and all Classic clients.
+> A one-click installer that replicates Iberis's complete ElvUI/BenikUI UI (including pre-configured profiles for BigWigs, Details, MRT, and more) across Retail and all Classic clients.
 >
 > 이베리스의 [서약선] 캐릭터 ElvUI/BenikUI 환경을 그대로 복제 배포하는 애드온. 본섭부터 모든 클래식 클라이언트까지 지원.
 
@@ -43,7 +43,7 @@ UIScale multiplies every pixel, so the layout is designed to work at other resol
 1. If you see minor errors, type `/console scriptErrors 0` in chat.
 2. If action bars are missing, update through the **CurseForge App**.
 3. **[ElvUI](https://tukui.org/elvui) and [ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui) are required.**
-4. When reporting issues, please reproduce with **only ElvUI, BenikUI, and IberisUI enabled** — it makes the cause much easier to identify.
+4. When reporting issues, please reproduce with **only ElvUI, BenikUI, and IberisUI enabled**. It makes the cause much easier to identify.
 
 &nbsp;
 
@@ -84,8 +84,8 @@ ElvUI is a required dependency and is distributed through its [official site](ht
 ### Step 2: Install BenikUI + IberisUI
 
 **CurseForge App (Recommended)**
-- Search for **`BenikUI`** → Install
-- Search for **`IberisUI`** → Install
+- Search for **`BenikUI`** and install
+- Search for **`IberisUI`** and install
 
 **Manual install**
 1. Download the zips for [BenikUI](https://www.curseforge.com/wow/addons/benikui) and [IberisUI](https://www.curseforge.com/wow/addons/iberisui)
@@ -102,7 +102,7 @@ The IberisUI setup wizard runs automatically on first login. You can re-run it l
 | Step | Description |
 |---|---|
 | 1. UI Scale | Apply ElvUI profile in one click (UIScale 0.7 baseline) |
-| 2. External addons | Auto-detect installed addons → apply profiles |
+| 2. External addons | Auto-detect installed addons and apply profiles |
 | 3. Chat frames | Left = General/Community tabs, Right = Loot chat |
 | 4. Done | UI reload |
 
@@ -138,7 +138,7 @@ The IberisUI setup wizard runs automatically on first login. You can re-run it l
 ## Known Issues
 
 - The author primarily plays on **TBC Anniversary (20th anniversary server)**, so testing on **Retail / MoP Classic / Classic Era** is limited. Please report any issues you find via the bug tracker linked at the bottom of the page.
-- The ElvUI install wizard is auto-skipped, and **your existing ElvUI profile will be overwritten** by the IberisUI profile — back up first if you want to preserve your current setup.
+- The ElvUI install wizard is auto-skipped, and **your existing ElvUI profile will be overwritten** by the IberisUI profile. Back up first if you want to preserve your current setup.
 - Chat frame (ChatFrame1/4) positions are hard-locked against external changes. **This is intentional.**
 
 &nbsp;
@@ -149,8 +149,8 @@ The IberisUI setup wizard runs automatically on first login. You can re-run it l
 
 This addon depends on and runs on top of the following projects:
 
-- **[ElvUI](https://github.com/tukui-org/ElvUI)** — Elv & Tukui team
-- **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** — Benik
+- **[ElvUI](https://github.com/tukui-org/ElvUI)** (Elv & Tukui team)
+- **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** (Benik)
 
 The project structure (multi-client TOC pattern, install wizard pattern) was inspired by ElvUI_BenikUI.
 
@@ -248,8 +248,8 @@ ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvu
 ### 2단계: BenikUI + IberisUI 설치
 
 **CurseForge App (추천)**
-- CurseForge App에서 **`BenikUI`** 검색 → 설치
-- CurseForge App에서 **`IberisUI`** 검색 → 설치
+- CurseForge App에서 **`BenikUI`** 검색 후 설치
+- CurseForge App에서 **`IberisUI`** 검색 후 설치
 
 **수동 설치**
 1. [BenikUI](https://www.curseforge.com/wow/addons/benikui)와 [IberisUI](https://www.curseforge.com/wow/addons/iberisui) 각각의 zip을 다운로드
@@ -266,7 +266,7 @@ ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvu
 | 단계 | 내용 |
 |---|---|
 | 1. UI 스케일 | 단일 버튼으로 ElvUI 프로필 일괄 적용 (UIScale 0.7 기준) |
-| 2. 외부 애드온 | 설치된 외부 애드온 자동 감지 → 프로필 적용 |
+| 2. 외부 애드온 | 설치된 외부 애드온 자동 감지 후 프로필 적용 |
 | 3. 채팅창 | 좌측 일반/커뮤니티 탭, 우측 전리품 채팅창 구성 |
 | 4. 완료 | UI 리로드 |
 
@@ -302,7 +302,7 @@ ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvu
 ## 알려진 제약
 
 - 현재 **불성(20주년 기념서버)** 을 메인으로 플레이 중이므로, **본섭(Retail) / 판다(MoP Classic) / 오리지널(Classic Era)** 환경에서의 미세한 오류 검증이 다소 부족할 수 있습니다. 발견 시 페이지 하단 링크의 버그 리포트로 알려 주시기 바랍니다.
-- ElvUI 설치 마법사가 자동 스킵됩니다. **기존 ElvUI 프로필이 IberisUI 프로필로 덮어써집니다** — 기존 설정을 보존하려면 적용 전에 백업해 두시기 바랍니다.
+- ElvUI 설치 마법사가 자동 스킵됩니다. **기존 ElvUI 프로필이 IberisUI 프로필로 덮어써집니다**. 기존 설정을 보존하려면 적용 전에 백업해 두시기 바랍니다.
 - 채팅창(ChatFrame1/4) 위치는 외부 코드의 변경을 즉시 차단(hard-lock)합니다. **의도된 동작**입니다.
 
 &nbsp;
@@ -313,8 +313,8 @@ ElvUI는 필수 의존성이며, [공식 ElvUI 사이트](https://tukui.org/elvu
 
 이 애드온은 다음 제작자분들의 작업물에 의존하며, 그 위에서 동작합니다:
 
-- **[ElvUI](https://github.com/tukui-org/ElvUI)** — Elv & Tukui team
-- **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** — Benik
+- **[ElvUI](https://github.com/tukui-org/ElvUI)** (Elv & Tukui team)
+- **[ElvUI_BenikUI](https://www.curseforge.com/wow/addons/benikui)** (Benik)
 
 프로젝트 구조(멀티 클라이언트 TOC 패턴, 설치 마법사 패턴)는 ElvUI_BenikUI에서 영감을 받았습니다.
 
@@ -349,66 +349,66 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 ## 작업 내역 / Changelog
 
 ### v2.35 (2026-11-23)
-- 본섭 12.1.5·ElvUI 16.02 대응 — 본섭 TOC 에 12.1.5 추가(ElvUI 16.02 와 같은 목록). 기념일(TBC 2.5.6)·본섭에서 ElvUI 16.02 로 동작 확인
+- 본섭 12.1.5·ElvUI 16.02 대응. 본섭 TOC 에 12.1.5 추가(ElvUI 16.02 와 같은 목록). 기념일(TBC 2.5.6)·본섭에서 ElvUI 16.02 로 동작 확인
 
 ### v2.34 (2026-10-12)
-- **설치가 중간에 끊기던 문제 수정** — 포에버 클라에서 본섭용 BenikUI를 쓰면 중앙 정보막대 등록이 실패하며 설치가 멈춰 뒤 단계(커스텀 패널·CVar)가 빠지던 것을, 실패해도 끝까지 진행되게 함
+- **설치가 중간에 끊기던 문제 수정**: 포에버 클라에서 본섭용 BenikUI를 쓰면 중앙 정보막대 등록이 실패하며 설치가 멈춰 뒤 단계(커스텀 패널·CVar)가 빠지던 것을, 실패해도 끝까지 진행되게 함
 - 설치 중 오류가 나면 채팅 한 줄과 함께 오류 처리기(BugSack 등)에도 넘겨 원인을 확인할 수 있게 함
 - 내부 소스 정리
 
 ### v2.33 (2026-09-17)
-- **채팅에서 캐릭터 이름 우클릭 → "이름 복사"가 막히던 문제 수정** — "애드온 'ElvUI_IberisUI'이 보호된 함수 'CopyToClipboard()' 호출을 시도했습니다" 오류. URL 링크 처리를 위해 전역 `SetItemRef`를 덮어쓰던 것을 `hooksecurefunc`로 바꿔 실행 흐름 오염(taint)을 없앰. 채팅창 고정(HardLockChat) 상태도 블리자드 프레임 대신 애드온 쪽 표에 둠
-- **이베리스 애드온 시리즈 CurseForge 공개** — 불성 기념서버에서 같이 쓰는 애드온 6종을 IberisUI와 같은 방식으로 배포. 한국어 기본 + 영문 클라 자동 영문 UI: [IberisGearSet](https://www.curseforge.com/wow/addons/iberisgearset) · [IberisSaved](https://www.curseforge.com/wow/addons/iberissaved) · [IberisBisTracker](https://www.curseforge.com/wow/addons/iberisbistracker) · [IberisRaidRoster](https://www.curseforge.com/wow/addons/iberisraidroster) · [IberisCraftCost](https://www.curseforge.com/wow/addons/iberiscraftcost) · [IberisBloodSound](https://www.curseforge.com/wow/addons/iberisbloodsound)
+- **채팅에서 캐릭터 이름 우클릭 › "이름 복사"가 막히던 문제 수정**: "애드온 'ElvUI_IberisUI'이 보호된 함수 'CopyToClipboard()' 호출을 시도했습니다" 오류. URL 링크 처리를 위해 전역 `SetItemRef`를 덮어쓰던 것을 `hooksecurefunc`로 바꿔 실행 흐름 오염(taint)을 없앰. 채팅창 고정(HardLockChat) 상태도 블리자드 프레임 대신 애드온 쪽 표에 둠
+- **이베리스 애드온 시리즈 CurseForge 공개**: 불성 기념서버에서 같이 쓰는 애드온 6종을 IberisUI와 같은 방식으로 배포. 한국어 기본 + 영문 클라 자동 영문 UI: [IberisGearSet](https://www.curseforge.com/wow/addons/iberisgearset) · [IberisSaved](https://www.curseforge.com/wow/addons/iberissaved) · [IberisBisTracker](https://www.curseforge.com/wow/addons/iberisbistracker) · [IberisRaidRoster](https://www.curseforge.com/wow/addons/iberisraidroster) · [IberisCraftCost](https://www.curseforge.com/wow/addons/iberiscraftcost) · [IberisBloodSound](https://www.curseforge.com/wow/addons/iberisbloodsound)
 
 ### v2.32 (2026-09-11)
-- **한글 깨짐(□□□) 방지 — 한글 클라는 폰트를 `기본 글꼴`로 지정.** BenikUI 기본값에서 온 Expressway·Bui Visitor1과 ElvUI 기본 PT Sans Narrow는 한글 클라에 등록되지 않는 영문 전용 폰트라, 다른 애드온(데미지 폰트 교체 애드온 등)이 같은 이름으로 영문 폰트를 먼저 등록하면 ElvUI·Details·BigWigs의 한글이 한꺼번에 깨졌음. 한/중 클라는 WoW 내장 로케일 폰트 이름을 써서 이런 충돌이 원천적으로 생기지 않게 함. 원래도 이 폰트로 대체 표시되고 있었으므로 **외형 변화 없음**. 영문 클라는 기존 폰트 유지
+- **한글 깨짐(□□□) 방지. 한글 클라는 폰트를 `기본 글꼴`로 지정.** BenikUI 기본값에서 온 Expressway·Bui Visitor1과 ElvUI 기본 PT Sans Narrow는 한글 클라에 등록되지 않는 영문 전용 폰트라, 다른 애드온(데미지 폰트 교체 애드온 등)이 같은 이름으로 영문 폰트를 먼저 등록하면 ElvUI·Details·BigWigs의 한글이 한꺼번에 깨졌음. 한/중 클라는 WoW 내장 로케일 폰트 이름을 써서 이런 충돌이 원천적으로 생기지 않게 함. 원래도 이 폰트로 대체 표시되고 있었으므로 **외형 변화 없음**. 영문 클라는 기존 폰트 유지
 - IberisUI가 직접 지정하지 않던 ElvUI·BenikUI 폰트(툴팁 머리글, 가방 텍스트, 이름표 등)도 한/중 클라에서 함께 교체. 데미지 글꼴 등 블리자드 기본 폰트는 그대로 유지
 - Details(툴팁·메뉴·창 제목·바)와 BigWigs 폰트도 동일하게 적용
-- **아군 NPC 이름표 끔** — 접속할 때마다 NPC 이름이 직함 없는 이름표로 뜨던 것을, 블리자드 기본 이름 표시(직함 포함)로. 그동안은 Shift+V로 아군 이름표를 켰다 꺼야 이 상태가 됐음
-- [서약선] 실측 반영 — BigWigs 타이머 바 위치·근접 창 위치 이동 + 근접 경고음 켬. 쓰이지 않는 BigWigs 옛 설정 키(`BigWigsAnchor_width`) 정리
+- **아군 NPC 이름표 끔**: 접속할 때마다 NPC 이름이 직함 없는 이름표로 뜨던 것을, 블리자드 기본 이름 표시(직함 포함)로. 그동안은 Shift+V로 아군 이름표를 켰다 꺼야 이 상태가 됐음
+- [서약선] 게임에서 잰 값 반영. BigWigs 타이머 바 위치·근접 창 위치 이동 + 근접 경고음 켬. 쓰이지 않는 BigWigs 옛 설정 키(`BigWigsAnchor_width`) 정리
 - ※ 설치 마법사 재실행 시 반영 (1단계: ElvUI / 외부 애드온 단계: Details·BigWigs)
 
 ### v2.31 (2026-08-12)
-- **ElvUI 15.20 대응 — v2.30의 임시 보정 일괄 제거.** ElvUI가 Classic Era 1.15.9(신엔진)를 정식 대응하면서 IberisUI 쪽 런타임 핫픽스가 전부 불필요해짐. 동봉 애드온 `!IberisFix`와 핫픽스 모듈 삭제
-- **외형 외 ElvUI 코어 개입 정리** — 탱크 프레임 강제 끔, 데이터텍스트 패널 가드, 추가 마나바 가시성 보정, TBC/판다 SLUG 폰트 비활성을 모두 제거. 네 항목 모두 ElvUI 15.19~15.20이 상위에서 해결함
-- 사문화된 게이트 코드 정리 — TBC 이름표 스케일 복원 훅(클라 68575 미만 전용)과 본섭 ESC 게임메뉴 taint 회피(ElvUI 15.19 미만 전용)를 삭제. 둘 다 현재 환경에서는 이미 실행되지 않던 코드로, 동작 변화 없음 ※ 블리자드 이름표 잔재 가림은 그대로 유지
+- **ElvUI 15.20 대응으로 v2.30의 임시 보정 일괄 제거.** ElvUI가 Classic Era 1.15.9(신엔진)를 정식 대응하면서 IberisUI 쪽 런타임 핫픽스가 전부 불필요해짐. 동봉 애드온 `!IberisFix`와 핫픽스 모듈 삭제
+- **외형 외 ElvUI 코어 개입 정리**: 탱크 프레임 강제 끔, 데이터텍스트 패널 가드, 추가 마나바 가시성 보정, TBC/판다 SLUG 폰트 비활성을 모두 제거. 네 항목 모두 ElvUI 15.19~15.20이 상위에서 해결함
+- 사문화된 게이트 코드 정리. TBC 이름표 스케일 복원 훅(클라 68575 미만 전용)과 본섭 ESC 게임메뉴 taint 회피(ElvUI 15.19 미만 전용)를 삭제. 둘 다 현재 환경에서는 이미 실행되지 않던 코드로, 동작 변화 없음 ※ 블리자드 이름표 잔재 가림은 그대로 유지
 - BenikUI 전문기술 대시보드 기본 비활성 ※ 마법사 재실행 시 반영
-- TOC를 각 클라 현재 빌드에 맞춤 — 본섭 12.1.0 / 판다 5.5.4 / TBC 2.5.6 / 에라 1.15.9
+- TOC를 각 클라 현재 빌드에 맞춤 (본섭 12.1.0 / 판다 5.5.4 / TBC 2.5.6 / 에라 1.15.9)
 - ⚠️ **본섭은 ElvUI와 동일하게 12.1.0 기준입니다.** 12.1 패치 전인 지역(한국 등)에서는 ElvUI·IberisUI 모두 "구버전 애드온"으로 비활성됩니다. 클라이언트가 12.1로 갱신되면 자동 정상화됩니다
 
 ### v2.30 (2026-07-28)
-- ElvUI 15.18 런타임 핫픽스 내장 — Classic Era 1.15.9(신엔진)에서 ElvUI 15.18 초기화가 붕괴하는 문제를 IberisUI가 게임 안에서 자동 보정. 동봉 애드온 `!IberisFix`(삭제된 전역 선복원, Classic Era 전용) + 런타임 패치 모듈(이벤트 가드·워치독 격벽·블리자드 잔재 청소·워치독 소음 필터). 별도 파일 패치 불필요, ElvUI가 신엔진 대응 버전(>15.18)을 내면 자동 비활성
-- Classic Era 1.15.9 이름표 이중 축소 복원 — 신엔진의 자체 스케일과 ElvUI uiscale이 중복 적용돼 작아지던 것을 스케일 1 훅으로 원복
+- ElvUI 15.18 런타임 핫픽스 내장. Classic Era 1.15.9(신엔진)에서 ElvUI 15.18 초기화가 붕괴하는 문제를 IberisUI가 게임 안에서 자동 보정. 동봉 애드온 `!IberisFix`(삭제된 전역 선복원, Classic Era 전용) + 런타임 패치 모듈(이벤트 가드·워치독 격벽·블리자드 잔재 청소·워치독 소음 필터). 별도 파일 패치 불필요, ElvUI가 신엔진 대응 버전(>15.18)을 내면 자동 비활성
+- Classic Era 1.15.9 이름표 이중 축소 복원. 신엔진의 자체 스케일과 ElvUI uiscale이 중복 적용돼 작아지던 것을 스케일 1 훅으로 원복
 - 채팅 줄간격 복원을 본섭/판다로 확장 (신 텍스트 렌더링 공통 대응)
-- 본섭 ESC 게임메뉴 종료 차단(taint) 회피 — ElvUI의 메뉴 개입을 무력화해 종료/로그아웃 정상화 (ESC의 ElvUI 버튼은 제거되며 설정은 `/ec`)
+- 본섭 ESC 게임메뉴 종료 차단(taint) 회피. ElvUI의 메뉴 개입을 무력화해 종료/로그아웃 정상화 (ESC의 ElvUI 버튼은 제거되며 설정은 `/ec`)
 - MRT 징표 기둥 표시 끔을 판다에도 적용 ※ 마법사 재실행 시 반영
 
 ### v2.28 (2026-07-28)
-- 채팅 줄간격 복원을 Classic Era 1.15.9(빌드 68808+)로 확장 — Classic Era 신클라도 TBC 68575와 같은 텍스트 렌더링 변경 (Anniversary 68575는 기존 렌더링이라 미적용)
-- 설치 마법사 화면 갱신 보호 — 1.15.9 신클라 script ran too long으로 갱신이 끊겨도 설정 저장은 완료되며 마법사가 계속 진행됨
-- 이름표 상하 겹침 해소 — 쌓기 모드(`nameplateMotion` 1) + 세로 간격(`nameplateOverlapV` 1.6) 설치 시 1회 적용 (Classic/TBC 계열만, 이후 유저 변경 존중)
+- 채팅 줄간격 복원을 Classic Era 1.15.9(빌드 68808+)로 확장. Classic Era 신클라도 TBC 68575와 같은 텍스트 렌더링 변경 (Anniversary 68575는 기존 렌더링이라 미적용)
+- 설치 마법사 화면 갱신 보호. 1.15.9 신클라 script ran too long으로 갱신이 끊겨도 설정 저장은 완료되며 마법사가 계속 진행됨
+- 이름표 상하 겹침 해소. 쌓기 모드(`nameplateMotion` 1) + 세로 간격(`nameplateOverlapV` 1.6) 설치 시 1회 적용 (Classic/TBC 계열만, 이후 유저 변경 존중)
 
 ### v2.27 (2026-07-13)
-- 아군 이름표 강제 끔 제거 — 설치 시·로그인마다 아군 이름표 CVar을 끄던 로직 삭제. 표시 여부는 유저 각자 이름표 설정에 맡김 (v2.24 아군 이름표 기본 끔 철회)
+- 아군 이름표 강제 끔 제거. 설치 시·로그인마다 아군 이름표 CVar을 끄던 로직 삭제. 표시 여부는 유저 각자 이름표 설정에 맡김 (v2.24 아군 이름표 기본 끔 철회)
 
 ### v2.26 (2026-07-10)
-- 탱크 유닛프레임 비활성을 **로그인 1회 마이그레이션**으로 보완 — install 마법사를 다시 거치지 않는 기존 유저에게도 적용되도록. 한 번 끈 뒤 `/ec`에서 다시 켜면 그 선택은 유지됨 (v2.25 탱크 임시 비활성 후속)
+- 탱크 유닛프레임 비활성을 **로그인 1회 마이그레이션**으로 보완. install 마법사를 다시 거치지 않는 기존 유저에게도 적용되도록. 한 번 끈 뒤 `/ec`에서 다시 켜면 그 선택은 유지됨 (v2.25 탱크 임시 비활성 후속)
 
 ### v2.25 (2026-07-10)
-- 채팅 줄간격 자동 적용 안정화 — ElvUI `SetupChat` 재구성 직후에도 재적용해 로그인 시 간격이 리셋되던 문제 해결
-- 타겟(선택) 이름표 확대(`nameplateSelectedScale` 1.25) 제거 — 몹이 많을 때 다른 이름표를 가려 폐기
-- (임시) 탱크 유닛프레임 기본 비활성 — ElvUI 15.18 + 신클라 2.5.6.68575에서 전투 중 `SecureGroupHeader` CreateFrame/SetSize가 차단되는 에러 스팸 방지. ElvUI 순정 기본값도 tank 켜짐이라 15.18 공통 이슈. ElvUI가 신클라 대응하면 복구 예정 (필요 시 `/ec`에서 켜기)
+- 채팅 줄간격 자동 적용 안정화. ElvUI `SetupChat` 재구성 직후에도 재적용해 로그인 시 간격이 리셋되던 문제 해결
+- 타겟(선택) 이름표 확대(`nameplateSelectedScale` 1.25) 제거. 몹이 많을 때 다른 이름표를 가려 폐기
+- (임시) 탱크 유닛프레임 기본 비활성. ElvUI 15.18 + 신클라 2.5.6.68575에서 전투 중 `SecureGroupHeader` CreateFrame/SetSize가 차단되는 에러 스팸 방지. ElvUI 순정 기본값도 tank 켜짐이라 15.18 공통 이슈. ElvUI가 신클라 대응하면 복구 예정 (필요 시 `/ec`에서 켜기)
 
 ### v2.24 (2026-07-09)
 - KR 클라이언트 2.5.6.68575(2026-07-09) 패치 대응 묶음
-- `DebuffTypeColor`/`DebuffTypeSymbol` 전역 삭제 → FrameXML 원본 값 조건부 복원 shim (인벤레이드프레임3·LibRealDispel 등 구형 애드온 로드 에러 구제)
-- 이름표 스케일 복원 훅을 구빌드(<68575)로 한정 — 신빌드는 클라가 uiscale 자체 적용, 이중 축소로 이름표가 작아지던 문제 방지
-- 채팅 줄간격 복원 — 신빌드 텍스트 렌더링 변경으로 줄이 붙던 문제 (`SetSpacing` 3)
-- 아군 이름표 기본 끔 — 통합 CVar 삭제·6분할 개편으로 로그인마다 켜지고 NPC 초록 이름+<칭호>가 하늘색 이름표로 대체되던 문제 (원하면 `/run IberisUIDB.keepFriendlyPlates = true`로 옵트아웃)
+- `DebuffTypeColor`/`DebuffTypeSymbol` 전역 삭제에 대응해 FrameXML 원본 값 조건부 복원 shim (인벤레이드프레임3·LibRealDispel 등 구형 애드온 로드 에러 구제)
+- 이름표 스케일 복원 훅을 구빌드(<68575)로 한정. 신빌드는 클라가 uiscale 자체 적용, 이중 축소로 이름표가 작아지던 문제 방지
+- 채팅 줄간격 복원. 신빌드 텍스트 렌더링 변경으로 줄이 붙던 문제 (`SetSpacing` 3)
+- 아군 이름표 기본 끔. 통합 CVar 삭제·6분할 개편으로 로그인마다 켜지고 NPC 초록 이름+<칭호>가 하늘색 이름표로 대체되던 문제 (원하면 `/run IberisUIDB.keepFriendlyPlates = true`로 옵트아웃)
 
 ### v2.23 (2026-07-09)
-- ElvUI 15.18 SLUG 폰트 시스템(TBC/Mists 미지원)으로 인한 폰트·체력바(피통) 에러 근본 수정 — `fontSlug`를 SV에서 자동 비활성(ElvDB 직접)
-- 폰트(SLUG)/이름표 스케일 우회를 코어 파일(compat/nameplate_blizzfix)로 통합 — CF 부분 업데이트 시에도 로드 보장
+- ElvUI 15.18 SLUG 폰트 시스템(TBC/Mists 미지원)으로 인한 폰트·체력바(피통) 에러 근본 수정. `fontSlug`를 SV에서 자동 비활성(ElvDB 직접)
+- 폰트(SLUG)/이름표 스케일 우회를 코어 파일(compat/nameplate_blizzfix)로 통합. CF 부분 업데이트 시에도 로드 보장
 - 타겟(선택) 이름표 확대 기본 적용 (`nameplateSelectedScale` 1.25)
 - 대상 버프/디버프 마우스오버 툴팁 표시 (`clickThrough` off)
 
@@ -426,7 +426,7 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 - MRT 징표바(MarksBar) 활성화 + 위치 갱신
 
 ### v2.19 (2026-05-24)
-- ElvUI player/target buffs/debuffs `priority` 필터 비활성화 (`""`) — 모든 버프/디버프 표시
+- ElvUI player/target buffs/debuffs `priority` 필터 비활성화 (`""`), 모든 버프/디버프 표시
 - MRT 공격대 생존기(ExCD2) 프로필 추가: 활성화 + 수동 등록 스킬 3종(33206/1044/12043) + 즐겨찾기/색상 매핑/컬럼 설정
 - InvenRaidFrames3 `enableClassBuff=false` (`_InvenRaidSeoyaksun.lua`)
 
@@ -434,103 +434,103 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 - MRT 공격대 마크 바(MarksBar) 기본 비활성화 (`enabled=false`)
 
 ### v2.17 (2026-05-23)
-- 유닛프레임 player/target aurabar(클래스타이머 막대) 비활성화 — 아이콘 buff/debuff 표시로 통일
+- 유닛프레임 player/target aurabar(클래스타이머 막대) 비활성화, 아이콘 buff/debuff 표시로 통일
 - player/target debuffs 표시 + 정렬 갱신 (`perrow=10, numrows=5`)
 - target buffs/debuffs `clickThrough=true`
-- InvenRaidFrames3 소환수 프레임 위치 미세 조정 + 가로 칸 수 `20 → 13`
+- InvenRaidFrames3 소환수 프레임 위치 미세 조정 + 가로 칸 수 `20`에서 `13`으로
 
 ### v2.14 (2026-05-19)
-- **AdditionalPower(드루이드 변신 마나바) 위치/크기 갱신** (`core/install.lua`, `core/resolutions.lua`) — 마법사 재실행 시 반영:
-  - AdditionalPowerMover anchor: `BOTTOMLEFT,491,288` → `BOTTOM,-222,333`
-  - classAdditional 모양: 가로 `width 255` → 세로 `VERTICAL 15x78` (`enable`/`frameLevel=2` 명시)
-  - ([연약선] 드루이드 실측. Default 프로필 공유라 서약선/연약선 등 모든 [-약선] 캐릭터에 동일 적용)
+- **AdditionalPower(드루이드 변신 마나바) 위치/크기 갱신** (`core/install.lua`, `core/resolutions.lua`). 마법사 재실행 시 반영:
+  - AdditionalPowerMover anchor: `BOTTOMLEFT,491,288`에서 `BOTTOM,-222,333`으로
+  - classAdditional 모양: 가로 `width 255`에서 세로 `VERTICAL 15x78`로 (`enable`/`frameLevel=2` 명시)
+  - ([연약선] 드루이드로 게임에서 잰 값. Default 프로필 공유라 서약선/연약선 등 모든 [-약선] 캐릭터에 동일 적용)
 
 ### v2.13 (2026-05-18)
 - **드루이드 변신 시 추가 마나바 표시 fix** (`core/core.lua`):
   - ElvUI Classic 계열에서 `AdditionalPower` element의 `displayPairs`가 비어 있어 곰형/표범형 변신 중 마나바가 oUF visibility 검사에서 자동으로 숨겨지던 현상 해소
   - `UF:Configure_ClassBar` hook으로 매 호출마다 `UF.ALT_POWER_INFO`를 backfill + 이미 만들어진 player frame에 즉시 주입 + `ForceUpdate`
   - 매 로그인마다 자동 적용 (마법사 재실행 불필요)
-- **Guidelime 창 크기 갱신** (`addonProfiles/Guidelime.lua`) — 마법사 재실행 시 반영:
-  - mainFrameWidth: 350 → 359.65
-  - mainFrameHeight: 400 → 311.62
-  - ([연약선] 실측값)
+- **Guidelime 창 크기 갱신** (`addonProfiles/Guidelime.lua`). 마법사 재실행 시 반영:
+  - mainFrameWidth: 350에서 359.65로
+  - mainFrameHeight: 400에서 311.62로
+  - ([연약선] 게임에서 잰 값)
 
 ### v2.12 (2026-05-17)
 - **InvenRaidFrames3 메인 공격대 위치 정밀화** (`core/resolutions.lua`):
-  - [이베링] 본섭 실측 anchor 좌표 반영 + 불성 기념일 클라이언트 px 추가 보정
-- **본섭(Retail) LDB 슬롯 분기 + aurabar 슬롯/높이/오프셋 조정** (`core/install.lua`) — 마법사 재실행 시 반영
-- **InvenRaidFrames3 [서약선] grouporder 기본 순서로 복귀** (`addonProfiles/_InvenRaidSeoyaksun.lua`) — 마법사 재실행 시 반영
+  - [이베링] 본섭에서 잰 anchor 좌표 반영 + 불성 기념일 클라이언트 px 추가 보정
+- **본섭(Retail) LDB 슬롯 분기 + aurabar 슬롯/높이/오프셋 조정** (`core/install.lua`). 마법사 재실행 시 반영
+- **InvenRaidFrames3 [서약선] grouporder 기본 순서로 복귀** (`addonProfiles/_InvenRaidSeoyaksun.lua`). 마법사 재실행 시 반영
 - **`/iui testbars N` 슬래시 명령 추가** (`core/core.lua`):
   - `/iui` 를 `/iberisui` 별칭으로 등록 + aurabar 정렬 테스트용 가짜 바 N개 생성
-- **표현 통일 (docs)**: 'IberisUI 애드온' → '이베리스 UI' (`README.md`)
+- **표현 통일 (docs)**: 'IberisUI 애드온'에서 '이베리스 UI'로 (`README.md`)
 
 ### v2.11 (2026-05-13)
 - **ChatFrame5("커뮤니티") 흰 배경 + region oldAlpha nil 에러 차단** (`core/chat.lua`, `core/core.lua`):
-  - `FCF_FadeOutChatFrame`이 ChatFrame 본체의 oldAlpha뿐 아니라 region 객체(`Background`/`TopLeftTexture` 등 9개)의 oldAlpha도 순회 → 이전 v2.08 fix는 본체만 처리해서 region nil 에러 재발
-  - 새 함수 `IUI:ApplyChatFadeFix()` — 모든 ChatFrame + 9개 region oldAlpha=1 초기화 + ChatFrame5는 region 텍스처 `SetTexture(nil)` + `SetAlpha(0)`로 흰 배경 노출 차단
-  - `IUI:Initialize()`에서 즉시 + 1초 지연 두 번 호출 → ChatFrame5가 SV 복원된 후에도 재적용. 매 로그인마다 자동 적용 (마법사 재실행 불필요)
-- **[서약선] 프로필 ElvUI 설정 대량 추가** (`core/install.lua`) — 마법사 재실행 시 반영:
-  - 액션바 재사용 대기시간 폰트 18 → 12 (`cooldown.actionbar.fontSize`)
+  - `FCF_FadeOutChatFrame`이 ChatFrame 본체의 oldAlpha뿐 아니라 region 객체(`Background`/`TopLeftTexture` 등 9개)의 oldAlpha도 순회한다. 이전 v2.08 fix는 본체만 처리해서 region nil 에러 재발
+  - 새 함수 `IUI:ApplyChatFadeFix()`: 모든 ChatFrame + 9개 region oldAlpha=1 초기화 + ChatFrame5는 region 텍스처 `SetTexture(nil)` + `SetAlpha(0)`로 흰 배경 노출 차단
+  - `IUI:Initialize()`에서 즉시 + 1초 지연 두 번 호출해서 ChatFrame5가 SV 복원된 후에도 재적용. 매 로그인마다 자동 적용 (마법사 재실행 불필요)
+- **[서약선] 프로필 ElvUI 설정 대량 추가** (`core/install.lua`). 마법사 재실행 시 반영:
+  - 액션바 재사용 대기시간 폰트 18에서 12로 (`cooldown.actionbar.fontSize`)
   - 플레이어 버프 활성: 한 줄 10개 × 최대 2줄, 24px 아이콘, 본인이 안 건 버프 + 영구 버프(축복/오라 등) 모두 표시 (`player.buffs.*`)
   - 대상 버프 동일 사이즈/줄/필터 설정 (`target.buffs.*`)
-  - 플레이어/대상 디버프 아이콘 끔 — classtimer로만 표시 (`player.debuffs.enable`, `target.debuffs.enable = false`)
+  - 플레이어/대상 디버프 아이콘 끔, classtimer로만 표시 (`player.debuffs.enable`, `target.debuffs.enable = false`)
   - 플레이어/대상 classtimer(aurabar) 활성: 강화효과(buffs) 위 attach, 본인+남이 건 디버프 모두 표시 (`player.aurabar.*`, `target.aurabar.*`)
-  - 대상 우상단 CC 강조 큰 아이콘 element 끔 (`target.auras.enable = false`) — 본인이 건 디버프가 missing-texture 분홍 사각형으로 노출되던 현상 해소
+  - 대상 우상단 CC 강조 큰 아이콘 element 끔 (`target.auras.enable = false`). 본인이 건 디버프가 missing-texture 분홍 사각형으로 노출되던 현상 해소
   - 이름표 우측 CC 강조 element 끔 (ENEMY_NPC/ENEMY_PLAYER/FRIENDLY_PLAYER `auras.enable = false`)
-- **기존 유저 안내**: ElvUI 설정 항목은 마법사 재실행해야 [서약선] 프로필 기준으로 새로 박힘. 다만 유저가 직접 커스텀한 ElvUI 설정이 있다면 마법사 재실행 시 해당 키가 [서약선] 기본값으로 덮어써짐 — 마법사 재실행 여부는 유저 선택. 채팅창 fix(`core/chat.lua`, `core/core.lua`)는 매 로그인마다 자동 적용되므로 마법사 재실행 불필요.
+- **기존 유저 안내**: ElvUI 설정 항목은 마법사 재실행해야 [서약선] 프로필 기준으로 새로 박힘. 다만 유저가 직접 커스텀한 ElvUI 설정이 있다면 마법사 재실행 시 해당 키가 [서약선] 기본값으로 덮어써짐. 마법사 재실행 여부는 유저 선택. 채팅창 fix(`core/chat.lua`, `core/core.lua`)는 매 로그인마다 자동 적용되므로 마법사 재실행 불필요.
 
 ### v2.10 (2026-05-12)
 - 서약선 캐릭터 게임 내 설정 변경 반영:
   - **InvenRaidFrames3 [서약선] 프로필** (`addonProfiles/_InvenRaidSeoyaksun.lua`):
-    - `grouporder = {5,6,7,8,1,2,3,4}` 추가 (공격대 그룹 순서 — 전 클라이언트 공통)
-    - `border = false` 추가 (Retail 한정 효과 — Anniversary 기본값이 이미 false라 무해)
+    - `grouporder = {5,6,7,8,1,2,3,4}` 추가 (공격대 그룹 순서, 전 클라이언트 공통)
+    - `border = false` 추가 (Retail 한정 효과, Anniversary 기본값이 이미 false라 무해)
     - `lock = false` (잠금 해제)
     - `enableSpellTimer = true` (주문 타이머 활성)
   - **MRT MarksBar** (`addonProfiles/MRT.lua`):
-    - `enabled = true` — 징표바 사용으로 전환 (기존 false)
-    - Retail 한정 `Show[3] = false` — 징표 기둥 표시 끔 (Anniversary는 그대로 켜둠)
+    - `enabled = true`: 징표바 사용으로 전환 (기존 false)
+    - Retail 한정 `Show[3] = false`: 징표 기둥 표시 끔 (Anniversary는 그대로 켜둠)
 
 ### v2.09 (2026-05-12)
-- Retail(Midnight) 전용 호환 패치 — Anniversary/TBC/Wrath/Vanilla 동작 영향 없음:
+- Retail(Midnight) 전용 호환 패치(Anniversary/TBC/Wrath/Vanilla 동작 영향 없음):
   - **InvenRaidFrames3 프로필 적용 수정**: Retail 빌드는 `InvenRaidFrames3DB.profileKeys["<player> - <realm>"]` 만 읽도록 변경됨. 기존 `CharDB.profile_Xm` 박기는 무시되어 [서약선] 프로필이 적용 안 되던 문제 해소 (`addonProfiles/InvenRaidFrames3.lua`)
   - **MRT `VMRT.ExCD2.gnGUIDs` nil 에러 우회**: Midnight 클라이언트에서 MRT의 ExCD2 ADDON_LOADED가 `if ExRT.isMN then return end`로 early-return하면서 `gnGUIDs` 초기화 코드를 건너뛰는데, INSPECT_READY 핸들러는 같은 가드가 없어 인스펙트 시마다 `attempt to perform indexed assignment on field 'gnGUIDs' (a nil value)` 발생. MRT 로드 시 우리 쪽에서 빈 테이블 미리 박음 (`core/compat.lua`)
 
 ### v2.08 (2026-05-11)
 - ChatFrame5("커뮤니티") 페이드 아웃 시 `oldAlpha` nil 에러 방지:
   - Blizzard `FCF_FadeOutChatFrame`이 `max(GetAlpha, chatFrame.oldAlpha)` 호출 시 nil 인자
-  - `oldAlpha`는 `ChatFrame_OnEnter`에서 처음 세팅 — 마우스 진입 전 fade 트리거 시 누락
+  - `oldAlpha`는 `ChatFrame_OnEnter`에서 처음 세팅해서 마우스 진입 전 fade 트리거 시 누락
   - `SetupChatWindows` 마지막에 모든 `ChatFrame.oldAlpha = 1` 안전망 추가
 - 로드/업데이트 안내 메시지 추가:
   - 채팅창에 IberisUI 버전 자동 출력 (첫 로드 / 업데이트 / 동일 버전 3분기 자동 감지)
   - 업데이트 분기: "버전 X 로드됨 (이전: vY)" + 변경 사항 링크 표시
-  - CurseForge 링크는 클릭 가능 hyperlink — 클릭 시 URL 입력박스 다이얼로그 (Ctrl+C 복사)
+  - CurseForge 링크는 클릭 가능 hyperlink, 클릭 시 URL 입력박스 다이얼로그 (Ctrl+C 복사)
 
 ### v2.07 (2026-05-11)
 - 외부 애드온 호환 shim 추가 (`core/compat.lua`):
-  - BfA 이후 제거된 컨테이너 API 17개를 `C_Container.*`에서 전역으로 alias — Postal 등 구버전 애드온의 `GetContainerItemID` 등 nil 호출 해소
-  - `InterfaceAddOnsList_Update` no-op 스텁 — Guidelime 옵션창 토글 시 발생하던 nil 호출 해소
+  - BfA 이후 제거된 컨테이너 API 17개를 `C_Container.*`에서 전역으로 alias. Postal 등 구버전 애드온의 `GetContainerItemID` 등 nil 호출 해소
+  - `InterfaceAddOnsList_Update` no-op 스텁. Guidelime 옵션창 토글 시 발생하던 nil 호출 해소
 
 ### v2.06 (2026-05-10)
 - RAID_WARNING(공격대 경보) sticky 채널 자동 설정:
   - WoW 기본은 `/경보` 한 번 보내면 다음 엔터 시 SAY로 자동 복귀 (sticky 아님)
-  - `IUI:ApplyStickyChannels()` 추가 — `ChatTypeInfo.RAID_WARNING.sticky = 1`
+  - `IUI:ApplyStickyChannels()` 추가 (`ChatTypeInfo.RAID_WARNING.sticky = 1`)
   - `IUI:Initialize()`에서 매 로그인마다 호출 (ChatTypeInfo는 세션마다 reset됨)
   - `IUI:SetupChatWindows()`에서도 즉시 적용
 
 ### v2.05 (2026-05-10)
 - 서약선 캐릭터 게임 내 변경 사항 반영:
-  - HidingBar 프로필: bar `size` 15 → 20
+  - HidingBar 프로필: bar `size` 15에서 20으로
   - HidingBar 프로필: `LibDBIcon10_RaidBook` mbtnSetting 추가
-  - BuiMiddleDTPanel 슬롯 2: `LDB_iWillRemember_MinimapButton` → `LDB_RaidBook`
+  - BuiMiddleDTPanel 슬롯 2: `LDB_iWillRemember_MinimapButton`에서 `LDB_RaidBook`으로
 
 ### v2.04 (2026-05-10)
 - CurseForge 모더레이션 정책 추가 대응:
-  - 영문/한글 `## Links` 섹션 두 개 → 페이지 최하단 통합 `## Links / 링크` 한 곳으로 (cross-hosting 링크는 페이지 하단 위치 정책 준수)
-  - Installation Step 1 — ElvUI 다운로드 imperative 톤 다운 ("Download directly..." → "is distributed through its official site")
-  - Known Issues — 인라인 GitHub Issues 링크 제거, 하단 Links 섹션 참조로 변경
+  - 영문/한글 `## Links` 섹션 두 개를 페이지 최하단 `## Links / 링크` 한 곳으로 통합 (cross-hosting 링크는 페이지 하단 위치 정책 준수)
+  - Installation Step 1: ElvUI 다운로드 imperative 톤 다운 ("Download directly..."에서 "is distributed through its official site"로)
+  - Known Issues: 인라인 GitHub Issues 링크 제거, 하단 Links 섹션 참조로 변경
 
 ### v2.03 (2026-05-10)
-- README/CurseForge Description 영문 우선 구조로 재편 (CurseForge 모더레이션 정책 대응 — 영문이 페이지 최상단에 위치)
+- README/CurseForge Description 영문 우선 구조로 재편 (CurseForge 모더레이션 정책 대응, 영문이 페이지 최상단에 위치)
 - `# English` / `# 한국어 / Korean` 두 섹션으로 본문 분리, 각 섹션은 자기 언어로 완결
 - 기존에 한글만 있던 인사말/요구사항/설치/마법사/적용 프로필/크레딧/라이선스/링크 영문 버전 신규 작성
 
@@ -539,11 +539,11 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 - 권장 환경(4K UHD + UIScale 0.7) 명시
 - 알려진 제약 솔직하게 표기 (검증 부족 클라이언트, 마법사 덮어쓰기, 채팅 hard-lock)
 - 외부 애드온 표에 한글 종류 표기 추가 (BigWigs=레이드 경보, Details=데미지 미터기 등)
-- ElvUI 호환 버전 표기 v15.05 → v15.13
-- BenikUI 링크 GitHub(404) → CurseForge로 정정
+- ElvUI 호환 버전 표기 v15.05에서 v15.13으로
+- BenikUI 링크 GitHub(404)에서 CurseForge로 정정
 - WowUp 언급 제거 (CurseForge App만 안내)
 - 설치 안내 정확화: ElvUI는 Tukui.org에서 별도 설치 (CF에 없음), BenikUI/IberisUI는 CF에서 각각 설치
-- "작자" → "제작자" 표기 통일
+- "작자"를 "제작자"로 표기 통일
 
 ### v2.01 (2026-05-10)
 - CI: CurseForge 자동 업로드 시크릿 이름 매칭 수정 (v2.00 빌드는 GitHub Release에만 발행되고 CurseForge에는 누락됨)
@@ -554,8 +554,8 @@ ElvUI와 ElvUI_BenikUI는 각자의 라이선스를 따릅니다.
 - BigWigs MonoUI 바 프로필 추가
 - 본섭 BenikUI Databars nil 인덱싱 에러 차단
 - ChatFrame 위치 hard-lock (외부 코드의 위치 변경 즉시 차단)
-- Details/InvenRaidFrames3 프로필을 SV에서 자동 추출 → verbatim 박음
-- 단일 `IUI.Profile` 테이블 (해상도 분기 제거 — UIScale 0.7이 모든 픽셀에 곱해짐)
+- Details/InvenRaidFrames3 프로필을 SV에서 자동 추출해 verbatim 박음
+- 단일 `IUI.Profile` 테이블 (해상도 분기 제거, UIScale 0.7이 모든 픽셀에 곱해짐)
 
 ### v1.x (2026-05-07 ~)
 초기 v1.0~1.03 개발 기록은 [git log](https://github.com/Iberis6501/ElvUI_IberisUI/commits/main)에서 확인.

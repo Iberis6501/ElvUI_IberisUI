@@ -115,5 +115,5 @@ function IUI:LoadDetailsProfile()
 		end)
 	end
 
-	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r Details — [서약선] 프로필 import + 위치 적용 완료.")
+	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r Details: [서약선] 프로필 import + 위치 적용 완료.")
 end

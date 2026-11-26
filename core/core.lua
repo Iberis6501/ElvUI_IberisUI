@@ -156,7 +156,7 @@ function IUI:PrintLoadMessage()
 
 	if prev == nil then
 		DEFAULT_CHAT_FRAME:AddMessage(format("%s버전 %s이 로드되었습니다.", title, v))
-		DEFAULT_CHAT_FRAME:AddMessage(format("명령어 |cff7fff7f/iberisui|r — CurseForge: %s", cfLink))
+		DEFAULT_CHAT_FRAME:AddMessage(format("명령어 |cff7fff7f/iberisui|r, CurseForge: %s", cfLink))
 	elseif prev ~= v then
 		DEFAULT_CHAT_FRAME:AddMessage(format("%s버전 %s이 로드되었습니다. (이전: v%s)", title, v, prev))
 		DEFAULT_CHAT_FRAME:AddMessage(format("변경 사항 확인: %s", cfLink))

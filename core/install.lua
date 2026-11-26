@@ -978,7 +978,7 @@ local function SetupAddons()
 	tryLoad("Postal",           function() IUI:LoadPostalProfile() end)
 	local msg = #addonNames > 0
 		and format("|cfffff400저장:|r %s (재로드 후 반영)", table.concat(addonNames, ", "))
-		or "|cffff8000실패|r — 채팅창 오류 확인"
+		or "|cffff8000실패|r (채팅창 오류 확인)"
 	PluginInstallFrame.Desc2:SetText(msg)
 	DEFAULT_CHAT_FRAME:AddMessage("|cffff9900IberisUI|r "..msg)
 	PluginInstallStepComplete.message = IUI.Title.." 애드온 저장됨"
@@ -1060,8 +1060,8 @@ IUI.installTable = {
 			HideOption3()
 			PluginInstallFrame.SubTitle:SetFormattedText(L["Welcome to IberisUI version %s, for ElvUI %s."], IUI.Version, E.version)
 			PluginInstallFrame.Desc1:SetText("|cffff9900이베리스(Iberis)|r 프로필 적용")
-			PluginInstallFrame.Desc2:SetText("UI 스케일 0.7 기준 — 해상도(4K/QHD/FHD) 무관하게 동일 배치로 적용됩니다.")
-			PluginInstallFrame.Desc3:SetText("|cff07D400※|r 32인치 모니터 기준 실측값")
+			PluginInstallFrame.Desc2:SetText("UI 스케일 0.7 기준이라 해상도(4K/QHD/FHD) 무관하게 동일 배치로 적용됩니다.")
+			PluginInstallFrame.Desc3:SetText("|cff07D400※|r 32인치 모니터에서 실제 테스트한 값")
 
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", ProfileApplyHandler())
@@ -1095,7 +1095,7 @@ IUI.installTable = {
 			HideOption3(); ShowIberisLogo()
 			PluginInstallFrame.SubTitle:SetText("채팅창 설정")
 			PluginInstallFrame.Desc1:SetText("ElvUI 채팅창을 좌·우 채팅 패널에 임베드합니다.")
-			PluginInstallFrame.Desc2:SetText("3개 선택 시 좌측 패널 위 3px 간격에 보조 패널 추가 — 커뮤니티 탭이 좌측에서 빠져 보조 패널에 단독 도킹됩니다.")
+			PluginInstallFrame.Desc2:SetText("3개 선택 시 좌측 패널 위 3px 간격에 보조 패널을 추가하고, 커뮤니티 탭이 좌측에서 빠져 보조 패널에 단독 도킹됩니다.")
 			PluginInstallFrame.Desc3:SetText("중요도: |cffD3CF00보통|r")
 
 			PluginInstallFrame.Option1:Show()
